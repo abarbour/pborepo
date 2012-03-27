@@ -1,0 +1,10 @@
+README (luigi.ucsd.edu)
+Creation date:	Tue Mar 27 22:31:04 UTC 2012
+
+file		brief description
++++++++++++++	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+bsm_azimuths	azimuths of the BSM channels: if Ch0==0 => assumed (not correct)
+bsm_coords	coordinates from the latest listing, from PBO site
+bsm_gaps	gap-distances and dates, for linearization
+bsm_igppGeod	geodetic distances from my office to the PBO BSM sites
+bsm_regions	region classifications
