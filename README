@@ -26,5 +26,5 @@ pbo_instrument_count	counts of instrument types
 pbo_stations_accel	stations having strong motion accelerometers
 pbo_stations_bsm	stations having borehole strainmeters
 pbo_stations_lsm	stations having laser strainmeters
-pbo_stations_pp	stations having pore pressure sensors
+pbo_stations_pp		stations having pore pressure sensors
 pbo_stations_seis	stations having seismometers (geophones)
