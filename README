@@ -2,26 +2,26 @@ README (luigi.ucsd.edu)
 Creation date:	Tue Mar 27 22:31:04 UTC 2012
 
 file			brief description
-+++++++++++++		+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-##
-## PBO borehole strainmeters
-##
++++++++++++++		++++++++++++++++++++++++++
+	##
+	## PBO borehole strainmeters
+	##
 bsm_azimuths		azimuths of the BSM channels: if Ch0==0 => assumed (not correct)
 bsm_coords		coordinates of bsm stations, from the latest listing
 bsm_gaps		gap-distances and dates, for linearization
 bsm_igppGeod		geodetic distances from my office to the PBO BSM sites
 bsm_regions		region classifications
-##
-## PBO GPS
-##
+	##
+	## PBO GPS
+	##
 cgps_coords		coordinates of continuous gps sites, from latest listing
-##
-## PBO borehole network
-##
+	##
+	## PBO borehole network
+	##
 pbo_stations		raw listing of PBO stations, from NCEDC/IRIS-DMC
-#
-# ... and generated from the raw listing:
-#
+	#
+	# ... and generated from the raw listing:
+	#
 pbo_instrument_count	counts of instrument types
 pbo_stations_accel	stations having strong motion accelerometers
 pbo_stations_bsm	stations having borehole strainmeters
