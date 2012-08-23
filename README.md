@@ -7,16 +7,16 @@ pboRepo metadata
 PBO borehole strainmeters
 -------------------------
 
-> bsm_azimuths		
-    * azimuths of the BSM channels **if Ch0==0 => assumed (and likely not correct)**
-> bsm_coords		
-    * coordinates of bsm stations, from the latest listing
-> bsm_gaps		
-    * gap-distances and dates, for linearization
-> bsm_igppGeod		
-    * geodetic distances from my office to the PBO BSM sites
-> bsm_regions		
-    * region classifications
+`bsm_azimuths`
+* azimuths of the BSM channels **if Ch0==0 => assumed (and likely not correct)**
+`bsm_coords`
+* coordinates of bsm stations, from the latest listing
+`bsm_gaps`
+* gap-distances and dates, for linearization
+`bsm_igppGeod`
+* geodetic distances from my office to the PBO BSM sites
+`bsm_regions`
+* region classifications
 
 PBO longbase laser strainmeters
 -------------------------------
