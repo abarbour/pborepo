@@ -18,7 +18,7 @@ grep -v ^'#' tmp.coords0 | awk 'BEGIN{
 }' >  tmp.coords1
 sh g.c.geocode > tmp.coords2
 paste tmp.coords[12] | awk 'BEGIN{
-	printf"sta4,            sta16,         nlat,           elon,      elev.m,        geocode\n"
+	printf"sta4,            sta16,         nlat,           elon,      elev.m,   gham.geocode\n"
 }{
 	$(NF-1)=sprintf("%10.02f",$(NF-1))
 	$(NF)=sprintf(",%15s",$(NF))

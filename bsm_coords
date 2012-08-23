@@ -4,7 +4,7 @@
 # Coordinate reference frame and epoch unspecified
 #
 # ID, Station Name, Latitude (deg), Longitude (deg), Ellipsoidal Elevation (m)
-sta4,            sta16,         nlat,           elon,      elev.m,        geocode
+sta4,            sta16,         nlat,           elon,      elev.m,   gham.geocode
 B001, golbeck01bwa2005, 48.043071747, -123.131408691,     237.00 ,   E4X4P1E2X3Y0
 B003, floequarybwa2005, 48.062358856, -124.140861511,     284.66 ,   E4T1T9U2V1W4
 B004, hokofallsbwa2005, 48.201931000, -124.427009583,      30.00 ,   E4T1U2F6J0R1
