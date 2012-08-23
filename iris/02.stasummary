@@ -1,0 +1,98 @@
+#!/bin/sh
+
+case $# in
+1)
+NET=$1
+;;
+*)
+echo "input: network code"
+exit
+;;
+esac
+
+#mv $NET.channel.summary.doy old.$NET.channel.summary.doy
+#wget -nc http://www.ncedc.org/ftp/pub/doc/${NET}.info/${NET}.channel.summary.doy
+#cat $NET.channel.summary.doy |\
+NCEDC="http://www.ncedc.org/ftp/pub/doc"
+curl ${NCEDC}/${NET}.info/${NET}.channel.summary.doy > tmpa
+grep "LS1 T0" tmpa | grep -v ^P > tmp.bsm
+grep "LS1 LM" tmpa | awk 'BEGIN{so="XXX"}{
+s=$1
+if (s!=so){print}
+so=s
+}'> tmp.lsm
+# prep-process the BSM stations
+cat tmp.bsm |\
+awk '{
+gsub(":"," ")
+gsub(","," ")
+gsub("05-","")
+print $NF+1,$0
+}' | sort -k5 | cat -n > tmpb.bsm
+# pre-process the LSM stations
+cat tmp.lsm |\
+awk '{
+gsub(":"," ")
+gsub(","," ")
+print $NF+1,$0
+}' | sort -k5 | cat -n > tmpb.lsm
+
+# 1 1 B001  PB LS1 LM   1.0000000 2005 172 00 00 00   3000 001 00 00 00
+# 48.04307 -123.13141  237.0 152.9     0.0   200.2  LASER STRAINMETER
+
+cat tmpb.lsm | awk '
+BEGIN{
+	printf"cum net sta start start-frac   lat   lon   ele   dep\n"
+}{	cum=$1	# cumulative number
+	num=$2	# actual number installed (or attempted)
+	sta=$3
+	net=$4
+	ys=$8
+	ds=$9
+	hs=$10
+	ms=$11
+	ss=$12
+	lat=$18
+	lon=$19
+	ele=$20
+	dep=$21
+	d=ds+(hs+ms/60+ss/3600)/24
+	if (ys%4==0){dt=366}else{dt=365}
+	df=d/dt
+	yf=ys+df
+	printf"%i %s %s %i,%i %f %f %f %f %f\n",cum,net,sta,ys,d,yf,lat,lon,ele,dep
+}END{
+}' > g.stasum.lsm
+cp g.stasum.lsm Stasum.PB.LSM
+
+# 1 1 B001  PB LS1 T0   1.0000000 2005 172 00 00 00   3000 001 00 00 00     48.04307 -123.13141  237.0 152.9     0.0   200.2  GLADWIN TENSOR STRAINMETER PBO 05-001
+
+cat tmpb.bsm | awk '
+BEGIN{
+	printf"cum net sta start start-frac   lat   lon   ele   dep\n"
+	printf"echo \"stats\"\n" > "g.c.stastats"
+}{	cum=$1	# cumulative number
+	num=$2	# actual number installed (or attempted)
+	sta=$3
+	net=$4
+	ys=$8
+	ds=$9
+	hs=$10
+	ms=$11
+	ss=$12
+	lat=$18
+	lon=$19
+	ele=$20
+	dep=$21
+	d=ds+(hs+ms/60+ss/3600)/24
+	if (ys%4==0){dt=366}else{dt=365}
+	df=d/dt
+	yf=ys+df
+	printf"%i %s %s %i,%i %f %f %f %f %f\n",cum,net,sta,ys,d,yf,lat,lon,ele,dep
+	printf"stastats %s\n",sta > "g.c.stastats"
+}END{
+}' > g.chansum.$NET
+chmod +x g.c.stastats
+g.c.stastats > g.stats.${NET}
+
+paste g.chansum.$NET g.stats.${NET} > Stasum.PB.BSM

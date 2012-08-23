@@ -1,0 +1,68 @@
+#!/bin/sh
+#
+# This script will maintain a current, local copy of SEED metadata
+# from the IRIS DMC FTP site.  The only base requirements are the
+# following programs: 'wget', 'ls' and 'mailx' (only if mail
+# notification is desired).  The idea would to run this as a cron
+# job, e.g. once a day, to keep local metadata up to date.
+#
+# Further extension is certainly possible, for example some other
+# process could be started whenever an update is received; see the
+# note below in the 'for' loop.
+#
+# 2006.3.1 - IRIS DMC - CT
+# Space separated list of networks for which to retrieve SEED metadata
+NETWORKS="AZ II PB"
+# Destination directory for all downloaded SEED
+DESTDIR=g.metadata
+# Path to wget or just 'wget' if it's in the current path
+WGET=wget
+# Optionally set an email address for notification of updates
+EMAIL=luigi.ucsd.edu@gmail.com
+
+echo "${NETWORKS} WITH ${WGET} AT ${DESTDIR}"
+
+# Check for destination directory and try to create it if needed
+if [ ! -d $DESTDIR ]; then
+  echo "Creating destination directory $DESTDIR"
+  mkdir -p $DESTDIR
+  if [ ! -d $DESTDIR ]; then
+    echo "Cannot create destination directory, cannot continue."
+  fi
+fi
+
+NETUPDATES=""
+
+# Loop through the network codes
+for NETCODE in $NETWORKS
+do
+  echo "Checking dataless SEED for $NETCODE"
+
+  LSLBEFORE=`ls -l $DESTDIR/$NETCODE.dataless 2>/dev/null`
+  $WGET -q -N -P $DESTDIR "ftp://ftp.iris.washington.edu/pub/RESPONSES/DATALESS_SEEDS/$NETCODE.dataless"
+  LSLAFTER=`ls -l $DESTDIR/$NETCODE.dataless 2>/dev/null`
+
+  if [ "$LSLBEFORE" != "$LSLAFTER" ]; then
+    echo "Updated SEED metadata for $NETCODE network"
+    NETUPDATES="${NETUPDATES}${NETCODE} "
+
+    # This would be the right place add some processing of updated files.
+    # For example, running rdseed to produce RESP:
+rdseed -f $DESTDIR/$NETCODE.dataless -q RESP -R > /dev/null 2>&1
+
+  else
+    echo "Did not update SEED metadata for $NETCODE network"
+  fi
+
+done
+
+# Send email about updates if EMAIL was specified and something was updated
+if [ "$EMAIL" != "" ]; then
+  if [ "$NETUPDATES" != "" ]; then
+    echo "Sending mail to $EMAIL"
+    echo "Updated SEED metadata from DMC for: $NETUPDATES" > /tmp/tmpemail
+    mailx -s "RefreshMetadata: $NETUPDATES" $EMAIL < /tmp/tmpemail
+  fi
+fi
+
+echo "Done refreshing SEED metadata"

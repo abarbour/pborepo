@@ -1,0 +1,7 @@
+egrep -v "(LDV)|(LE1)|(LE2)" pbo_stations_raw |\
+awk 'BEGIN{FS="\""}{gsub(" ","\n");print $2}' | awk 'NF>0' |\
+sort | uniq -c | sort -nr  > pbo_stations_instrumentcount
+
+#egrep "Yellowstone" PB.stations |\
+#awk 'BEGIN{FS="\""}{gsub(" ","\n");print $2}' | awk 'NF>0' |\
+#sort | uniq -c | sort -nr

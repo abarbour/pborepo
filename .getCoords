@@ -1,0 +1,4 @@
+#!/bin/sh
+LOC="http://pbosoftware.unavco.org/dmsdocs/Root%20Folder/Data%20Management/Metadata/Station%20Coordinates"
+curl ${LOC}/PBO_bsm_coords.txt > bsm_coords
+curl ${LOC}/PBO_gps_coords.txt > cgps_coords

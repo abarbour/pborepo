@@ -1,0 +1,7 @@
+cat << XXX
+git add ...
+git commit -m "comment"
+git push -u origin master
+git pull (??)
+XXX
+echo "links http://help.github.com/git-cheat-sheets/"
