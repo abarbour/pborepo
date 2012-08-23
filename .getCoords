@@ -10,6 +10,7 @@ grep -v ^'#' tmp.coords0 | awk 'BEGIN{
 	OFS=","
 	n=0
 }{
+	$1=toupper($1)
 	$2=tolower($2)
 	cmd=sprintf("ll2geocode %s %s",$3,$4)
 	print cmd > "g.c.geocode"
