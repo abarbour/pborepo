@@ -2,21 +2,31 @@
 # Dataless seed, pre-processed
 # !!!(unsure how long in-between updates)
 #
-curl http://www.ncedc.org/ftp/pub/doc/PB.info/PB.stations > pbo_stations_raw
+curl http://www.ncedc.org/ftp/pub/doc/PB.info/PB.stations > tmp.raw
+HDR="sta4 net nlat elon elev.m instruments sta16.meta data.start data.end"
+#
+## FULL
+echo ${HDR} > pbo_stations_raw
+cat tmp.raw >> pbo_stations_raw
 ## BSM
-egrep "(BS1)|(BS2)|(BS3)|(BS4)" pbo_stations_raw > pbo_stations_bsm
+echo ${HDR} > pbo_stations_bsm
+egrep "(BS1)|(BS2)|(BS3)|(BS4)" tmp.raw >> pbo_stations_bsm
 ## SEIS
-egrep "(EH1)|(EH2)|(EHZ)" pbo_stations_raw > pbo_stations_seis
+echo ${HDR} > pbo_stations_seis
+egrep "(EH1)|(EH2)|(EHZ)" tmp.raw >> pbo_stations_seis
 ## ACCEL
-egrep "(HN1)|(HN2)|(HNZ)" pbo_stations_raw > pbo_stations_accel
+echo ${HDR} > pbo_stations_accel
+egrep "(HN1)|(HN2)|(HNZ)" tmp.raw >> pbo_stations_accel
 ## PP
 #	the dataless seed is inconsistent with the PBO database
 #	so make it consistent:
-egrep "(LDD)|(VDD)" pbo_stations_raw > tmp.ppf
+egrep "(LDD)|(VDD)" tmp.raw > tmp.ppf
 links -dump http://pore.unavco.org/pore/ | egrep "\[" |\
 awk 'substr($2,1,1)=="B"{gsub("/",""); print$2}' > tmp.pp
-grep -f tmp.pp tmp.ppf > pbo_stations_pp
+echo ${HDR} > pbo_stations_pp
+grep -f tmp.pp tmp.ppf >> pbo_stations_pp
 ## LSM
-egrep "(LDV)|(LE1)|(LE2)" pbo_stations_raw > pbo_stations_lsm
+echo ${HDR} > pbo_stations_lsm
+egrep "(LDV)|(LE1)|(LE2)" tmp.raw >> pbo_stations_lsm
 ##
-rm tmp.pp tmp.ppf
+rm tmp.pp tmp.ppf tmp.raw
