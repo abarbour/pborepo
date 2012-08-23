@@ -1,3 +1,0 @@
-git add .
-git commit -m  "commits made on `date`"
-git push -u origin master
