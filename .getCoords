@@ -1,4 +1,30 @@
 #!/bin/sh
 LOC="http://pbosoftware.unavco.org/dmsdocs/Root%20Folder/Data%20Management/Metadata/Station%20Coordinates"
-curl ${LOC}/PBO_bsm_coords.txt > bsm_coords
+##
+## BSM
+curl ${LOC}/PBO_bsm_coords.txt > tmp.coords0
+#
+grep ^'#' tmp.coords0 > bsm_coords
+grep -v ^'#' tmp.coords0 | awk 'BEGIN{
+	FS=","
+	OFS=","
+	n=0
+}{
+	$2=tolower($2)
+	cmd=sprintf("ll2geocode %s %s",$3,$4)
+	print cmd > "g.c.geocode"
+	print
+}' >  tmp.coords1
+sh g.c.geocode > tmp.coords2
+paste tmp.coords[12] | awk 'BEGIN{
+	printf"sta4,            sta16,         nlat,           elon,      elev.m,        geocode\n"
+}{
+	$(NF-1)=sprintf("%10.02f",$(NF-1))
+	$(NF)=sprintf(",%15s",$(NF))
+	print
+}' >> bsm_coords
+rm g.c.geocode tmp.coords?
+##
+## GPS
 curl ${LOC}/PBO_gps_coords.txt > cgps_coords
+##

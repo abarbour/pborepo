@@ -13,7 +13,7 @@ SCS2 EW 405.1 16 33.245108 -115.941786
 YMS  EW 405.0 16 36.82864 -116.45044
 XXX
 cat tmp.lsm.sta | awk '{
-	cmd=sprintf("ll2geo %s %s",$5,$6)
+	cmd=sprintf("ll2geocode %s %s",$5,$6)
 	system(cmd)
 }' > tmp.lsm.geo
 cat tmp.lsm.sta | awk '{
