@@ -1,0 +1,150 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>PBO Repo</title>
+  <meta name="description" content="A repository for metadata, flatfiles, etc. regarding Plate Boundary Observatory (PBO) stations and data products.">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">PBO Repo</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">A repository for metadata, flatfiles, etc. regarding Plate Boundary Observatory (PBO) stations and data products.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/abarbour/pborepo/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/abarbour/pborepo/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/abarbour/pborepo" class="code">View PBO Repo on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>What is this project?</h1>
+
+<p>This is a self-maintained repository for any type of meta information for Plate Boundary Observatory (PBO) stations I find useful for my own research.  Feel free to contact me (<a href="https://github.com/abarbour" class="user-mention">@abarbour</a>) should you wish to see other data included.  More information may be found on the <a href="http://pbo.unavco.org/">PBO website</a>.</p>
+
+<p>This website is organized by the section headings, with links to the <a href="https://github.com/github" class="user-mention">@github</a> "blobs" for each dataset; from there you can access the raw data should you need to.  The section at the end of the page (<a href="http://abarbour.github.com/pborepo#NEWS">NEWS</a>) lists brief descriptions of any changes or significant updates.</p>
+
+<h2>PBO borehole strainmeters (BSM)</h2>
+
+<p><a href="https://github.com/abarbour/pborepo/blob/master/bsm_azimuths"><code>bsm_azimuths</code></a></p>
+
+<ul>
+<li>Orientations of the individual BSM channels <strong>Note: if Ch0==0 then it is an assumed value (and likely not correct)</strong>
+</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/bsm_coords"><code>bsm_coords</code></a></p>
+
+<ul>
+<li>Coordinates of BSM stations, from the latest listing.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/bsm_geps"><code>bsm_gaps</code></a></p>
+
+<ul>
+<li>By station: capacitance-bridge gap separations, install/lin. dates; these are generally used for strain data linearization.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/bsm_igppGeod"><code>bsm_igppGeod</code></a></p>
+
+<ul>
+<li>Geodetics from my office to the PBO BSM sites.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/bsm_regions"><code>bsm_regions</code></a></p>
+
+<ul>
+<li>Regional classifications; these are found in the long (16-character) station names.</li>
+</ul><h2>PBO longbase laser strainmeters (LSM)</h2>
+
+<p><a href="https://github.com/abarbour/pborepo/blob/master/lsm_coords"><code>lsm_coords</code></a></p>
+
+<ul>
+<li>Coordinates and counts-to-strain scalings for LSM sites, including inactive
+<code>YMS</code>, and non-PBO sites: <code>PFO[123]</code> and <code>DHL1</code>.</li>
+</ul><h2>PBO continuous Global Positioning System (GPS) stations</h2>
+
+<p><a href="https://github.com/abarbour/pborepo/blob/master/cgps_coords"><code>cgps_coords</code></a></p>
+
+<ul>
+<li>coordinates of continuous gps sites, from latest listing</li>
+</ul><h2>PBO borehole network</h2>
+
+<p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_raw"><code>pbo_stations_raw</code></a></p>
+
+<ul>
+<li>This is a raw listing of PBO stations, from NCEDC/IRIS-DMC; the values are comma-separated and some fields have character strings in quotations.</li>
+</ul><p><strong>Note: the following are derived from the raw listing:</strong></p>
+
+<p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_instrumentcount"><code>pbo_stations_instrumentcount</code></a></p>
+
+<ul>
+<li>Counts of the various instrument types in the network.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_accel"><code>pbo_stations_accel</code></a></p>
+
+<ul>
+<li>List of stations having strong motion accelerometers.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_bsm"><code>pbo_stations_bsm</code></a></p>
+
+<ul>
+<li>List of stations having borehole strainmeters.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_lsm"><code>pbo_stations_lsm</code></a></p>
+
+<ul>
+<li>List of stations having laser strainmeters.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_pp"><code>pbo_stations_pp</code></a></p>
+
+<ul>
+<li>List of stations having pore pressure sensors.</li>
+</ul><p><a href="https://github.com/abarbour/pborepo/blob/master/pbo_stations_seis"><code>pbo_stations_seis</code></a></p>
+
+<ul>
+<li>List of stations having seismometers (geophones).</li>
+</ul><h1>NEWS</h1>
+
+<ul>
+<li>January 2013 (website branch added)</li>
+</ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/abarbour" class="avatar"><img src="https://secure.gravatar.com/avatar/baf9d6714c7d69470cce61c1496249bb?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/abarbour">abarbour</a> maintains <a href="https://github.com/abarbour/pborepo">PBO Repo</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/abarbour/pborepo/tarball/master" class="tar">tar</a><a href="https://github.com/abarbour/pborepo/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-34990319-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+</body>
+</html>
