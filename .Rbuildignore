@@ -1,1 +1,3 @@
 data/gen
+^.*\.Rproj$
+^\.Rproj\.user$
