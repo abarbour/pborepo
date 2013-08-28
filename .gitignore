@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 pborepo.Rproj
+.gitignore
+.cheatsheat
