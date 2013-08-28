@@ -1,0 +1,17 @@
+Package: pborepo
+Type: Package
+Title: Access to metadata for the Plate Boundary Observatory
+Version: 0.2013.240
+Date: 2013-08-28
+Author: Andrew J Barbour
+Maintainer: Andrew J Barbour <andy.barbour@gmail.com>
+Description: The Plate Boundary Observatory is the geodetic
+    component of the EarthScope project, and maintains a
+    large network of instruments, including continuous GPS,
+    longbase laser strainmeters, and borehole strainmeters.
+    This package provides access to certain metadata associated
+    with these stations.
+    Note that this metadata is a compilation from multiple
+    sources, and is only current up to the version number, which
+    has the following format: version.year.day-of-year.
+License: GPL >= 2
