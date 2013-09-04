@@ -1,41 +1,23 @@
-\name{pborepo-package}
-\alias{pborepo-package}
-\alias{pborepo}
 \docType{package}
-\title{
-What the package does (short line)
-~~ package title ~~
-}
+\name{pborepo-package}
+\alias{pborepo}
+\alias{pborepo-package}
+\alias{strainmeter}
+\title{Access to data-products and metadata from the Plate Boundary Observatory geodetic network}
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+  Some description
 }
 \details{
-\tabular{ll}{
-Package: \tab pborepo\cr
-Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2013-08-28\cr
-License: \tab What license is it under?\cr
+  See the following pages for details on
 }
-~~ An overview of how to use the package, including the most important functions ~~
+\section{Pore-pressure data}{
+  \url{http://pore.unavco.org/pore}
+}
+
+\section{Pore-temperature data}{
+  \url{http://pore.unavco.org/pore}
 }
 \author{
-Who wrote it
+  Andrew J. Barbour <andy.barbour@gmail.com>
+}
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
-}
-\references{
-~~ Literature or other references for background information ~~
-}
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation ~~
-~~ directory ~~
-\keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
-\examples{
-~~ simple examples of the most important functions ~~
-}

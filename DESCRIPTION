@@ -1,17 +1,31 @@
 Package: pborepo
 Type: Package
-Title: Access to metadata for the Plate Boundary Observatory
-Version: 0.2013.240
-Date: 2013-08-28
+Title: Access to data-products and metadata from the Plate Boundary Observatory
+    geodetic network
+Version: 0.2013.247
+Date: 2013-09-04
 Author: Andrew J Barbour
 Maintainer: Andrew J Barbour <andy.barbour@gmail.com>
+URL: http://abarbour.github.io/pborepo
 Description: The Plate Boundary Observatory is the geodetic
     component of the EarthScope project, and maintains a
     large network of instruments, including continuous GPS,
     longbase laser strainmeters, and borehole strainmeters.
-    This package provides access to certain metadata associated
-    with these stations.
-    Note that this metadata is a compilation from multiple
+    This package provides access to  metadata associated
+    with these stations, and some data products.
+    Note that the metadata is a compilation from multiple
     sources, and is only current up to the version number, which
     has the following format: version.year.day-of-year.
+    The data products currently supported include:
+    pore-fluid pressure, and
+    pore-fluid temperature.
+Depends:
+    R (>= 2.14.1),
+    stats,
+    utils,
+    graphics,
+    grDevices
 License: GPL >= 2
+Collate:
+    'pborepo-package.R'
+    'zzz.R'
