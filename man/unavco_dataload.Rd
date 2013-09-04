@@ -41,6 +41,9 @@
 \seealso{
   Other data-retrieval: \code{\link{dlCatcher}},
   \code{\link{unavco_downloader}},
-  \code{\link{unavco_path}}
+  \code{\link{unavco_downloader.default}},
+  \code{\link{unavco_path}},
+  \code{\link{unavco_temploader}},
+  \code{\link{unavco_temploader.default}}
 }
 

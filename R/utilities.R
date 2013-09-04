@@ -26,10 +26,32 @@ list.txtgz <- function(datadir=".", basedir=getwd(), pattern="txt.gz$", ...){
 #' @param n numeric; the number of \code{lead.char} to replicate
 #' @export
 #' @family utilities
-pbo_message <- function(..., lead.char=c("+",">"), n=8){
+pbo_message <- function(..., lead.char=c("+",">","!"), n=8){
   msg <- paste(...)
   lead.char <- match.arg(lead.char)
   fullmsg <- paste(paste(rep(lead.char, n), collapse=""), msg, collapse="\n")
   message(fullmsg)
   return(invisible(msg))
+}
+
+#### TIME CONVERSIONS
+#' String to posix for unavco data
+#' @export
+#' @family utilities time-conversion
+unavco_temp_toPOS <- function(tstr, tz="UTC"){
+  #2008-12-31 21:00:00.81
+  base::as.POSIXct(paste(tstr,tz),format="%Y-%m-%d %H:%M:%S",tz=tz)
+}
+#' year and day to date
+#' @export
+#' @family utilities time-conversion
+unavco_temp_toDate <- function(year, day, tz="UTC"){
+  base::as.Date(paste(year,day),format="%Y %j",tz=tz)
+}
+#' @export
+#' @family utilities time-conversion
+unavco_temp_setTZ <- function(df, tz="UTC"){
+  #### some functions change the POSIX timezone, this returns it to normal
+  df$Dt. <- base::as.POSIXlt(df$Dt., tz=tz)
+  return(df)
 }

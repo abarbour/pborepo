@@ -2,7 +2,7 @@
 \alias{pbo_message}
 \title{Consistent messaging for downloading and other functions}
 \usage{
-  pbo_message(..., lead.char = c("+", ">"), n = 8)
+  pbo_message(..., lead.char = c("+", ">", "!"), n = 8)
 }
 \arguments{
   \item{...}{the messages to give to \code{\link{message}}}

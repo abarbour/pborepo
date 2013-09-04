@@ -1,10 +1,14 @@
 \name{unavco_downloader}
 \alias{dlCatcher}
 \alias{unavco_downloader}
+\alias{unavco_downloader.default}
 \title{Downloader for the UNAVCO data archive}
 \usage{
-  unavco_downloader(url.toget, temp = tempfile(),
-    quiet = FALSE, ...)
+  unavco_downloader(url.toget, temp, PLUGIN, quiet = FALSE,
+    remove.temp = FALSE, ...)
+
+  \method{unavco_downloader}{default} (url.toget, temp,
+    PLUGIN, quiet = FALSE, remove.temp = FALSE, ...)
 
   dlCatcher(FUN)
 }
@@ -15,7 +19,8 @@
 
   \item{quiet}{logical; should the downloader be verbose?}
 
-  \item{...}{additional parameters}
+  \item{...}{additional parameters to
+  \code{\link{download.file}}}
 
   \item{FUN}{A function to try}
 }
@@ -32,6 +37,8 @@
 \seealso{
   Other data-retrieval: \code{\link{unavco_dataload}},
   \code{\link{unavco_dataload.default}},
-  \code{\link{unavco_path}}
+  \code{\link{unavco_path}},
+  \code{\link{unavco_temploader}},
+  \code{\link{unavco_temploader.default}}
 }
 

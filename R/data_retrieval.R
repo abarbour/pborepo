@@ -48,25 +48,51 @@ unavco_dataload.default <- function(sta, year, day,
   stopifnot(length(tempLOC) == nDL)
   for (dli in seq_len(nDL)){
     dl <- toDL[dli]
+    tl <- tempLOC[dli]
     cdl <- canDL[dli]
     if (cdl){
-      unavco_downloader(dl, temp=tempLOC[dli], quiet=quiet)
+      unavco_downloader(dl, temp=tl, quiet=quiet)
+      dat <- unavco_temploader(tl, dat)
+      #dat <- loadUnav(tmp, typ=typ)
     } else {
-      # generate [ ]
+      pbo_message(dl, "unavailable", lead.char="!")
+      dat <- NULL
+    }
+    if (impute){
+      if (!is.null(dat)){
+        #dat <- impute(dat)
+      } else {
+        #generate [ ]
+        #dat <- genPP(year, day, sec.samp=default.sec.samp)
+      }
     }
   }
-#   dlfile <- function() {.dlfile(toget, tmp, quiet=quiet, cacheOK=FALSE, mode="w")}
-#   ec <- dlCatcher(dlfile)
-#   # load it into workspace
-#   if (ec=="OK"){
-#     dat <- loadUnav(tmp, typ=typ)
-#   } else if (ec=="FAILED"){
-#     message("\t>>>> downloading failed")
-#     dat <- genPP(year, day, sec.samp=default.sec.samp)
-#   }
-#   # remove the downloaded file if desired
-#   if (lfnull && ec=="OK"){unlink(tmp)}
-#   return(dat)
+  return(dat)
+}
+
+#' Load and process data downloaded from the UNAVCO archive
+#' @param file character; the file to be loaded
+#' @param dattype character;
+#' @param ... additional parameters
+#' 
+#' @family data-retrieval
+#' @export
+unavco_temploader <- function(file, dattype = c("pp","pt"), ...) UseMethod("unavco_temploader")
+#' @rdname unavco_temploader
+#' @method unavco_temploader default
+#' @S3method unavco_temploader default
+unavco_temploader.default <- function(file, dattype = c("pp","pt"), ...){
+  dat <- match.arg(dattype)
+  #
+  dn <- switch(dat, pp="hPa", pt="degC")
+  #
+  dtmp <- read.table(file, header=FALSE, colClasses=c(rep("character",2),"numeric"), sep=" ")
+  data <- base::as.data.frame.POSIXct( unavco_temp_toPOS(paste(dtmp$V1, dtmp$V2)) )
+  data$V3 <- dtmp$V3
+  #
+  names(data) <- c("Dt.",dn)
+  #
+  return(data)
 }
 
 #' Downloader for the UNAVCO data archive
@@ -79,18 +105,21 @@ unavco_dataload.default <- function(sta, year, day,
 #' @param url.toget character; the URL to download
 #' @param temp character; file for temporary writing
 #' @param quiet logical; should the downloader be verbose?
-#' @param ... additional parameters
+#' @param ... additional parameters to \code{\link{download.file}}
 #'
 #' @export
 #' @family data-retrieval
-unavco_downloader <- function(url.toget, temp=tempfile(), quiet=FALSE, ...) UseMethod("unavco_downloader")
-# @rdname unavco_downloader
+unavco_downloader <- function(url.toget, temp, PLUGIN, quiet=FALSE, remove.temp=FALSE, ...) UseMethod("unavco_downloader")
+#' @rdname unavco_downloader
 #' @method unavco_downloader default
 #' @S3method unavco_downloader default
-unavco_downloader.default <- function(url.toget, temp=tempfile(), quiet=FALSE, ...){
+unavco_downloader.default <- function(url.toget, temp, PLUGIN, quiet=FALSE, remove.temp=FALSE, ...){
+  if (missing(temp)) temp <- tempfile()
   if (!quiet) pbo_message(url.toget, "--to--", temp, lead.char=">")
-  dlCatcher(FUN = function() {download.file(url.toget, temp, quiet=quiet, cacheOK=FALSE, mode="w", ...)})
+  ec <- dlCatcher(FUN = function() {download.file(url.toget, temp, quiet=quiet, cacheOK=FALSE, mode="w", ...)})
+  return(invisible(ec))
 }
+
 #' @rdname unavco_downloader
 #' @param FUN A function to try
 #' @export
@@ -147,7 +176,8 @@ unavco_path <- function(sta4, year, jday, type=c("pp","pt"), url.check=FALSE){
   repos <- pbo_constants(FALSE)$unavco
   repos <- repos[[type]]
   #
-  daturl <- paste(repos, sta, yr4, dy3, sep="/")
+  baserepos <- paste(repos, sta, sep="/")
+  daturl <- paste(baserepos, yr4, dy3, sep="/")
   # data files
   fi <- paste0(sta, yr2, dy3, longtype)
   fitxt <- paste(fi, "txt", sep=".")
@@ -157,9 +187,15 @@ unavco_path <- function(sta4, year, jday, type=c("pp","pt"), url.check=FALSE){
   #
   if (url.check){
     URLTEST <- RCurl::url.exists
-    passed <- unlist(lapply(X=todl, FUN=URLTEST))
+    if (!URLTEST(baserepos)){
+      # first check base repo, to save time
+      pbo_message(baserepos, "non-existent", lead.char="!")
+      passed <- rep(FALSE, length(todl))
+    } else {
+      passed <- unlist(lapply(X=todl, FUN=URLTEST))
+    }
   } else {
-    passed <- NA
+    passed <- rep(NA, length(todl))
   }
   # return
   toret <- list(daturl=daturl, bot=fi, txt=fitxt, txtgz=fitxtgz, wget=todl, wget.status=passed)

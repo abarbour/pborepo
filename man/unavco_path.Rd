@@ -40,6 +40,9 @@ unavco_path("B084",2010, 1:10, "pt")
   Other data-retrieval: \code{\link{dlCatcher}},
   \code{\link{unavco_dataload}},
   \code{\link{unavco_dataload.default}},
-  \code{\link{unavco_downloader}}
+  \code{\link{unavco_downloader}},
+  \code{\link{unavco_downloader.default}},
+  \code{\link{unavco_temploader}},
+  \code{\link{unavco_temploader.default}}
 }
 
