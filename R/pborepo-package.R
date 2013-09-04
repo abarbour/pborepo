@@ -14,7 +14,7 @@
 #'
 #' @docType package
 #' @name pborepo-package
-#' @aliases pborepo strainmeter
+#' @aliases pborepo
 #' 
 #' @author Andrew J. Barbour <andy.barbour@@gmail.com> 
 #' 
@@ -37,13 +37,14 @@ NULL
 #' 
 #' @name pborepo-constants
 #' @seealso \code{\link{pborepo}}
+#' @family overviews
 .constants = list(
   unavco=list(
-    base="http://borehole.unavco.org/",
-    bsm.repo="http://bsm.unavco.org/bsm/",
-    pp.repo="http://pore.unavco.org/pore",
-    pt.repo="http://pore.unavco.org/pore",
-    tilt.repo="http://tilt.unavco.org/tilt/"
+    general="http://borehole.unavco.org/",
+    bsm="http://bsm.unavco.org/bsm/",
+    pp="http://pore.unavco.org/pore",
+    pt="http://pore.unavco.org/pore",
+    tilt="http://tilt.unavco.org/tilt/"
   ),
   conversions=list(
     hpa_to_pa=100/1,

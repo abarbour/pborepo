@@ -24,8 +24,11 @@ Depends:
     stats,
     utils,
     graphics,
-    grDevices
+    grDevices,
+    RCurl (>= 1.95-4.1)
 License: GPL >= 2
 Collate:
     'pborepo-package.R'
     'zzz.R'
+    'data_retrieval.R'
+    'utilities.R'

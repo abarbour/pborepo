@@ -25,6 +25,8 @@
 }
 \seealso{
   \code{\link{pborepo}}
+
+  Other overviews: \code{\link{pborepo-package}}
 }
 \keyword{datasets}
 

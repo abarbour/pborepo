@@ -1,3 +1,10 @@
 data/gen
+tmp
+README.md
+
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.gitignore
+.RData
+.Rhistory
+.cheatsheat

@@ -1,0 +1,31 @@
+\name{list.txtgz}
+\alias{list.txtgz}
+\title{List .txt.gz files in a directory}
+\usage{
+  list.txtgz(datadir = ".", basedir = getwd(),
+    pattern = "txt.gz$", ...)
+}
+\arguments{
+  \item{datadir}{character; the location of the .txt.gz
+  files}
+
+  \item{basedir}{character; the location of \code{datadir}}
+
+  \item{pattern}{character; the regexp (perl style) to use
+  for the listing}
+
+  \item{...}{additional parameters passed to
+  \code{\link{list.files}}}
+}
+\description{
+  List .txt.gz files in a directory
+}
+\details{
+  Uses \code{\link{list.dirs}} with: \code{full.names =
+  TRUE, recursive = TRUE} and \code{\link{list.files}}
+  with: \code{full.names = TRUE, ignore.case = FALSE}
+}
+\seealso{
+  Other utilities: \code{\link{pbo_message}}
+}
+
