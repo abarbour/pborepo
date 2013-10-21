@@ -2,8 +2,8 @@ Package: pborepo
 Type: Package
 Title: Access to data-products and metadata from the Plate Boundary Observatory
     geodetic network
-Version: 0.2013.247
-Date: 2013-09-04
+Version: 0.2013.247-1
+Date: 2013-10-21
 Author: Andrew J Barbour
 Maintainer: Andrew J Barbour <andy.barbour@gmail.com>
 URL: http://abarbour.github.io/pborepo
@@ -29,6 +29,6 @@ Depends:
 License: GPL >= 2
 Collate:
     'pborepo-package.R'
-    'zzz.R'
     'data_retrieval.R'
     'utilities.R'
+    'zzz.R'

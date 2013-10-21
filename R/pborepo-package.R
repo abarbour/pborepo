@@ -22,7 +22,9 @@
 # not needed since specified in DESCRIPTION-DEPENDS: stats utils graphics grDevices
 # @useDynLib strain
 #'
-#'
+#' @seealso \code{\link{data-retrieval}}
+#' \code{\link{utilities}}
+#' 
 #' @family overviews
 #'
 NULL
@@ -88,3 +90,8 @@ pbo_constants <- function(do.str=TRUE){
 # @docType data
 # @format A list with filter weights by decimation factor
 #NULL
+
+#' @title BSM metadata
+#' @name bsmmeta
+#' @docType data
+NULL

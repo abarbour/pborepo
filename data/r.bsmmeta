@@ -1,0 +1,12 @@
+stringsAsFactors <- TRUE
+#
+# gen/bsm_coords:
+#sta4, sta16, nlat, elon, elev.m, gham.geocode
+#
+coords <- read.csv("gen/bsm_coords", strip.white = TRUE,
+	comment.char = "#", stringsAsFactors=stringsAsFactors)
+bsmmeta <- list(
+	coords=coords
+)
+attr(bsmmeta, "stamp") <- utils::packageVersion("pborepo")
+save(bsmmeta, file="bsmmeta.rda")

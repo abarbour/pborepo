@@ -15,4 +15,5 @@
   packageStartupMessage(sprintf("Loaded %s (%s) -- PBO data retrieval and metadata.", 
                                 pack,
                                 utils::packageVersion(pack)))
+  #lsf.str(paste0("package:",pack))
 }

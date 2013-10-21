@@ -1,4 +1,3 @@
-data/gen
 tmp
 README.md
 
@@ -8,3 +7,13 @@ README.md
 .RData
 .Rhistory
 .cheatsheat
+.RData
+
+data/.getCoords
+data/.getLSM
+data/.getPbo
+data/.lstPbo
+data/.Rdata
+data/Makefile
+data/r.bsmmeta
+data/gen/
