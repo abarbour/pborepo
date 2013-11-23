@@ -18,7 +18,8 @@
 #' 
 #' @author Andrew J. Barbour <andy.barbour@@gmail.com> 
 #' 
-# @import Matrix corpcor
+#' @import corpcor abind
+#' 
 # not needed since specified in DESCRIPTION-DEPENDS: stats utils graphics grDevices
 # @useDynLib strain
 #'
@@ -77,21 +78,27 @@ pbo_constants <- function(do.str=TRUE){
 
 ##
 ## Datasets
-## 
-##   Filter weights
-#
-# @title Minimum phase lowpass filter weights for strain data
-# @references
-# D.C. Agnew and K. Hodgkinson (2007),
-# Designing compact causal digital filters for low-frequency strainmeter data,
-# Bulletin of the Seismological Society of America,
-# vol 97, 1B, 1-99, doi: 10.1785/0120060088
-# @name minphs
-# @docType data
-# @format A list with filter weights by decimation factor
-#NULL
+##
 
 #' @title BSM metadata
 #' @name bsmmeta
 #' @docType data
+NULL
+
+
+##   calibration coeffs:
+#
+#' @title BSM calibration coefficients
+#' @name bsmCalibrations
+#' @docType data
+#' @format A list with lists of dataframes with
+#' calibration coefficients by station
+#' @examples
+#' load("bsmCalibrations.rda")
+#' summary(bsmCalibrations)
+#' #      Length Class  Mode
+#' #grant 2      -none- list
+#' #hodg  4      -none- list
+#' #pbo   1      -none- list
+#' #roel  2      -none- list
 NULL

@@ -15,5 +15,5 @@ data/.getPbo
 data/.lstPbo
 data/.Rdata
 data/Makefile
-data/r.bsmmeta
+data/r.*
 data/gen/
