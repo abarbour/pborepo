@@ -1,8 +1,16 @@
-pboRepo metadata
+pborepo metadata
 ================
+
+~~~~~{.R}
+library(pborepo)
+~~~~~
 
 PBO borehole strainmeters
 -------------------------
+
+~~~~~{.R}
+data(bsmmeta)
+~~~~~
 
 `bsm_azimuths`
 * azimuths of the BSM channels **if Ch0==0 => assumed (and likely not correct)**
@@ -21,8 +29,8 @@ PBO borehole strainmeters
 
 * calibration coefficients
 ~~~~~{.R}
-    data(bsmCalibrations)
-    ?calibration_matrix
+data(bsmCalibrations)
+?calibration_matrix
 ~~~~~
 
 PBO longbase laser strainmeters
