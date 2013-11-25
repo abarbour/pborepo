@@ -19,6 +19,12 @@ PBO borehole strainmeters
 `bsm_regions`
 * region classifications
 
+* calibration coefficients
+~~~~~{.R}
+    data(bsmCalibrations)
+    ?calibration_matrix
+~~~~~
+
 PBO longbase laser strainmeters
 -------------------------------
 
