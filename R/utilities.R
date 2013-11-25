@@ -110,3 +110,75 @@ unavco_temp_setTZ <- function(df, tz="UTC"){
   df$Dt. <- base::as.POSIXlt(df$Dt., tz=tz)
   return(df)
 }
+
+### Various functions
+#' Calculate \emph{all} norms of a matrix
+#' 
+#' @seealso \code{\link{norm}}
+#' @export
+#' 
+#' @param M matrix
+#' @param types character; optionally specify the norms you wish to calculate
+#' e.g., O, I, F, M, 2
+#' 
+#' @family utilities 
+#' @examples
+#' M <- matrix(1:12,4)
+#' norms(M)
+#' #
+#' # or manually specify
+#' norms(M, c("O","M"))
+norms <- function(M, types=NULL){
+  if (is.null(types)) types <- eval(formals(base::norm)$type)
+  sapply(types, base::norm, x=na.omit(M))
+}
+
+#' Trimmed RMS (root mean square)
+#' @details
+#' The functions
+#' \code{\link{rowRms}} and  \code{\link{colRms}} cannot accept \code{trim}
+#' arguments because they use  \code{\link{rowMeans}}
+#' and  \code{\link{colMeans}}, respectively.
+#' 
+#' @export
+#' 
+#' @param x [from \code{\link{mean}}:]\emph{ An R object. Complex vectors 
+#' are allowed for trim = 0, only.}
+#' @param trim numeric; [from \code{\link{mean}}:]\emph{
+#' the fraction (0 to 0.5) of observations to be trimmed 
+#' from each end of x before the mean is computed. 
+#' Values of trim outside that range are taken as the nearest endpoint.}
+#' @param na.rm  [from \code{\link{mean}}:]\emph{
+#' a logical value indicating whether NA values should be stripped before 
+#' the computation proceeds.}
+#' @param ... additional parameters
+#' @references
+#' [1] \url{http://en.wikipedia.org/wiki/Root_mean_square}
+#' @family utilities 
+#' @examples
+#' x <- sin(seq(-pi,pi,by=0.1))
+#' xr <- rms(x)
+#' #
+#' # The expected value for a default \code{sin} curve is sqrt(2)/2
+#' plot(x, type="l")
+#' lines(abs(x), col="red")
+#' abline(h=c(mean(x), mean(abs(x)), sqrt(2)/2, xr), lty=4:1, col=4:1)
+#' #
+#' M <- matrix(1:12,3)
+#' colRms(M)
+#' rowRms(M)
+rms <- function(x, trim = 0, na.rm=TRUE){
+  sqrt(mean(x*x, trim=trim, na.rm=na.rm))
+}
+#' @rdname rms
+#' @export
+colRms <- function(x, na.rm=TRUE, ...){
+  x <- as.matrix(x)
+  sqrt(colMeans(x*x, na.rm=na.rm, ...))
+}
+#' @rdname rms
+#' @export
+rowRms <- function(x, na.rm=TRUE, ...){
+  x <- as.matrix(x)
+  sqrt(rowMeans(x*x, na.rm=na.rm, ...))
+}

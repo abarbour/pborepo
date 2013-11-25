@@ -26,6 +26,8 @@
   with: \code{full.names = TRUE, ignore.case = FALSE}
 }
 \seealso{
-  Other utilities: \code{\link{pbo_message}}
+  Other utilities: \code{\link{colRms}},
+  \code{\link{norms}}, \code{\link{pbo_message}},
+  \code{\link{rms}}, \code{\link{rowRms}}
 }
 

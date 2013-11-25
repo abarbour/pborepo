@@ -32,7 +32,12 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 
 #' Calibration matrix
 #' @param tbl x
-#' @param sta4 x
+#' @param sta4 character; an optional station name
+#' @param typ  character; an optional method identifier
+#' @param Sij matrix, or an object to be coerced into a matrix
+#' @param needs.pinv logical; indicate whether the matrix should be pseudo-inverted
+#' @param byrow logical; if \code{Sij} needs to be coerced into a matrix, should
+#' it be filled `byrow'?
 #' @param ... additional arguments
 #' @export
 #' @examples
@@ -60,22 +65,37 @@ calibration_matrix <- function(tbl, sta4, ...) UseMethod("calibration_matrix")
 #' @S3method calibration_matrix cal.pbo
 #' @method calibration_matrix cal.pbo
 calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
-  .rms <- function(x){
-    sqrt(mean(x**2, na.rm=TRUE))
-  }
-  .norms <- function(M){
-    sapply(eval(formals(base::norm)$type), norm, x=na.omit(M))
-  }
+  #
   tblarr <- tbl[['caltbl.arr']]
   typ <- match.arg(typ)
   sta4 <- as.character(sta4)
   Sij <- matrix(as.matrix(tblarr[ , typ, sta4]), nrow=3, byrow=TRUE)
+  #
+  fortify_calibration_matrix(Sij, sta4, typ, FALSE)
+}
+#' @rdname calibration_matrix
+#' @aliases calibration_matrix.cal.hodg
+#' @S3method calibration_matrix cal.hodg
+#' @method calibration_matrix cal.hodg
+calibration_matrix.cal.hodg <- function() .NotYetImplemented()
+
+#' @rdname calibration_matrix
+#' @aliases calibration_matrix.cal.roel
+#' @S3method calibration_matrix cal.roel
+#' @method calibration_matrix cal.roel
+calibration_matrix.cal.roel <- function() .NotYetImplemented()
+
+#' @rdname calibration_matrix
+#' @export
+fortify_calibration_matrix <- function(Sij, sta4=NA, typ=NA, needs.pinv=FALSE, byrow=TRUE, ...){
+  if (!is.matrix(Sij)) Sij <- matrix(as.matrix(Sij), nrow=3, byrow=byrow)
   dimnames(Sij) <- list(c("Ear","Gam1","Gam2"), paste0("CH",0:3))
-  nfo <- rbind(means=rowMeans(Sij, na.rm=TRUE), RMS=apply(Sij, 1, .rms))
+  nfo <- rbind(means=rowMeans(Sij, na.rm=TRUE), RMS=apply(Sij, 1, rms))
   nfo <- rbind(nfo, ratio=nfo[2,]/nfo[1,])
+  attr(Sij, "sta4") <- sta4
   attr(Sij, "typ") <- typ
-  attr(Sij, "needs.pinv") <- FALSE
-  attr(Sij, "norms") <- if (!all(is.na(Sij))){ .norms(t(Sij)) } else { NA }
+  attr(Sij, "needs.pinv") <- needs.pinv
+  attr(Sij, "norms") <- if (!all(is.na(Sij))){ norms(t(Sij)) } else { NA }
   attr(Sij, "sizes") <- nfo
   Sij
 }

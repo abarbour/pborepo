@@ -16,6 +16,8 @@
   Consistent messaging for downloading and other functions
 }
 \seealso{
-  Other utilities: \code{\link{list.txtgz}}
+  Other utilities: \code{\link{colRms}},
+  \code{\link{list.txtgz}}, \code{\link{norms}},
+  \code{\link{rms}}, \code{\link{rowRms}}
 }
 

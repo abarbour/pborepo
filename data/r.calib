@@ -3,13 +3,13 @@
 load("/Users/abarbour/dbase/stations/calib/grant10.rda")	# [ ]
 load("/Users/abarbour/dbase/stations/calib/hodg13.rda")		# [ ]
 load("/Users/abarbour/dbase/stations/calib/pbo.rda")		# [X]
-load("/Users/abarbour/dbase/stations/calib/roel10.rda")		# [ ]
+load("/Users/abarbour/dbase/stations/calib/roel.rda")		# [X]
 
 bsmCalibrations <- list(
 	grant=grant10,
 	hodg=hodg13,
 	pbo=pbo,
-	roel=roel10
+	roel=roel
 )
 
 save(bsmCalibrations, file="bsmCalibrations.rda")
