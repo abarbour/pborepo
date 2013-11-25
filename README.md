@@ -1,6 +1,3 @@
-README (luigi.ucsd.edu)
-Creation date:	Tue Mar 27 22:31:04 UTC 2012
-
 pboRepo metadata
 ================
 
@@ -60,3 +57,8 @@ PBO borehole network
 
 `pbo_stations_seis`
 * stations having seismometers (geophones)
+
+---
+
+This project was started in March 2012
+
