@@ -94,7 +94,7 @@ NULL
 #' @format A list with lists of dataframes with
 #' calibration coefficients by station
 #' @examples
-#' load("bsmCalibrations.rda")
+#' data(bsmCalibrations)
 #' summary(bsmCalibrations)
 #' #      Length Class  Mode
 #' #grant 2      -none- list

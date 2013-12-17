@@ -11,7 +11,7 @@
 #' station_data("B08[24]", use.regexp=TRUE) # gets what you want
 #' #
 #' # Get the 16-character codes
-#' sta16_from_sta4("B082","B084")
+#' sta16_from_sta4(c("B082","B084"))
 station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE){
   metao <- match.arg(meta)
   meta <- switch(metao, bsm="bsmmeta")

@@ -77,13 +77,13 @@ calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
 #' @aliases calibration_matrix.cal.hodg
 #' @S3method calibration_matrix cal.hodg
 #' @method calibration_matrix cal.hodg
-calibration_matrix.cal.hodg <- function() .NotYetImplemented()
+calibration_matrix.cal.hodg <- function(tbl, sta4, ...) .NotYetImplemented()
 
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.roel
 #' @S3method calibration_matrix cal.roel
 #' @method calibration_matrix cal.roel
-calibration_matrix.cal.roel <- function() .NotYetImplemented()
+calibration_matrix.cal.roel <- function(tbl, sta4, ...) .NotYetImplemented()
 
 #' @rdname calibration_matrix
 #' @export

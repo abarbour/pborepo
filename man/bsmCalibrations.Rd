@@ -8,7 +8,7 @@ calibration coefficients by station}
   BSM calibration coefficients
 }
 \examples{
-load("bsmCalibrations.rda")
+data(bsmCalibrations)
 summary(bsmCalibrations)
 #      Length Class  Mode
 #grant 2      -none- list

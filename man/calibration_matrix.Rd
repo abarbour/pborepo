@@ -13,9 +13,9 @@
   \method{calibration_matrix}{cal.pbo} (tbl, sta4,
     typ = c("free", "cdr", "cd"))
 
-  \method{calibration_matrix}{cal.hodg} ()
+  \method{calibration_matrix}{cal.hodg} (tbl, sta4, ...)
 
-  \method{calibration_matrix}{cal.roel} ()
+  \method{calibration_matrix}{cal.roel} (tbl, sta4, ...)
 
   fortify_calibration_matrix(Sij, sta4 = NA, typ = NA,
     needs.pinv = FALSE, byrow = TRUE, ...)
