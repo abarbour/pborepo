@@ -5,7 +5,7 @@
 \format{A list with lists of dataframes with
 calibration coefficients by station}
 \description{
-  BSM calibration coefficients
+BSM calibration coefficients
 }
 \examples{
 data(bsmCalibrations)
@@ -16,5 +16,4 @@ summary(bsmCalibrations)
 #pbo   1      -none- list
 #roel  2      -none- list
 }
-\keyword{datasets}
 

@@ -2,8 +2,7 @@
 \alias{list.txtgz}
 \title{List .txt.gz files in a directory}
 \usage{
-  list.txtgz(datadir = ".", basedir = getwd(),
-    pattern = "txt.gz$", ...)
+list.txtgz(datadir = ".", basedir = getwd(), pattern = "txt.gz$", ...)
 }
 \arguments{
   \item{datadir}{character; the location of the .txt.gz
@@ -18,16 +17,17 @@
   \code{\link{list.files}}}
 }
 \description{
-  List .txt.gz files in a directory
+List .txt.gz files in a directory
 }
 \details{
-  Uses \code{\link{list.dirs}} with: \code{full.names =
-  TRUE, recursive = TRUE} and \code{\link{list.files}}
-  with: \code{full.names = TRUE, ignore.case = FALSE}
+Uses \code{\link{list.dirs}} with: \code{full.names = TRUE,
+recursive = TRUE} and \code{\link{list.files}} with:
+\code{full.names = TRUE, ignore.case = FALSE}
 }
 \seealso{
-  Other utilities: \code{\link{colRms}},
-  \code{\link{norms}}, \code{\link{pbo_message}},
-  \code{\link{rms}}, \code{\link{rowRms}}
+Other utilities: \code{\link{colRms}}, \code{\link{rms}},
+\code{\link{rowRms}}; \code{\link{norms}};
+\code{\link{pbo_message}}; \code{\link{sta16_from_sta4}},
+\code{\link{station_data}}
 }
 

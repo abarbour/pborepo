@@ -2,7 +2,7 @@
 \alias{norms}
 \title{Calculate \emph{all} norms of a matrix}
 \usage{
-  norms(M, types = NULL)
+norms(M, types = NULL)
 }
 \arguments{
   \item{M}{matrix}
@@ -11,7 +11,7 @@
   wish to calculate e.g., O, I, F, M, 2}
 }
 \description{
-  Calculate \emph{all} norms of a matrix
+Calculate \emph{all} norms of a matrix
 }
 \examples{
 M <- matrix(1:12,4)
@@ -21,10 +21,11 @@ norms(M)
 norms(M, c("O","M"))
 }
 \seealso{
-  \code{\link{norm}}
+\code{\link{norm}}
 
-  Other utilities: \code{\link{colRms}},
-  \code{\link{list.txtgz}}, \code{\link{pbo_message}},
-  \code{\link{rms}}, \code{\link{rowRms}}
+Other utilities: \code{\link{colRms}}, \code{\link{rms}},
+\code{\link{rowRms}}; \code{\link{list.txtgz}};
+\code{\link{pbo_message}}; \code{\link{sta16_from_sta4}},
+\code{\link{station_data}}
 }
 

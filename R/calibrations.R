@@ -1,7 +1,8 @@
 #' Prints a description of the calibration table
-#' @param tbl x
-#' @param ... additional arguments
+#' @param tbl the calibration table to describe
+#' @param ... additional arguments passed to \code{\link{cat}}
 #' @export
+#' @family Calibrations
 describe <- function(tbl, ...) UseMethod("describe")
 #' @rdname describe
 #' @aliases describe.cal.pbo
@@ -12,15 +13,22 @@ describe.cal.pbo <- function(tbl, ...){
 }
 
 #' Get a specific calibration table
-#' @param tblname x
+#' @param tblname character; the name of the calibration table
+#' to import. See \code{\link{bsmCalibrations}}.  Defaults to
+#' \code{"pbo"} if missing.
+#' @param describe.tbl logical; should \code{\link{describe}}
+#' be used to print information about the calibration table?
 #' @param ... additional arguments
 #' @export
+#' @seealso \code{\link{bsmCalibrations}}
+#' @family Calibrations
 get_caltbl <- function(tblname, describe.tbl=TRUE, ...) UseMethod("get_caltbl")
 #' @rdname get_caltbl
 #' @aliases get_caltbl.default
 #' @S3method get_caltbl default
 #' @method get_caltbl default
 get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
+  if (missing(tblname)) tblname <- "pbo"
   alltbls <- 'bsmCalibrations'
   env <- new.env()
   do.call("data", list(alltbls, envir=env))
@@ -40,6 +48,7 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' it be filled `byrow'?
 #' @param ... additional arguments
 #' @export
+#' @family Calibrations
 #' @examples
 #' \dontrun{
 #' #
@@ -69,6 +78,9 @@ calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
   tblarr <- tbl[['caltbl.arr']]
   typ <- match.arg(typ)
   sta4 <- as.character(sta4)
+  if (!(sta4 %in% dimnames(tblarr)[[3]])){
+    stop(paste("station  --", sta4, "--  not found in this calibration table"))
+  }
   Sij <- matrix(as.matrix(tblarr[ , typ, sta4]), nrow=3, byrow=TRUE)
   #
   fortify_calibration_matrix(Sij, sta4, typ, FALSE)
@@ -118,5 +130,29 @@ all_calibrations.cal.pbo <- function(tbl, sta4, ...){
     dimnames(arr)[[3]] <- caltypes
     attr(arr, "is.available") <- apply(!is.na(arr), 3, all)
     return(arr)
+  }
+}
+
+#' @rdname calibration_matrix
+#' @export
+any_calibration <- function(tbl, sta4, preference=c("free","cdr","cd"), ...)  UseMethod("any_calibration")
+ 
+#' @rdname calibration_matrix
+#' @param preference character; a vector of preferred calibration types (decreasing 
+#' in preference with increasing index number); the first valid calibration matrix
+#' is returned based on this preference
+#' @aliases any_calibration.cal.pbo
+#' @S3method any_calibration cal.pbo
+#' @method any_calibration cal.pbo
+any_calibration.cal.pbo <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
+  allcal <- all_calibrations(tbl, sta4)
+  avail <- attr(allcal,"is.available")
+  cal <- preference[preference %in% names(avail)[avail]][1]
+  if (all(is.na(cal))){
+    error(paste("No valid calibration is available for station  --", sta4, "--"))
+  } else {
+    caltbl <- allcal[ , , cal]
+    attr(caltbl,"cal.type") <- cal
+    return(caltbl)
   }
 }

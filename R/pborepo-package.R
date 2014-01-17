@@ -23,8 +23,14 @@
 # not needed since specified in DESCRIPTION-DEPENDS: stats utils graphics grDevices
 # @useDynLib strain
 #'
-#' @seealso \code{\link{data-retrieval}}
-#' \code{\link{utilities}}
+#' @seealso 
+#' See \code{\link{data-retrieval}} for functions related to data retrieval
+#' 
+#' See \code{\link{station_data}} for example, for utility functions
+#' 
+#' See \code{\link{calibration_matrix}} for example, for
+#' functions associated with strain
+#' calibration coefficients.
 #' 
 #' @family overviews
 #'

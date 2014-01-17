@@ -3,6 +3,7 @@
 #' @param meta character; the metadata source
 #' @param use.regexp logical; should \code{name} be considered to be a \code{\link{regexp}}?
 #' @export
+#' @family utilities
 #' @examples
 #' station_data()
 #' station_data("B084")

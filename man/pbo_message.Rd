@@ -2,7 +2,7 @@
 \alias{pbo_message}
 \title{Consistent messaging for downloading and other functions}
 \usage{
-  pbo_message(..., lead.char = c("+", ">", "!"), n = 8)
+pbo_message(..., lead.char = c("+", ">", "!"), n = 8)
 }
 \arguments{
   \item{...}{the messages to give to \code{\link{message}}}
@@ -13,11 +13,12 @@
   replicate}
 }
 \description{
-  Consistent messaging for downloading and other functions
+Consistent messaging for downloading and other functions
 }
 \seealso{
-  Other utilities: \code{\link{colRms}},
-  \code{\link{list.txtgz}}, \code{\link{norms}},
-  \code{\link{rms}}, \code{\link{rowRms}}
+Other utilities: \code{\link{colRms}}, \code{\link{rms}},
+\code{\link{rowRms}}; \code{\link{list.txtgz}};
+\code{\link{norms}}; \code{\link{sta16_from_sta4}},
+\code{\link{station_data}}
 }
 

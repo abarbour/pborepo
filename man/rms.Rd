@@ -4,11 +4,11 @@
 \alias{rowRms}
 \title{Trimmed RMS (root mean square)}
 \usage{
-  rms(x, trim = 0, na.rm = TRUE)
+rms(x, trim = 0, na.rm = TRUE)
 
-  colRms(x, na.rm = TRUE, ...)
+colRms(x, na.rm = TRUE, ...)
 
-  rowRms(x, na.rm = TRUE, ...)
+rowRms(x, na.rm = TRUE, ...)
 }
 \arguments{
   \item{x}{[from \code{\link{mean}}:]\emph{ An R object.
@@ -26,13 +26,13 @@
   \item{...}{additional parameters}
 }
 \description{
-  Trimmed RMS (root mean square)
+Trimmed RMS (root mean square)
 }
 \details{
-  The functions \code{\link{rowRms}} and
-  \code{\link{colRms}} cannot accept \code{trim} arguments
-  because they use \code{\link{rowMeans}} and
-  \code{\link{colMeans}}, respectively.
+The functions \code{\link{rowRms}} and \code{\link{colRms}}
+cannot accept \code{trim} arguments because they use
+\code{\link{rowMeans}} and \code{\link{colMeans}},
+respectively.
 }
 \examples{
 x <- sin(seq(-pi,pi,by=0.1))
@@ -48,10 +48,11 @@ colRms(M)
 rowRms(M)
 }
 \references{
-  [1] \url{http://en.wikipedia.org/wiki/Root_mean_square}
+[1] \url{http://en.wikipedia.org/wiki/Root_mean_square}
 }
 \seealso{
-  Other utilities: \code{\link{list.txtgz}},
-  \code{\link{norms}}, \code{\link{pbo_message}}
+Other utilities: \code{\link{list.txtgz}};
+\code{\link{norms}}; \code{\link{pbo_message}};
+\code{\link{sta16_from_sta4}}, \code{\link{station_data}}
 }
 

@@ -3,7 +3,6 @@
 \alias{bsmmeta}
 \title{BSM metadata}
 \description{
-  BSM metadata
+BSM metadata
 }
-\keyword{datasets}
 
