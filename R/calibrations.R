@@ -5,10 +5,10 @@
 #' @family Calibrations
 describe <- function(tbl, ...) UseMethod("describe")
 #' @rdname describe
-#' @aliases describe.cal.pbo
-#' @S3method describe cal.pbo
-#' @method describe cal.pbo
-describe.cal.pbo <- function(tbl, ...){
+#' @aliases describe.default
+#' @S3method describe default
+#' @method describe default
+describe.default <- function(tbl, ...){
   cat(tbl$description, ...)
 }
 
@@ -46,6 +46,9 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' @param needs.pinv logical; indicate whether the matrix should be pseudo-inverted
 #' @param byrow logical; if \code{Sij} needs to be coerced into a matrix, should
 #' it be filled `byrow'?
+#' @param preference character; a vector of preferred calibration types (decreasing 
+#' in preference with increasing index number); the first valid calibration matrix
+#' is returned based on this preference
 #' @param ... additional arguments
 #' @export
 #' @family Calibrations
@@ -116,6 +119,13 @@ fortify_calibration_matrix <- function(Sij, sta4=NA, typ=NA, needs.pinv=FALSE, b
 #' @export
 all_calibrations <- function(tbl, sta4, ...) UseMethod("all_calibrations")
 #' @rdname calibration_matrix
+#' @aliases all_calibrations.cal.hodg
+#' @S3method all_calibrations cal.hodg
+#' @method all_calibrations cal.hodg
+all_calibrations.cal.hodg <- function(tbl, sta4, ...){
+  .NotYetImplemented()
+}
+#' @rdname calibration_matrix
 #' @aliases all_calibrations.cal.pbo
 #' @S3method all_calibrations cal.pbo
 #' @method all_calibrations cal.pbo
@@ -138,9 +148,13 @@ all_calibrations.cal.pbo <- function(tbl, sta4, ...){
 any_calibration <- function(tbl, sta4, preference=c("free","cdr","cd"), ...)  UseMethod("any_calibration")
  
 #' @rdname calibration_matrix
-#' @param preference character; a vector of preferred calibration types (decreasing 
-#' in preference with increasing index number); the first valid calibration matrix
-#' is returned based on this preference
+#' @aliases any_calibration.cal.hodg
+#' @S3method any_calibration cal.hodg
+#' @method any_calibration cal.hodg
+any_calibration.cal.hodg <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
+  .NotYetImplemented()
+}
+#' @rdname calibration_matrix
 #' @aliases any_calibration.cal.pbo
 #' @S3method any_calibration cal.pbo
 #' @method any_calibration cal.pbo
@@ -149,7 +163,7 @@ any_calibration.cal.pbo <- function(tbl, sta4, preference=c("free","cdr","cd"), 
   avail <- attr(allcal,"is.available")
   cal <- preference[preference %in% names(avail)[avail]][1]
   if (all(is.na(cal))){
-    error(paste("No valid calibration is available for station  --", sta4, "--"))
+    stop(paste("No valid calibration is available for station  --", sta4, "--"))
   } else {
     caltbl <- allcal[ , , cal]
     attr(caltbl,"cal.type") <- cal

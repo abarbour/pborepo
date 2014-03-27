@@ -1,13 +1,13 @@
 
 								# array'd
 load("/Users/abarbour/dbase/stations/calib/grant10.rda")	# [ ]
-load("/Users/abarbour/dbase/stations/calib/hodg13.rda")		# [ ]
+load("/Users/abarbour/dbase/stations/calib/hodg.rda")		# [ ]
 load("/Users/abarbour/dbase/stations/calib/pbo.rda")		# [X]
 load("/Users/abarbour/dbase/stations/calib/roel.rda")		# [X]
 
 bsmCalibrations <- list(
 	grant=grant10,
-	hodg=hodg13,
+	hodg=hodg,
 	pbo=pbo,
 	roel=roel
 )

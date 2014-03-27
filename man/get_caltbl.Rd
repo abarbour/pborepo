@@ -25,9 +25,13 @@ Get a specific calibration table
 \code{\link{bsmCalibrations}}
 
 Other Calibrations: \code{\link{all_calibrations}},
+\code{\link{all_calibrations.cal.hodg}},
+\code{\link{all_calibrations.cal.hodg}},
 \code{\link{all_calibrations.cal.pbo}},
 \code{\link{all_calibrations.cal.pbo}},
 \code{\link{any_calibration}},
+\code{\link{any_calibration.cal.hodg}},
+\code{\link{any_calibration.cal.hodg}},
 \code{\link{any_calibration.cal.pbo}},
 \code{\link{any_calibration.cal.pbo}},
 \code{\link{calibration_matrix}},
@@ -38,7 +42,7 @@ Other Calibrations: \code{\link{all_calibrations}},
 \code{\link{calibration_matrix.cal.roel}},
 \code{\link{calibration_matrix.cal.roel}},
 \code{\link{fortify_calibration_matrix}};
-\code{\link{describe}}, \code{\link{describe.cal.pbo}},
-\code{\link{describe.cal.pbo}}
+\code{\link{describe}}, \code{\link{describe.default}},
+\code{\link{describe.default}}
 }
 
