@@ -1,11 +1,12 @@
 #' Prints a description of the calibration table
+#' 
 #' @param tbl the calibration table to describe
 #' @param ... additional arguments passed to \code{\link{cat}}
 #' @export
 #' @family Calibrations
 describe <- function(tbl, ...) UseMethod("describe")
+
 #' @rdname describe
-#' @aliases describe.default
 #' @export
 describe.default <- function(tbl, ...){
   cat(tbl$description, ...)
@@ -36,8 +37,10 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
   return(invisible(tbl))
 }
 
-#' Calibration matrix
-#' @param tbl x
+#' Load or manipulate calibration matrices
+#' 
+#' @param tbl character; the name of the table to load; defaults to \code{"pbo"}
+#' if missing
 #' @param sta4 character; an optional station name
 #' @param typ  character; an optional method identifier
 #' @param Sij matrix, or an object to be coerced into a matrix
@@ -49,6 +52,10 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' is returned based on this preference
 #' @param ... additional arguments
 #' @export
+#' @aliases calibrate calibration
+#' 
+#' @seealso \code{\link{pinv}} to calculate the pseudoinverse
+#' 
 #' @family Calibrations
 #' @examples
 #' \dontrun{
@@ -72,11 +79,12 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' any_calibration(pbotbl, "B084")
 #' #
 #' }
-calibration_matrix <- function(tbl, sta4, ...) UseMethod("calibration_matrix")
+calibration_matrix <- function(tbl, sta4, typ=c('free','cdr','cd'), ...) UseMethod("calibration_matrix")
+
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.pbo
 #' @export
-calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
+calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd'), ...){
   #
   tblarr <- tbl[['caltbl.arr']]
   typ <- match.arg(typ)
@@ -88,15 +96,16 @@ calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
   #
   fortify_calibration_matrix(Sij, sta4, typ, FALSE)
 }
+
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.hodg
 #' @export
-calibration_matrix.cal.hodg <- function(tbl, sta4, ...) .NotYetImplemented()
+calibration_matrix.cal.hodg <- function(tbl, sta4, typ=NULL, ...) .NotYetImplemented()
 
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.roel
 #' @export
-calibration_matrix.cal.roel <- function(tbl, sta4, ...) .NotYetImplemented()
+calibration_matrix.cal.roel <- function(tbl, sta4, typ=NULL, ...) .NotYetImplemented()
 
 #' Pseudo-inverse of a matrix
 #'

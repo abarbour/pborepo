@@ -1,5 +1,6 @@
 This project is intended to be a storage repository for metadata and other bits of
-data for [PBO](http://pbo.unavco.org/).  It's also a self-consistent R-package, meaning
+data for [PBO](http://pbo.unavco.org/), but it also
+serves as a self-consistent R-package, meaning
 one can do the following
 ~~~~~{.R}
 install.packages("devtools",dependencies=TRUE)
@@ -11,10 +12,14 @@ and from then on
 library(pborepo)
 ?pborepo
 ~~~~~
-will load the package library.  This is a slowly developing project
-so
-you should re-install often; but, onceit's of suitable
-completeness, I plan to upload it to [CRAN](http://cran.r-project.org/).
+will should work.
+
+This project is developing slowly: metadata rarely changes, but the R-functions
+likely will.
+So,
+you should re-install often, although once the package is of suitable
+completeness, I may upload it to [CRAN](http://cran.r-project.org/).
+
 Feel free to contact me (<a href="https://github.com/abarbour" class="user-mention">@abarbour</a>) 
 should you have questions, or wish to see other data included; or, use github as it was
 intended and commit some changes of your own! :)

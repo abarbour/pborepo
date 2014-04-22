@@ -34,6 +34,7 @@ Other Calibrations: \code{\link{all_calibrations}},
 \code{\link{any_calibration.cal.hodg}},
 \code{\link{any_calibration.cal.pbo}},
 \code{\link{any_calibration.cal.pbo}},
+\code{\link{calibrate}}, \code{\link{calibration}},
 \code{\link{calibration_matrix}},
 \code{\link{calibration_matrix.cal.hodg}},
 \code{\link{calibration_matrix.cal.hodg}},
@@ -42,7 +43,6 @@ Other Calibrations: \code{\link{all_calibrations}},
 \code{\link{calibration_matrix.cal.roel}},
 \code{\link{calibration_matrix.cal.roel}},
 \code{\link{fortify_calibration_matrix}};
-\code{\link{describe}}, \code{\link{describe.default}},
-\code{\link{describe.default}}
+\code{\link{describe}}, \code{\link{describe.default}}
 }
 

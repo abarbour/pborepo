@@ -1,32 +1,39 @@
 #/Users/abarbour/kook.processing/R/dev/timetasks/merge/funcs.R
 
 #' Retrieve and load data from the UNAVCO archive
-#' 
-#' @details
-#' \code{\link{unavco_path}} is used, \code{url.check=TRUE} enabled, 
-#' to generate the file path(s)
-#'
-#' \code{\link{unavco_downloader}} is used
-#' to download the file(s)
 #'  
 #' @param sta character;
-#' @param year numeric;
-#' @param day numeric;
 #' @param dattype character;
 #' @param default.sec.samp numeric;
 #' @param localfile character;
-#' @param quiet logical;
 #' @param impute logical;
+#' @param sta4 character; 4-character station name (e.g. B084).
+#' @param year numeric; the year of data
+#' @param jday numeric; Julian date (the day of \code{year})
+#' @param type character; the type of data to generate download data for
+#' @param url.check logical; should the urls be tested for existence?
+#' @param url.toget character; the URL to download
+#' @param temp character; file for temporary writing
+#' @param quiet logical; should the functions not be verbose?
+#' @param file character; the file to be loaded
+#' @param PLUGIN function (not used)
+#' @param FUN a function to try, and catch exceptions from
+#' @param remove.temp logical; should temporary files be deleted?
+#' @param ... additional parameters
 #' 
-#' @family data-retrieval
+#' @name data-retrieval
+NULL
+
+#' @rdname data-retrieval
 #' @export
-unavco_dataload <- function(sta, year, day, dattype = c("pp","pt"), 
+unavco_dataload <- function(sta, year, jday, 
+                            dattype = c("pp","pt"), 
                             default.sec.samp=1, localfile=NULL, quiet=FALSE,
                             impute=TRUE) UseMethod("unavco_dataload")
-#' @rdname unavco_dataload
-#' @method unavco_dataload default
-#' @S3method unavco_dataload default
-unavco_dataload.default <- function(sta, year, day, 
+
+#' @rdname data-retrieval
+#' @export
+unavco_dataload.default <- function(sta, year, jday, 
                                     dattype = c("pp","pt"), 
                                     default.sec.samp=1, localfile=NULL, quiet=FALSE,
                                     impute=TRUE){
@@ -34,7 +41,7 @@ unavco_dataload.default <- function(sta, year, day,
   dat <- match.arg(dattype)
   #if (!quiet) pbo_message(sta, year, day, dat)
   # set paths
-  pth <- unavco_path(sta, year, day, type=dat, url.check=TRUE)
+  pth <- unavco_path(sta, year, jday, type=dat, url.check=TRUE)
   # select data
   toDL <- pth$wget
   canDL <- pth$wget.status
@@ -70,17 +77,13 @@ unavco_dataload.default <- function(sta, year, day,
   return(dat)
 }
 
-#' Load and process data downloaded from the UNAVCO archive
-#' @param file character; the file to be loaded
-#' @param dattype character;
-#' @param ... additional parameters
+#' @details \code{\link{unavco_temploader}} loads and process data downloaded from the UNAVCO archive
 #' 
-#' @family data-retrieval
+#' @rdname data-retrieval
 #' @export
 unavco_temploader <- function(file, dattype = c("pp","pt"), ...) UseMethod("unavco_temploader")
-#' @rdname unavco_temploader
-#' @method unavco_temploader default
-#' @S3method unavco_temploader default
+#' @rdname data-retrieval
+#' @export
 unavco_temploader.default <- function(file, dattype = c("pp","pt"), ...){
   dat <- match.arg(dattype)
   #
@@ -95,24 +98,15 @@ unavco_temploader.default <- function(file, dattype = c("pp","pt"), ...){
   return(data)
 }
 
-#' Downloader for the UNAVCO data archive
-#' @details
-#' \code{\link{download.file}} is used with
-#' \code{cacheOK==FALSE}, and \code{mode=="w"}.
+#' @details \code{\link{unavco_downloader}} is the downloader for the UNAVCO data archive
+#' \code{\link{download.file}} is used with \code{cacheOK==FALSE}, and \code{mode=="w"}.
 #' 
-#' Exception handling is performed with \code{\link{dlCatcher}}.
-#' 
-#' @param url.toget character; the URL to download
-#' @param temp character; file for temporary writing
-#' @param quiet logical; should the downloader be verbose?
-#' @param ... additional parameters to \code{\link{download.file}}
-#'
+#' @rdname data-retrieval
 #' @export
-#' @family data-retrieval
 unavco_downloader <- function(url.toget, temp, PLUGIN, quiet=FALSE, remove.temp=FALSE, ...) UseMethod("unavco_downloader")
-#' @rdname unavco_downloader
-#' @method unavco_downloader default
-#' @S3method unavco_downloader default
+
+#' @rdname data-retrieval
+#' @export
 unavco_downloader.default <- function(url.toget, temp, PLUGIN, quiet=FALSE, remove.temp=FALSE, ...){
   if (missing(temp)) temp <- tempfile()
   if (!quiet) pbo_message(url.toget, "--to--", temp, lead.char=">")
@@ -120,8 +114,9 @@ unavco_downloader.default <- function(url.toget, temp, PLUGIN, quiet=FALSE, remo
   return(invisible(ec))
 }
 
-#' @rdname unavco_downloader
-#' @param FUN A function to try
+#' @details \code{\link{dlCatcher}} handles exceptions.
+#' 
+#' @rdname data-retrieval
 #' @export
 dlCatcher <- function(FUN){
   ### exception handler
@@ -135,24 +130,16 @@ dlCatcher <- function(FUN){
   return(status)
 }
 
-#' Generate the appropriate path for UNAVCO data retrieval
-#' @description
-#' Returns the appropriate url to download a .txt.gz data file
+#' @details \code{\link{unavco_path}} generates the appropriate path for 
+#' UNAVCO data retrieval; it returns the appropriate url to download a .txt.gz data file
 #' from the UNAVCO data archive.
-#' 
-#' @details
 #' If \code{url.check==TRUE} the function \code{url.exists} is used
 #' to test the status of each link; this can add a substantial amount
 #' of processing time for large numbers of urls.
 #' 
-#' @param sta4 character; 4-character station name (e.g. B084).
-#' @param year numeric; year of data
-#' @param jday numeric; Julian date (day of year)
-#' @param type character; the type of data to generate download data for
-#' @param url.check logical; should the urls be tested for existence?
-#' 
-#' @family data-retrieval
+#' @rdname data-retrieval
 #' @export
+#' 
 #' @examples
 #' unavco_path("B084", 2010, 1)
 #' unavco_path("B084", 2010, 1:10) # use vectors for multiple urls
@@ -173,7 +160,7 @@ unavco_path <- function(sta4, year, jday, type=c("pp","pt"), url.check=FALSE){
   dy3 <- sprintf("%03i",as.numeric(jday))
   yr2 <- substr(yr4, 3, 4)
   # url to data
-  repos <- pbo_constants(FALSE)$unavco
+  repos <- pbo_constants()$unavco
   repos <- repos[[type]]
   #
   baserepos <- paste(repos, sta, sep="/")

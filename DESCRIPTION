@@ -2,8 +2,8 @@ Package: pborepo
 Type: Package
 Title: Access to data-products and metadata from the Plate Boundary Observatory
     geodetic network
-Version: 0.2013.247-3
-Date: 2014-03-16
+Version: 0.2013.247-4
+Date: 2014-04-21
 Author: Andrew J Barbour
 Maintainer: Andrew J Barbour <andy.barbour@gmail.com>
 URL: http://abarbour.github.io/pborepo
@@ -18,11 +18,15 @@ Description: The Plate Boundary Observatory is the geodetic
     sources, and is only current up to the version number, which
     has the following format: version.year.day-of-year.
     The data products currently supported include:
+    high-frequency strain,
     pore-fluid pressure, and
     pore-fluid temperature.
+SystemRequirements: libcurl for downloading; c-shell and python (>= 2.5
+    preferred), to assemble high-frequency strain
 Depends:
     R (>= 2.14.1),
-    RCurl (>= 1.95-4.1),
     abind,
     corpcor
+Suggests:
+    RCurl (>= 1.95-4.1)
 License: GPL

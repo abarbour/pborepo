@@ -1,7 +1,10 @@
-#' Station information from metadata
+#' Station information from PBO metadata
+#' 
 #' @param name character; the string or \code{\link{regexp}} to use
 #' @param meta character; the metadata source
 #' @param use.regexp logical; should \code{name} be considered to be a \code{\link{regexp}}?
+#' @param sta4 character; the station's 4-character code (e.g., 'B084')
+#' 
 #' @export
 #' @family utilities
 #' @examples
@@ -91,21 +94,30 @@ pbo_message <- function(..., lead.char=c("+",">","!"), n=8){
 }
 
 #### TIME CONVERSIONS
-#' String to posix for unavco data
+#' Various time conversion functions
+#' 
 #' @export
+#' 
+#' @param tstr character; time string
+#' @param tz character; time zone
+#' @param year numeric; the year
+#' @param day numeric; the day of \code{year}
+#' @param df data.frame to alter
+#' 
+#' @rdname time-utilities
+#' @aliases unavco-time
 #' @family utilities time-conversion
 unavco_temp_toPOS <- function(tstr, tz="UTC"){
   #2008-12-31 21:00:00.81
   base::as.POSIXct(paste(tstr,tz),format="%Y-%m-%d %H:%M:%S",tz=tz)
 }
-#' year and day to date
+#' @rdname time-utilities
 #' @export
-#' @family utilities time-conversion
 unavco_temp_toDate <- function(year, day, tz="UTC"){
   base::as.Date(paste(year,day),format="%Y %j",tz=tz)
 }
+#' @rdname time-utilities
 #' @export
-#' @family utilities time-conversion
 unavco_temp_setTZ <- function(df, tz="UTC"){
   #### some functions change the POSIX timezone, this returns it to normal
   df$Dt. <- base::as.POSIXlt(df$Dt., tz=tz)

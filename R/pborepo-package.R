@@ -40,14 +40,20 @@ NULL
 
 #' Constants used as defaults
 #' 
-#' @details The helper function \code{\link{pbo_constants}}
+#' @details The helper function \code{\link{constants}}
 #' shows (the structure of, optionally)
-#' and returns \code{.constants}.
+#' and returns \code{.pbo_constants}. 
+#' \code{\link{pbo_constants}} simply accesses \code{\link{constants}}
+#' 
+#' @param do.str logical; should the structure be printed?
 #' 
 #' @name pborepo-constants
+#' @export
+#' 
 #' @seealso \code{\link{pborepo}}
-#' @family overviews
-.constants = list(
+#' @examples
+#' str(pbo_constants())
+.pbo_constants = list(
   unavco=list(
     general="http://borehole.unavco.org/",
     bsm="http://bsm.unavco.org/bsm/",
@@ -71,15 +77,19 @@ NULL
                             )
   )
 )
+
 #' @rdname pborepo-constants
-#' @param do.str logical; should the structure be printed?
 #' @export
-# @example
-# pbo_constants()
-pbo_constants <- function(do.str=TRUE){
-  const <- pborepo:::.constants
+constants <- function(do.str=TRUE){
+  const <- pborepo::.pbo_constants
   if (do.str) str(const, comp.str = "++++++++\n\t", no.list=TRUE, digits.d = 9)
   return(invisible(const))
+}
+
+#' @rdname pborepo-constants
+#' @export
+pbo_constants <- function(){
+  pborepo::constants(do.str=FALSE)
 }
 
 ##
@@ -90,7 +100,6 @@ pbo_constants <- function(do.str=TRUE){
 #' @name bsmmeta
 #' @docType data
 NULL
-
 
 ##   calibration coeffs:
 #

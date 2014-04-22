@@ -5,20 +5,23 @@
 \alias{any_calibration}
 \alias{any_calibration.cal.hodg}
 \alias{any_calibration.cal.pbo}
+\alias{calibrate}
+\alias{calibration}
 \alias{calibration_matrix}
 \alias{calibration_matrix.cal.hodg}
 \alias{calibration_matrix.cal.pbo}
 \alias{calibration_matrix.cal.roel}
 \alias{fortify_calibration_matrix}
-\title{Calibration matrix}
+\title{Load or manipulate calibration matrices}
 \usage{
-calibration_matrix(tbl, sta4, ...)
+calibration_matrix(tbl, sta4, typ = c("free", "cdr", "cd"), ...)
 
-\method{calibration_matrix}{cal.pbo}(tbl, sta4, typ = c("free", "cdr", "cd"))
+\method{calibration_matrix}{cal.pbo}(tbl, sta4, typ = c("free", "cdr", "cd"),
+  ...)
 
-\method{calibration_matrix}{cal.hodg}(tbl, sta4, ...)
+\method{calibration_matrix}{cal.hodg}(tbl, sta4, typ = NULL, ...)
 
-\method{calibration_matrix}{cal.roel}(tbl, sta4, ...)
+\method{calibration_matrix}{cal.roel}(tbl, sta4, typ = NULL, ...)
 
 fortify_calibration_matrix(Sij, sta4 = NA, typ = NA, needs.pinv = FALSE,
   byrow = TRUE, ...)
@@ -38,7 +41,8 @@ any_calibration(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
   "cd"), ...)
 }
 \arguments{
-  \item{tbl}{x}
+  \item{tbl}{character; the name of the table to load;
+  defaults to \code{"pbo"} if missing}
 
   \item{sta4}{character; an optional station name}
 
@@ -61,7 +65,7 @@ any_calibration(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
   \item{...}{additional arguments}
 }
 \description{
-Calibration matrix
+Load or manipulate calibration matrices
 }
 \examples{
 \dontrun{
@@ -87,8 +91,9 @@ any_calibration(pbotbl, "B084")
 }
 }
 \seealso{
+\code{\link{pinv}} to calculate the pseudoinverse
+
 Other Calibrations: \code{\link{describe}},
-\code{\link{describe.default}},
 \code{\link{describe.default}}; \code{\link{get_caltbl}},
 \code{\link{get_caltbl.default}},
 \code{\link{get_caltbl.default}}

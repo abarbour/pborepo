@@ -28,8 +28,5 @@ functions
 
 See \code{\link{calibration_matrix}} for example, for
 functions associated with strain calibration coefficients.
-
-Other overviews: \code{\link{pbo_constants}},
-\code{\link{pborepo-constants}}
 }
 

@@ -1,7 +1,7 @@
 \name{station_data}
 \alias{sta16_from_sta4}
 \alias{station_data}
-\title{Station information from metadata}
+\title{Station information from PBO metadata}
 \usage{
 station_data(name = NULL, meta = "bsm", use.regexp = FALSE)
 
@@ -15,9 +15,12 @@ sta16_from_sta4(sta4 = NULL, meta = "bsm", use.regexp = FALSE)
 
   \item{use.regexp}{logical; should \code{name} be
   considered to be a \code{\link{regexp}}?}
+
+  \item{sta4}{character; the station's 4-character code
+  (e.g., 'B084')}
 }
 \description{
-Station information from metadata
+Station information from PBO metadata
 }
 \examples{
 station_data()

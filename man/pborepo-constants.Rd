@@ -1,5 +1,6 @@
 \docType{data}
 \name{pborepo-constants}
+\alias{constants}
 \alias{pbo_constants}
 \alias{pborepo-constants}
 \title{Constants used as defaults}
@@ -26,9 +27,11 @@
   .. ..$ ext : num [1:4] 2 1 0 3
 }}
 \usage{
-.constants
+.pbo_constants
 
-pbo_constants(do.str = TRUE)
+constants(do.str = TRUE)
+
+pbo_constants()
 }
 \arguments{
   \item{do.str}{logical; should the structure be printed?}
@@ -37,14 +40,16 @@ pbo_constants(do.str = TRUE)
 Constants used as defaults
 }
 \details{
-The helper function \code{\link{pbo_constants}} shows (the
-structure of, optionally) and returns \code{.constants}.
+The helper function \code{\link{constants}} shows (the
+structure of, optionally) and returns
+\code{.pbo_constants}. \code{\link{pbo_constants}} simply
+accesses \code{\link{constants}}
+}
+\examples{
+str(pbo_constants())
 }
 \seealso{
 \code{\link{pborepo}}
-
-Other overviews: \code{\link{pborepo}},
-\code{\link{pborepo-package}}
 }
 \keyword{datasets}
 
