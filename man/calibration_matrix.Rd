@@ -10,7 +10,6 @@
 \alias{calibration_matrix.cal.pbo}
 \alias{calibration_matrix.cal.roel}
 \alias{fortify_calibration_matrix}
-\alias{pinv}
 \title{Calibration matrix}
 \usage{
 calibration_matrix(tbl, sta4, ...)
@@ -20,8 +19,6 @@ calibration_matrix(tbl, sta4, ...)
 \method{calibration_matrix}{cal.hodg}(tbl, sta4, ...)
 
 \method{calibration_matrix}{cal.roel}(tbl, sta4, ...)
-
-pinv(Sij, ...)
 
 fortify_calibration_matrix(Sij, sta4 = NA, typ = NA, needs.pinv = FALSE,
   byrow = TRUE, ...)
@@ -66,10 +63,6 @@ any_calibration(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
 \description{
 Calibration matrix
 }
-\details{
-\code{\link{pinv}} is a function which uses singular value
-decomposition to calculate the pseudo-inverse of a matrix.
-}
 \examples{
 \dontrun{
 #
@@ -90,7 +83,6 @@ all_calibrations(pbotbl, "B082") # but there's at least one
 #
 # First available calibration
 any_calibration(pbotbl, "B084")
-any_calibration(pbotbl, "B082")
 #
 }
 }

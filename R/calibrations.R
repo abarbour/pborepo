@@ -70,7 +70,6 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' #
 #' # First available calibration
 #' any_calibration(pbotbl, "B084")
-#' any_calibration(pbotbl, "B082")
 #' #
 #' }
 calibration_matrix <- function(tbl, sta4, ...) UseMethod("calibration_matrix")
@@ -99,11 +98,40 @@ calibration_matrix.cal.hodg <- function(tbl, sta4, ...) .NotYetImplemented()
 #' @export
 calibration_matrix.cal.roel <- function(tbl, sta4, ...) .NotYetImplemented()
 
-
-#' @details \code{\link{pinv}} is a function which uses singular value
-#' decomposition to calculate the pseudo-inverse of a matrix.
-#' @rdname calibration_matrix
+#' Pseudo-inverse of a matrix
+#'
+#' Uses singular value decomposition to calculate the pseudo-inverse of a matrix.  
+#' 
+#' @details
+#' This can be useful when 
+#' predictions of tensor strains are used to make
+#' predictions on a gauge-by-gauge basis with strain data
+#' 
+#' The attribute \code{"dimnames"} is recycled; any other attribute will be lost.
+#' 
+#' @param Sij matrix, or an object to be coerced into a matrix
+#' @param ... additional arguments
 #' @export
+#' 
+#' @seealso 
+#' \code{\link[corpcor]{pseudoinverse}} for details of the method
+#' 
+#' \code{\link{calibration_matrix}}
+#' 
+#' @examples
+#' 
+#' # get a calibration table
+#' pbotbl <- get_caltbl("pbo")
+#' 
+#' # and the first available calibration matrix...
+#' m <- any_calibration(pbotbl, "B082")
+#' 
+#' # Calculate the pseudoinverse
+#' print(mi <- pinv(m))
+#' 
+#' # we can get back the original, less attributes of course
+#' mo <- pinv(mi)
+#' try( all.equal(m, mo, check.attributes=FALSE) )
 pinv <- function(Sij, ...){
   if (!is.matrix(Sij)) Sij <- matrix(as.matrix(Sij))
   dn <- dimnames(Sij)
