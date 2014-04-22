@@ -1,0 +1,45 @@
+\name{pinv}
+\alias{pinv}
+\title{Pseudo-inverse of a matrix}
+\usage{
+pinv(Sij, ...)
+}
+\arguments{
+  \item{Sij}{matrix, or an object to be coerced into a
+  matrix}
+
+  \item{...}{additional arguments}
+}
+\description{
+Uses singular value decomposition to calculate the
+pseudo-inverse of a matrix.
+}
+\details{
+This can be useful when predictions of tensor strains are
+used to make predictions on a gauge-by-gauge basis with
+strain data
+
+The attribute \code{"dimnames"} is recycled; any other
+attribute will be lost.
+}
+\examples{
+# get a calibration table
+pbotbl <- get_caltbl("pbo")
+
+# and the first available calibration matrix...
+m <- any_calibration(pbotbl, "B082")
+
+# Calculate the pseudoinverse
+print(mi <- pinv(m))
+
+# we can get back the original, less attributes of course
+mo <- pinv(mi)
+try( all.equal(m, mo, check.attributes=FALSE) )
+}
+\seealso{
+\code{\link[corpcor]{pseudoinverse}} for details of the
+method
+
+\code{\link{calibration_matrix}}
+}
+
