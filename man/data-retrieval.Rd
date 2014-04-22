@@ -1,0 +1,104 @@
+\name{data-retrieval}
+\alias{data-retrieval}
+\alias{dlCatcher}
+\alias{unavco_dataload}
+\alias{unavco_dataload.default}
+\alias{unavco_downloader}
+\alias{unavco_downloader.default}
+\alias{unavco_path}
+\alias{unavco_temploader}
+\alias{unavco_temploader.default}
+\title{Retrieve and load data from the UNAVCO archive}
+\usage{
+unavco_dataload(sta, year, jday, dattype = c("pp", "pt"),
+  default.sec.samp = 1, localfile = NULL, quiet = FALSE, impute = TRUE)
+
+\method{unavco_dataload}{default}(sta, year, jday, dattype = c("pp", "pt"),
+  default.sec.samp = 1, localfile = NULL, quiet = FALSE, impute = TRUE)
+
+unavco_temploader(file, dattype = c("pp", "pt"), ...)
+
+\method{unavco_temploader}{default}(file, dattype = c("pp", "pt"), ...)
+
+unavco_downloader(url.toget, temp, PLUGIN, quiet = FALSE,
+  remove.temp = FALSE, ...)
+
+\method{unavco_downloader}{default}(url.toget, temp, PLUGIN, quiet = FALSE,
+  remove.temp = FALSE, ...)
+
+dlCatcher(FUN)
+
+unavco_path(sta4, year, jday, type = c("pp", "pt"), url.check = FALSE)
+}
+\arguments{
+  \item{sta}{character;}
+
+  \item{dattype}{character;}
+
+  \item{default.sec.samp}{numeric;}
+
+  \item{localfile}{character;}
+
+  \item{impute}{logical;}
+
+  \item{sta4}{character; 4-character station name (e.g.
+  B084).}
+
+  \item{year}{numeric; the year of data}
+
+  \item{jday}{numeric; Julian date (the day of
+  \code{year})}
+
+  \item{type}{character; the type of data to generate
+  download data for}
+
+  \item{url.check}{logical; should the urls be tested for
+  existence?}
+
+  \item{url.toget}{character; the URL to download}
+
+  \item{temp}{character; file for temporary writing}
+
+  \item{quiet}{logical; should the functions not be
+  verbose?}
+
+  \item{file}{character; the file to be loaded}
+
+  \item{PLUGIN}{function (not used)}
+
+  \item{FUN}{a function to try, and catch exceptions from}
+
+  \item{remove.temp}{logical; should temporary files be
+  deleted?}
+
+  \item{...}{additional parameters}
+}
+\description{
+Retrieve and load data from the UNAVCO archive
+}
+\details{
+\code{\link{unavco_temploader}} loads and process data
+downloaded from the UNAVCO archive
+
+\code{\link{unavco_downloader}} is the downloader for the
+UNAVCO data archive \code{\link{download.file}} is used
+with \code{cacheOK==FALSE}, and \code{mode=="w"}.
+
+\code{\link{dlCatcher}} handles exceptions.
+
+\code{\link{unavco_path}} generates the appropriate path
+for UNAVCO data retrieval; it returns the appropriate url
+to download a .txt.gz data file from the UNAVCO data
+archive. If \code{url.check==TRUE} the function
+\code{url.exists} is used to test the status of each link;
+this can add a substantial amount of processing time for
+large numbers of urls.
+}
+\examples{
+unavco_path("B084", 2010, 1)
+unavco_path("B084", 2010, 1:10) # use vectors for multiple urls
+unavco_path("B084",2010, 1:10, "pt")
+# Also try:
+# unavco_path("B084",2010, 1:10, "pt", TRUE)
+}
+
