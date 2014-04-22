@@ -6,8 +6,7 @@
 describe <- function(tbl, ...) UseMethod("describe")
 #' @rdname describe
 #' @aliases describe.default
-#' @S3method describe default
-#' @method describe default
+#' @export
 describe.default <- function(tbl, ...){
   cat(tbl$description, ...)
 }
@@ -25,8 +24,7 @@ describe.default <- function(tbl, ...){
 get_caltbl <- function(tblname, describe.tbl=TRUE, ...) UseMethod("get_caltbl")
 #' @rdname get_caltbl
 #' @aliases get_caltbl.default
-#' @S3method get_caltbl default
-#' @method get_caltbl default
+#' @export
 get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
   if (missing(tblname)) tblname <- "pbo"
   alltbls <- 'bsmCalibrations'
@@ -70,12 +68,15 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' all_calibrations(pbotbl, "B084") # all three are available
 #' all_calibrations(pbotbl, "B082") # but there's at least one
 #' #
+#' # First available calibration
+#' any_calibration(pbotbl, "B084")
+#' any_calibration(pbotbl, "B082")
+#' #
 #' }
 calibration_matrix <- function(tbl, sta4, ...) UseMethod("calibration_matrix")
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.pbo
-#' @S3method calibration_matrix cal.pbo
-#' @method calibration_matrix cal.pbo
+#' @export
 calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
   #
   tblarr <- tbl[['caltbl.arr']]
@@ -90,15 +91,29 @@ calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd')){
 }
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.hodg
-#' @S3method calibration_matrix cal.hodg
-#' @method calibration_matrix cal.hodg
+#' @export
 calibration_matrix.cal.hodg <- function(tbl, sta4, ...) .NotYetImplemented()
 
 #' @rdname calibration_matrix
 #' @aliases calibration_matrix.cal.roel
-#' @S3method calibration_matrix cal.roel
-#' @method calibration_matrix cal.roel
+#' @export
 calibration_matrix.cal.roel <- function(tbl, sta4, ...) .NotYetImplemented()
+
+
+#' @details \code{\link{pinv}} is a function which uses singular value
+#' decomposition to calculate the pseudo-inverse of a matrix.
+#' @rdname calibration_matrix
+#' @export
+pinv <- function(Sij, ...){
+  if (!is.matrix(Sij)) Sij <- matrix(as.matrix(Sij))
+  dn <- dimnames(Sij)
+  dn.c <- dn[[1]]
+  dn.r <- dn[[2]]
+  iSij <- zapsmall( corpcor::pseudoinverse(Sij, ...) )
+  dimnames(iSij) <- list(dn.r, dn.c)
+  attr(iSij, "pseudoinverse") <- TRUE
+  return(iSij)
+}
 
 #' @rdname calibration_matrix
 #' @export
@@ -120,15 +135,13 @@ fortify_calibration_matrix <- function(Sij, sta4=NA, typ=NA, needs.pinv=FALSE, b
 all_calibrations <- function(tbl, sta4, ...) UseMethod("all_calibrations")
 #' @rdname calibration_matrix
 #' @aliases all_calibrations.cal.hodg
-#' @S3method all_calibrations cal.hodg
-#' @method all_calibrations cal.hodg
+#' @export
 all_calibrations.cal.hodg <- function(tbl, sta4, ...){
   .NotYetImplemented()
 }
 #' @rdname calibration_matrix
 #' @aliases all_calibrations.cal.pbo
-#' @S3method all_calibrations cal.pbo
-#' @method all_calibrations cal.pbo
+#' @export
 all_calibrations.cal.pbo <- function(tbl, sta4, ...){
   caltypes <- eval(formals("calibration_matrix.cal.pbo")$typ)
   if (!is.null(caltypes)){
@@ -149,15 +162,13 @@ any_calibration <- function(tbl, sta4, preference=c("free","cdr","cd"), ...)  Us
  
 #' @rdname calibration_matrix
 #' @aliases any_calibration.cal.hodg
-#' @S3method any_calibration cal.hodg
-#' @method any_calibration cal.hodg
+#' @export
 any_calibration.cal.hodg <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
   .NotYetImplemented()
 }
 #' @rdname calibration_matrix
 #' @aliases any_calibration.cal.pbo
-#' @S3method any_calibration cal.pbo
-#' @method any_calibration cal.pbo
+#' @export
 any_calibration.cal.pbo <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
   allcal <- all_calibrations(tbl, sta4)
   avail <- attr(allcal,"is.available")

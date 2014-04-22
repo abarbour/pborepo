@@ -41,8 +41,9 @@ Other Calibrations: \code{\link{all_calibrations}},
 \code{\link{calibration_matrix.cal.pbo}},
 \code{\link{calibration_matrix.cal.roel}},
 \code{\link{calibration_matrix.cal.roel}},
-\code{\link{fortify_calibration_matrix}};
-\code{\link{describe}}, \code{\link{describe.default}},
+\code{\link{fortify_calibration_matrix}},
+\code{\link{pinv}}; \code{\link{describe}},
+\code{\link{describe.default}},
 \code{\link{describe.default}}
 }
 
