@@ -8,19 +8,31 @@ station_data(name = NULL, meta = "bsm", use.regexp = FALSE)
 sta16_from_sta4(sta4 = NULL, meta = "bsm", use.regexp = FALSE)
 }
 \arguments{
-  \item{name}{character; the string or \code{\link{regexp}}
-  to use}
+  \item{name}{character; the search string; use
+  \code{use.regexp=TRUE} to use it as a regular expression}
 
-  \item{meta}{character; the metadata source}
+  \item{meta}{character; the metadata source; currently the
+  only option is \code{'bsm'}, which accesses PBO-BSM
+  station information (see \code{data('bsmmeta')})}
 
   \item{use.regexp}{logical; should \code{name} be
-  considered to be a \code{\link{regexp}}?}
+  considered to be a regular expression (c.f.
+  \code{\link{regexp}})?}
 
-  \item{sta4}{character; the station's 4-character code
-  (e.g., 'B084')}
+  \item{sta4}{character; an optional 4-character station
+  code (e.g., \code{'B084'})}
 }
 \description{
-Station information from PBO metadata
+PBO operates a large number of stations, and
+\code{\link{station_data}} is a mechanism to search through
+a subset of their metadata; \code{\link{sta16_from_sta4}}
+is a simple way to convert from a station's 4-character
+station code (e.g., B084) to its 16-character
+representation (e.g., pinyon084bcs2006).
+}
+\details{
+This function searches internal metadata, which can be
+accessed via \code{data(bsmmeta)}, for example.
 }
 \examples{
 station_data()
@@ -29,12 +41,15 @@ station_data("bcs", use.regexp=TRUE)
 station_data(c("B082","B084"), use.regexp=TRUE) # will use only the first
 station_data("B08[24]", use.regexp=TRUE) # gets what you want
 #
-# Get the 16-character codes
+# Get all of the 16-character codes
+sta16_from_sta4()
+# or just a few
 sta16_from_sta4(c("B082","B084"))
 }
 \seealso{
-Other utilities: \code{\link{colRms}}, \code{\link{rms}},
-\code{\link{rowRms}}; \code{\link{list.txtgz}};
-\code{\link{norms}}; \code{\link{pbo_message}}
+Other utilities: \code{\link{RMS}}, \code{\link{colRMS}},
+\code{\link{rms}}, \code{\link{rowRMS}};
+\code{\link{list.txtgz}}; \code{\link{norms}};
+\code{\link{pbo_message}}
 }
 

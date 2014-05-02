@@ -7,11 +7,15 @@ norms(M, types = NULL)
 \arguments{
   \item{M}{matrix}
 
-  \item{types}{character; optionally specify the norms you
+  \item{types}{character; optionally, specify the norms you
   wish to calculate e.g., O, I, F, M, 2}
 }
 \description{
 Calculate \emph{all} norms of a matrix
+}
+\details{
+\code{\link{na.omit}} is used on \code{M} prior to
+calculation
 }
 \examples{
 M <- matrix(1:12,4)
@@ -23,9 +27,9 @@ norms(M, c("O","M"))
 \seealso{
 \code{\link{norm}}
 
-Other utilities: \code{\link{colRms}}, \code{\link{rms}},
-\code{\link{rowRms}}; \code{\link{list.txtgz}};
-\code{\link{pbo_message}}; \code{\link{sta16_from_sta4}},
-\code{\link{station_data}}
+Other utilities: \code{\link{RMS}}, \code{\link{colRMS}},
+\code{\link{rms}}, \code{\link{rowRMS}};
+\code{\link{list.txtgz}}; \code{\link{pbo_message}};
+\code{\link{sta16_from_sta4}}, \code{\link{station_data}}
 }
 

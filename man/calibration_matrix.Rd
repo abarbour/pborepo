@@ -42,9 +42,12 @@ any_calibration(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
 }
 \arguments{
   \item{tbl}{character; the name of the table to load;
-  defaults to \code{"pbo"} if missing}
+  defaults to \code{"pbo"} if missing.  The function will
+  dispatch the appropriate method depending on the class of
+  the object}
 
-  \item{sta4}{character; an optional station name}
+  \item{sta4}{character; the four-character station code,
+  e.g. \code{'B084'}}
 
   \item{typ}{character; an optional method identifier}
 
@@ -92,6 +95,9 @@ any_calibration(pbotbl, "B084")
 }
 \seealso{
 \code{\link{pinv}} to calculate the pseudoinverse
+
+\code{\link{station_data}} to find information about the
+PBO stations (including \code{sta4})
 
 Other Calibrations: \code{\link{describe}},
 \code{\link{describe.default}}; \code{\link{get_caltbl}},

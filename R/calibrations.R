@@ -23,6 +23,7 @@ describe.default <- function(tbl, ...){
 #' @seealso \code{\link{bsmCalibrations}}
 #' @family Calibrations
 get_caltbl <- function(tblname, describe.tbl=TRUE, ...) UseMethod("get_caltbl")
+
 #' @rdname get_caltbl
 #' @aliases get_caltbl.default
 #' @export
@@ -40,8 +41,9 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' Load or manipulate calibration matrices
 #' 
 #' @param tbl character; the name of the table to load; defaults to \code{"pbo"}
-#' if missing
-#' @param sta4 character; an optional station name
+#' if missing.  The function will dispatch the appropriate method depending on the
+#' class of the object 
+#' @param sta4 character; the four-character station code, e.g. \code{'B084'}
 #' @param typ  character; an optional method identifier
 #' @param Sij matrix, or an object to be coerced into a matrix
 #' @param needs.pinv logical; indicate whether the matrix should be pseudo-inverted
@@ -55,6 +57,9 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' @aliases calibrate calibration
 #' 
 #' @seealso \code{\link{pinv}} to calculate the pseudoinverse
+#' 
+#' \code{\link{station_data}} to find information about the PBO stations (including
+#' \code{sta4})
 #' 
 #' @family Calibrations
 #' @examples
@@ -157,7 +162,7 @@ pinv <- function(Sij, ...){
 fortify_calibration_matrix <- function(Sij, sta4=NA, typ=NA, needs.pinv=FALSE, byrow=TRUE, ...){
   if (!is.matrix(Sij)) Sij <- matrix(as.matrix(Sij), nrow=3, byrow=byrow)
   dimnames(Sij) <- list(c("Ear","Gam1","Gam2"), paste0("CH",0:3))
-  nfo <- rbind(means=rowMeans(Sij, na.rm=TRUE), RMS=apply(Sij, 1, rms))
+  nfo <- rbind(means=rowMeans(Sij, na.rm=TRUE), rms=apply(Sij, 1, RMS))
   nfo <- rbind(nfo, ratio=nfo[2,]/nfo[1,])
   attr(Sij, "sta4") <- sta4
   attr(Sij, "typ") <- typ

@@ -1,9 +1,22 @@
 #' Station information from PBO metadata
 #' 
-#' @param name character; the string or \code{\link{regexp}} to use
-#' @param meta character; the metadata source
-#' @param use.regexp logical; should \code{name} be considered to be a \code{\link{regexp}}?
-#' @param sta4 character; the station's 4-character code (e.g., 'B084')
+#' PBO operates a large number of stations, and \code{\link{station_data}} is
+#' a mechanism to search through a subset of their metadata; 
+#' \code{\link{sta16_from_sta4}} is a simple way to convert from a station's
+#' 4-character station code (e.g., B084) to its 
+#' 16-character representation (e.g., pinyon084bcs2006).
+#' 
+#' @details This function searches internal metadata, which can be accessed
+#' via \code{data(bsmmeta)}, for example.
+#' 
+#' @param name character; the search string; use \code{use.regexp=TRUE} to use it
+#' as a regular expression
+#' @param meta character; the metadata source; currently the only
+#' option is \code{'bsm'}, which accesses
+#' PBO-BSM station information (see \code{data('bsmmeta')})
+#' @param use.regexp logical; should \code{name} be considered to be a regular expression
+#' (c.f. \code{\link{regexp}})?
+#' @param sta4 character; an optional 4-character station code (e.g., \code{'B084'})
 #' 
 #' @export
 #' @family utilities
@@ -14,7 +27,9 @@
 #' station_data(c("B082","B084"), use.regexp=TRUE) # will use only the first
 #' station_data("B08[24]", use.regexp=TRUE) # gets what you want
 #' #
-#' # Get the 16-character codes
+#' # Get all of the 16-character codes
+#' sta16_from_sta4()
+#' # or just a few
 #' sta16_from_sta4(c("B082","B084"))
 station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE){
   metao <- match.arg(meta)
@@ -49,10 +64,11 @@ station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE){
 #' @rdname station_data
 #' @export
 sta16_from_sta4 <- function(sta4=NULL, meta="bsm", use.regexp=FALSE){
-  if (!is.null(sta4)){
-    stadat <- sapply(sta4, function(x, MET=meta, REG=use.regexp) station_data(name=x, meta=MET, use.regexp=REG)[["sta16"]])
+  s16 <- "sta16"
+  stadat <- if (!is.null(sta4)){
+    sapply(X=sta4, FUN=function(x, MET=meta, REG=use.regexp){station_data(name=x, meta=MET, use.regexp=REG)[[s16]]})
   } else {
-    stadat <- station_data(name=NULL, meta=meta, use.regexp=use.regexp)[["sta16"]]
+    station_data(meta=meta, use.regexp=use.regexp)[[s16]]
   }
   return(as.vector(stadat))
 }
@@ -127,11 +143,14 @@ unavco_temp_setTZ <- function(df, tz="UTC"){
 ### Various functions
 #' Calculate \emph{all} norms of a matrix
 #' 
+#' @details
+#' \code{\link{na.omit}} is used on \code{M} prior to calculation
+#' 
 #' @seealso \code{\link{norm}}
 #' @export
 #' 
 #' @param M matrix
-#' @param types character; optionally specify the norms you wish to calculate
+#' @param types character; optionally, specify the norms you wish to calculate
 #' e.g., O, I, F, M, 2
 #' 
 #' @family utilities 
@@ -146,14 +165,20 @@ norms <- function(M, types=NULL){
   sapply(types, base::norm, x=na.omit(M))
 }
 
-#' Trimmed RMS (root mean square)
+#' Trimmed root mean square (RMS)
+#' 
+#' Calculates the root mean square of a sequence, which
+#' is defined as the square-root of the squared arithmetic
+#' mean.
+#' 
 #' @details
 #' The functions
-#' \code{\link{rowRms}} and  \code{\link{colRms}} cannot accept \code{trim}
+#' \code{\link{rowRMS}} and  \code{\link{colRMS}} cannot accept \code{trim}
 #' arguments because they use  \code{\link{rowMeans}}
 #' and  \code{\link{colMeans}}, respectively.
 #' 
 #' @export
+#' @aliases rms
 #' 
 #' @param x [from \code{\link{mean}}:]\emph{ An R object. Complex vectors 
 #' are allowed for trim = 0, only.}
@@ -161,16 +186,21 @@ norms <- function(M, types=NULL){
 #' the fraction (0 to 0.5) of observations to be trimmed 
 #' from each end of x before the mean is computed. 
 #' Values of trim outside that range are taken as the nearest endpoint.}
+#' Note that any trimming occurs prior to calculation of arithmetic mean.
 #' @param na.rm  [from \code{\link{mean}}:]\emph{
-#' a logical value indicating whether NA values should be stripped before 
+#' a logical value indicating whether \code{NA} values should be stripped before 
 #' the computation proceeds.}
-#' @param ... additional parameters
+#' @param ... additional parameters given to either
+#' \code{\link{rowMeans}}, or \code{\link{colMeans}}
 #' @references
 #' [1] \url{http://en.wikipedia.org/wiki/Root_mean_square}
 #' @family utilities 
 #' @examples
-#' x <- sin(seq(-pi,pi,by=0.1))
-#' xr <- rms(x)
+#' x <- sin(seq(-pi,pi,by=0.05))
+#' xr <- RMS(x)
+#' # this:
+#' RMS(c(4,9))
+#' # should equal ~6.96
 #' #
 #' # The expected value for a default \code{sin} curve is sqrt(2)/2
 #' plot(x, type="l")
@@ -178,20 +208,20 @@ norms <- function(M, types=NULL){
 #' abline(h=c(mean(x), mean(abs(x)), sqrt(2)/2, xr), lty=4:1, col=4:1)
 #' #
 #' M <- matrix(1:12,3)
-#' colRms(M)
-#' rowRms(M)
-rms <- function(x, trim = 0, na.rm=TRUE){
+#' colRMS(M)
+#' rowRMS(M)
+RMS <- function(x, trim = 0, na.rm=TRUE){
   sqrt(mean(x*x, trim=trim, na.rm=na.rm))
 }
-#' @rdname rms
+#' @rdname RMS
 #' @export
-colRms <- function(x, na.rm=TRUE, ...){
+colRMS <- function(x, na.rm=TRUE, ...){
   x <- as.matrix(x)
   sqrt(colMeans(x*x, na.rm=na.rm, ...))
 }
-#' @rdname rms
+#' @rdname RMS
 #' @export
-rowRms <- function(x, na.rm=TRUE, ...){
+rowRMS <- function(x, na.rm=TRUE, ...){
   x <- as.matrix(x)
   sqrt(rowMeans(x*x, na.rm=na.rm, ...))
 }

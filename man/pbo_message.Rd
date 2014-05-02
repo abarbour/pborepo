@@ -16,9 +16,9 @@ pbo_message(..., lead.char = c("+", ">", "!"), n = 8)
 Consistent messaging for downloading and other functions
 }
 \seealso{
-Other utilities: \code{\link{colRms}}, \code{\link{rms}},
-\code{\link{rowRms}}; \code{\link{list.txtgz}};
-\code{\link{norms}}; \code{\link{sta16_from_sta4}},
-\code{\link{station_data}}
+Other utilities: \code{\link{RMS}}, \code{\link{colRMS}},
+\code{\link{rms}}, \code{\link{rowRMS}};
+\code{\link{list.txtgz}}; \code{\link{norms}};
+\code{\link{sta16_from_sta4}}, \code{\link{station_data}}
 }
 

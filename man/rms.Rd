@@ -1,14 +1,15 @@
-\name{rms}
-\alias{colRms}
+\name{RMS}
+\alias{RMS}
+\alias{colRMS}
 \alias{rms}
-\alias{rowRms}
-\title{Trimmed RMS (root mean square)}
+\alias{rowRMS}
+\title{Trimmed root mean square (RMS)}
 \usage{
-rms(x, trim = 0, na.rm = TRUE)
+RMS(x, trim = 0, na.rm = TRUE)
 
-colRms(x, na.rm = TRUE, ...)
+colRMS(x, na.rm = TRUE, ...)
 
-rowRms(x, na.rm = TRUE, ...)
+rowRMS(x, na.rm = TRUE, ...)
 }
 \arguments{
   \item{x}{[from \code{\link{mean}}:]\emph{ An R object.
@@ -17,26 +18,33 @@ rowRms(x, na.rm = TRUE, ...)
   \item{trim}{numeric; [from \code{\link{mean}}:]\emph{ the
   fraction (0 to 0.5) of observations to be trimmed from
   each end of x before the mean is computed. Values of trim
-  outside that range are taken as the nearest endpoint.}}
+  outside that range are taken as the nearest endpoint.}
+  Note that any trimming occurs prior to calculation of
+  arithmetic mean.}
 
   \item{na.rm}{[from \code{\link{mean}}:]\emph{ a logical
-  value indicating whether NA values should be stripped
-  before the computation proceeds.}}
+  value indicating whether \code{NA} values should be
+  stripped before the computation proceeds.}}
 
-  \item{...}{additional parameters}
+  \item{...}{additional parameters given to either
+  \code{\link{rowMeans}}, or \code{\link{colMeans}}}
 }
 \description{
-Trimmed RMS (root mean square)
+Calculates the root mean square of a sequence, which is
+defined as the square-root of the squared arithmetic mean.
 }
 \details{
-The functions \code{\link{rowRms}} and \code{\link{colRms}}
+The functions \code{\link{rowRMS}} and \code{\link{colRMS}}
 cannot accept \code{trim} arguments because they use
 \code{\link{rowMeans}} and \code{\link{colMeans}},
 respectively.
 }
 \examples{
-x <- sin(seq(-pi,pi,by=0.1))
-xr <- rms(x)
+x <- sin(seq(-pi,pi,by=0.05))
+xr <- RMS(x)
+# this:
+RMS(c(4,9))
+# should equal ~6.96
 #
 # The expected value for a default \\code{sin} curve is sqrt(2)/2
 plot(x, type="l")
@@ -44,8 +52,8 @@ lines(abs(x), col="red")
 abline(h=c(mean(x), mean(abs(x)), sqrt(2)/2, xr), lty=4:1, col=4:1)
 #
 M <- matrix(1:12,3)
-colRms(M)
-rowRms(M)
+colRMS(M)
+rowRMS(M)
 }
 \references{
 [1] \url{http://en.wikipedia.org/wiki/Root_mean_square}

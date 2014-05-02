@@ -25,9 +25,9 @@ recursive = TRUE} and \code{\link{list.files}} with:
 \code{full.names = TRUE, ignore.case = FALSE}
 }
 \seealso{
-Other utilities: \code{\link{colRms}}, \code{\link{rms}},
-\code{\link{rowRms}}; \code{\link{norms}};
-\code{\link{pbo_message}}; \code{\link{sta16_from_sta4}},
-\code{\link{station_data}}
+Other utilities: \code{\link{RMS}}, \code{\link{colRMS}},
+\code{\link{rms}}, \code{\link{rowRMS}};
+\code{\link{norms}}; \code{\link{pbo_message}};
+\code{\link{sta16_from_sta4}}, \code{\link{station_data}}
 }
 
