@@ -93,6 +93,9 @@ any_calibration(pbotbl, "B084")
 #
 }
 }
+\author{
+A. Barbour
+}
 \seealso{
 \code{\link{pinv}} to calculate the pseudoinverse
 

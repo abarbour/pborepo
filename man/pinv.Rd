@@ -36,6 +36,9 @@ print(mi <- pinv(m))
 mo <- pinv(mi)
 try( all.equal(m, mo, check.attributes=FALSE) )
 }
+\author{
+A. Barbour
+}
 \seealso{
 \code{\link[corpcor]{pseudoinverse}} for details of the
 method

@@ -25,4 +25,8 @@ unavco_temp_setTZ(df, tz = "UTC")
 \description{
 Various time conversion functions
 }
+\note{
+These are \emph{very much} legacy functions, and will
+probably evaporate in the future.
+}
 

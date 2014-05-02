@@ -53,6 +53,8 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' in preference with increasing index number); the first valid calibration matrix
 #' is returned based on this preference
 #' @param ... additional arguments
+#' 
+#' @author A. Barbour
 #' @export
 #' @aliases calibrate calibration
 #' 
@@ -132,6 +134,7 @@ calibration_matrix.cal.roel <- function(tbl, sta4, typ=NULL, ...) .NotYetImpleme
 #' 
 #' \code{\link{calibration_matrix}}
 #' 
+#' @author A. Barbour
 #' @examples
 #' 
 #' # get a calibration table

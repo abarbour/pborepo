@@ -18,6 +18,7 @@
 #' (c.f. \code{\link{regexp}})?
 #' @param sta4 character; an optional 4-character station code (e.g., \code{'B084'})
 #' 
+#' @author A. Barbour
 #' @export
 #' @family utilities
 #' @examples
@@ -111,6 +112,10 @@ pbo_message <- function(..., lead.char=c("+",">","!"), n=8){
 
 #### TIME CONVERSIONS
 #' Various time conversion functions
+#' 
+#' @note
+#' These are \emph{very much} legacy functions, and will
+#' probably evaporate in the future.
 #' 
 #' @export
 #' 

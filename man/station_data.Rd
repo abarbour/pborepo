@@ -46,6 +46,9 @@ sta16_from_sta4()
 # or just a few
 sta16_from_sta4(c("B082","B084"))
 }
+\author{
+A. Barbour
+}
 \seealso{
 Other utilities: \code{\link{RMS}}, \code{\link{colRMS}},
 \code{\link{rms}}, \code{\link{rowRMS}};
