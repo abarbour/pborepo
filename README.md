@@ -12,7 +12,7 @@ and from then on
 library(pborepo)
 ?pborepo
 ~~~~~
-will should work.
+should work.
 
 This project is developing slowly: metadata rarely changes, but the R-functions
 likely will.
