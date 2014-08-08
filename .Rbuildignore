@@ -8,8 +8,6 @@ README.md
 .RData
 .Rhistory
 .cheatsheat
-.RData
-
 data/.getCoords
 data/.getLSM
 data/.getPbo
@@ -18,3 +16,4 @@ data/.Rdata
 data/Makefile
 data/r.*
 data/gen/
+^packrat/
