@@ -1,3 +1,7 @@
+bsm_*
+cgps_coords
+lsm_coords
+pbo_stations_*
 .cheatsheat
 .Rproj.user
 .Rhistory

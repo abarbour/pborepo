@@ -29,5 +29,7 @@ Depends:
     corpcor,
     httr
 Suggests:
-    RCurl (>= 1.95-4.1)
+    RCurl (>= 1.95-4.1),
+    plyr (>= 1.8),
+    dplyr (>= 0.2)
 License: GPL

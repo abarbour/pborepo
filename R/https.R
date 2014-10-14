@@ -43,19 +43,43 @@ get_https <- function(URL, ...){
   httr::content(response, type = "raw", ...)
 }
 
-#' Retrieve data from the online repository
-#' @param file character;
+#' Retrieve data from the \code{pborepo} online repository (github)
+#' @aliases gitdata
+#' @param file character; the name of the file to retrieve; if this is \code{NULL} only the
+#' results of \code{\link{list_github_files}} are returned
 #' @param save.local logical; should the file be saved locally
 #' @param saf logical; the value of \code{stringsAsFactors}
 #' @param verbose logical;
 #' @param ... additional parameters to \code{\link{read.https}}
 #' @export
-pborepo_gitdata <- function(file=NULL, save.local=TRUE, saf = FALSE, verbose=TRUE, ...){
+#' 
+#' @seealso \code{\link{read.https}}, which is used to retrieve the data
+#' @examples
+#' \dontrun{
+#' #
+#' list_github_files() # returns the filenames, with other info
+#' #
+#' print(gitfiles <- pborepo_gitdata()) # returns only the filenames
+#' print(lsm <- pborepo_gitdata("lsm_coords")) # returns a data.frame
+#' pborepo_gitdata("bogus_filename") # an error, as expected
+#' #
+#' # Get them all with plyr/dplyr
+#' library(plyr)
+#' library(dplyr, warn.conflicts=FALSE)
+#' alldata <- llply(gitfiles, function(fi) tbl_df(pborepo_gitdata(fi, verbose=FALSE)), .progress = 'text')
+#' names(alldata) <- gitfiles
+#' summary(alldata)
+#' print(str(alldata, vec.len=2, nchar.max=10))
+#' lsm2 <- alldata[['lsm_coords']]
+#' all.equal(tbl_df(lsm),lsm2)
+#' }
+pborepo_gitdata <- function(file=NULL, save.local=FALSE, saf = FALSE, verbose=TRUE, ...){
   df <- list_github_files()
   if (is.null(file)){
-    message("Did not specify filename. Here is a list:")
-    return(df)
+    if (verbose) message("No filename specified, so here are the options:")
+    return(df$gitfile$file)
   }
+  # if a name was specified we continue marching...
   Df <- df[["gitfile"]]
   Df$status <- Df$file %in% file
   Dfsub <- subset(Df, status)
@@ -63,7 +87,7 @@ pborepo_gitdata <- function(file=NULL, save.local=TRUE, saf = FALSE, verbose=TRU
   if (nr==0){
     stop("No file found. Try 'list_github_files()'")
   } else if (nr>1){
-    stop("multiple files match")
+    stop("Multiple files match.")
   }
   fi. <- Dfsub$file
   base. <- df[["gitbase"]]
