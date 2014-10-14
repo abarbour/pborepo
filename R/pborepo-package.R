@@ -18,7 +18,7 @@
 #' 
 #' @author Andrew J. Barbour <andy.barbour@@gmail.com> 
 #' 
-#' @import corpcor abind
+#' @import corpcor abind httr
 #' 
 # not needed since specified in DESCRIPTION-DEPENDS: stats utils graphics grDevices
 # @useDynLib strain

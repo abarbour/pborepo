@@ -4,7 +4,8 @@
 \alias{station_data}
 \title{Station information from PBO metadata}
 \usage{
-station_data(name = NULL, meta = "bsm", use.regexp = FALSE)
+station_data(name = NULL, meta = "bsm", use.regexp = FALSE,
+  verbose = TRUE)
 
 sta16_from_sta4(sta4 = NULL, meta = "bsm", use.regexp = FALSE)
 }
@@ -18,6 +19,8 @@ PBO-BSM station information (see \code{data('bsmmeta')})}
 
 \item{use.regexp}{logical; should \code{name} be considered to be a regular expression
 (c.f. \code{\link{regexp}})?}
+
+\item{verbose}{logical; should messages be given?}
 
 \item{sta4}{character; an optional 4-character station code (e.g., \code{'B084'})}
 }

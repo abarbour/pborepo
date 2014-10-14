@@ -22,6 +22,9 @@
 #' @param ... additional parameters
 #' 
 #' @name data-retrieval
+#' 
+#' @seealso \code{\link{read.https}} and XXX to load data files from
+#' the source (github)
 NULL
 
 #' @rdname data-retrieval

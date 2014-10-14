@@ -93,4 +93,8 @@ unavco_path("B084",2010, 1:10, "pt")
 # Also try:
 # unavco_path("B084",2010, 1:10, "pt", TRUE)
 }
+\seealso{
+\code{\link{read.https}} and XXX to load data files from
+the source (github)
+}
 

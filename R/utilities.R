@@ -16,6 +16,7 @@
 #' PBO-BSM station information (see \code{data('bsmmeta')})
 #' @param use.regexp logical; should \code{name} be considered to be a regular expression
 #' (c.f. \code{\link{regexp}})?
+#' @param verbose logical; should messages be given?
 #' @param sta4 character; an optional 4-character station code (e.g., \code{'B084'})
 #' 
 #' @author A. Barbour
@@ -32,7 +33,7 @@
 #' sta16_from_sta4()
 #' # or just a few
 #' sta16_from_sta4(c("B082","B084"))
-station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE){
+station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE, verbose=TRUE){
   metao <- match.arg(meta)
   meta <- switch(metao, bsm="bsmmeta")
   env <- new.env()
@@ -56,6 +57,7 @@ station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE){
       logics[logics==0] <- nrd
       dat <- dat[logics, ]
     } else {
+      if (verbose) message("can also set 'use.regexp=TRUE'")
       dat <- dat[dat==name, ]      
     }
   }
