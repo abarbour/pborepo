@@ -37,7 +37,7 @@ station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE, verbose=TRUE){
   metao <- match.arg(meta)
   meta <- switch(metao, bsm="bsmmeta")
   env <- new.env()
-  do.call("data", list(meta, envir=env))
+  do.call("data", list(meta, package="pborepo", envir=env))
   metad <- env[[meta]]
   #print(metad)
   nms <- switch(metao, bsm=c("coords"))
