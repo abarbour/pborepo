@@ -96,9 +96,15 @@ pborepo_gitdata <- function(file=NULL, save.local=FALSE, saf = FALSE, verbose=TR
   hdr. <- Dfsub$hdr
   if (verbose) message(sprintf("%s\ttype '%s'\theader '%s'", fi., typ., hdr.))
   READFUN <- switch(typ., tbl=read.table, csv=read.csv)
+  file.local <- if (save.local){
+    file
+  } else {
+    #tempfile()
+    NULL
+  }
   read.https(URL=url., 
-             local.file = ifelse(save.local,file,NULL), 
-             delete = ifelse(save.local,FALSE,TRUE),
+             local.file = file.local, 
+             delete = ifelse(save.local, FALSE, TRUE),
              FUN=READFUN, header=hdr., verbose=verbose, 
              comment.char = "#", 
              stringsAsFactors = saf, ...)
