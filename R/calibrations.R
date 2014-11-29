@@ -4,11 +4,11 @@
 #' @param ... additional arguments passed to \code{\link{cat}}
 #' @export
 #' @family Calibrations
-describe <- function(tbl, ...) UseMethod("describe")
+describe_this <- function(tbl, ...) UseMethod("describe_this")
 
-#' @rdname describe
+#' @rdname describe_this
 #' @export
-describe.default <- function(tbl, ...){
+describe_this.default <- function(tbl, ...){
   cat(tbl$description, ...)
 }
 
@@ -16,7 +16,7 @@ describe.default <- function(tbl, ...){
 #' @param tblname character; the name of the calibration table
 #' to import. See \code{\link{bsmCalibrations}}.  Defaults to
 #' \code{"pbo"} if missing.
-#' @param describe.tbl logical; should \code{\link{describe}}
+#' @param describe.tbl logical; should \code{\link{describe_this}}
 #' be used to print information about the calibration table?
 #' @param ... additional arguments
 #' @export
@@ -34,7 +34,7 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
   do.call("data", list(alltbls, envir=env))
   TBLS <- env[[alltbls]]
   tbl <- TBLS[[tblname]]
-  if (describe.tbl) describe(tbl)
+  if (describe.tbl) describe_this(tbl)
   return(invisible(tbl))
 }
 
@@ -70,7 +70,7 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' # select a calibration table
 #' #  data(bsmCalibrations)
 #' #  pbotbl <- bsmCalibrations[['pbo']]
-#' #  describe(pbotbl)
+#' #  describe_this(pbotbl)
 #' # or simply
 #' pbotbl <- get_caltbl("pbo")
 #' # 

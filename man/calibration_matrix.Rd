@@ -72,7 +72,7 @@ Load or manipulate calibration matrices
 # select a calibration table
 #  data(bsmCalibrations)
 #  pbotbl <- bsmCalibrations[['pbo']]
-#  describe(pbotbl)
+#  describe_this(pbotbl)
 # or simply
 pbotbl <- get_caltbl("pbo")
 #
@@ -98,8 +98,9 @@ A. Barbour
 \code{\link{station_data}} to find information about the PBO stations (including
 \code{sta4})
 
-Other Calibrations: \code{\link{describe}},
-  \code{\link{describe.default}}; \code{\link{get_caltbl}},
+Other Calibrations: \code{\link{describe_this}},
+  \code{\link{describe_this.default}};
+  \code{\link{get_caltbl}},
   \code{\link{get_caltbl.default}}
 }
 

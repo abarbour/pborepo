@@ -13,7 +13,7 @@ get_caltbl(tblname, describe.tbl = TRUE, ...)
 to import. See \code{\link{bsmCalibrations}}.  Defaults to
 \code{"pbo"} if missing.}
 
-\item{describe.tbl}{logical; should \code{\link{describe}}
+\item{describe.tbl}{logical; should \code{\link{describe_this}}
 be used to print information about the calibration table?}
 
 \item{...}{additional arguments}
@@ -36,6 +36,7 @@ Other Calibrations: \code{\link{all_calibrations}},
   \code{\link{calibration_matrix.cal.pbo}},
   \code{\link{calibration_matrix.cal.roel}},
   \code{\link{fortify_calibration_matrix}};
-  \code{\link{describe}}, \code{\link{describe.default}}
+  \code{\link{describe_this}},
+  \code{\link{describe_this.default}}
 }
 
