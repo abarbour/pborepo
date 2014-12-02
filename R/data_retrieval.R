@@ -1,7 +1,19 @@
 #/Users/abarbour/kook.processing/R/dev/timetasks/merge/funcs.R
 
 #' Retrieve and load data from the UNAVCO archive
-#'  
+#'
+#' @description
+#' The user should be most interested in \code{\link{pore.pressure}} and
+#' \code{\link{pore.temperature}} to get pore-fluid pressure and temperature
+#' data.
+#' 
+#' @details
+#' \code{\link{pore.pressure}} and \code{\link{pore.temperature}} both use
+#' \code{\link{unavco_dataload}} and \code{\link{unavco_dataload}}  to
+#' download, reads-in, and process data from the UNAVCO archive. 
+#' 
+#' These functions will return all data for the specified year and (Julian) day(s).
+#'
 #' @param sta character;
 #' @param dattype character;
 #' @param default.sec.samp numeric;
@@ -10,6 +22,7 @@
 #' @param sta4 character; 4-character station name (e.g. B084).
 #' @param year numeric; the year of data
 #' @param jday numeric; Julian date (the day of \code{year})
+#' @param dt.window xx; extract data from this window; should be \code{POSIXt} compatible
 #' @param type character; the type of data to generate download data for
 #' @param url.check logical; should the urls be tested for existence?
 #' @param url.toget character; the URL to download
@@ -25,7 +38,38 @@
 #' 
 #' @seealso \code{\link{read.https}} and XXX to load data files from
 #' the source (github)
+#' 
+#' \code{\link{consistent}}
+#' 
+#' \code{\link{unavco-methods}}
+#' 
+#' @examples
+#' \dontrun{
+#' # Download data, also makes it consistent
+#' xpp<-pore.pressure("B084",2010,94)
+#' xpt<-pore.temperature("B084",2010,94)
+#' 
+#' layout(matrix(1:2))
+#' plot(xpp, type='l')
+#' plot(xpt, type='l')
+#' layout(matrix(1))
+#' }
 NULL
+
+#' @rdname data-retrieval
+#' @export
+pore.pressure <- function(sta4, year, jday, dt.window=NULL, ...){
+  dat <- unavco_dataload(sta4, year, jday, dattype="pp", ...)
+  if (!is.null(dt.window)) .NotYetUsed("windowing", FALSE)
+  consistent(dat)
+}
+#' @rdname data-retrieval
+#' @export
+pore.temperature <- function(sta4, year, jday, dt.window=NULL, ...){
+  dat <- unavco_dataload(sta4, year, jday, dattype="pt", ...)
+  if (!is.null(dt.window)) .NotYetUsed("windowing", FALSE)
+  consistent(dat)
+}
 
 #' @rdname data-retrieval
 #' @export
@@ -41,34 +85,43 @@ unavco_dataload.default <- function(sta, year, jday,
                                     default.sec.samp=1, localfile=NULL, quiet=FALSE,
                                     impute=TRUE){
   #### LOAD TEMPERATURE OR PORE PRESSURE DATA from the UNAVCO REPOSITORY
-  dat <- match.arg(dattype)
+  dat.t <- match.arg(dattype)
   #if (!quiet) pbo_message(sta, year, day, dat)
   # set paths
-  pth <- unavco_path(sta, year, jday, type=dat, url.check=TRUE)
+  pth <- unavco_path(sta, year, jday, type=dat.t, url.check=TRUE)
   # select data
   toDL <- pth$wget
   canDL <- pth$wget.status
   nDL <- length(toDL)
   # download and read
-  if (is.null(localfile)){
-    tempLOC <- rep(tempfile(), nDL)
+  tempLOC <- if (is.null(localfile)){
+    rep(tempfile(), nDL)
   } else {
-    tempLOC <- as.character(localfile)
+    lf <- as.character(localfile)
+    nlf <- length(lf)
+    if (nlf==1 & nDL>1){
+      paste(lf,seq_len(nDL),sep=".")
+    } else{
+      lf
+    }
   }
   stopifnot(length(tempLOC) == nDL)
+  # loop through files
   for (dli in seq_len(nDL)){
+    #
     dl <- toDL[dli]
     tl <- tempLOC[dli]
     cdl <- canDL[dli]
-    if (cdl){
+    #
+    dat <- if (cdl){
       unavco_downloader(dl, temp=tl, quiet=quiet)
-      dat <- unavco_temploader(tl, dat)
-      #dat <- loadUnav(tmp, typ=typ)
+      unavco_temploader(tl, dat.t)
     } else {
       pbo_message(dl, "unavailable", lead.char="!")
-      dat <- NULL
+      NULL
     }
     if (impute){
+      .NotYetUsed("impute", error = FALSE)
       if (!is.null(dat)){
         #dat <- impute(dat)
       } else {
@@ -77,6 +130,7 @@ unavco_dataload.default <- function(sta, year, jday,
       }
     }
   }
+  class(dat) <- c('unavco',dat.t)
   return(dat)
 }
 
@@ -88,15 +142,15 @@ unavco_temploader <- function(file, dattype = c("pp","pt"), ...) UseMethod("unav
 #' @rdname data-retrieval
 #' @export
 unavco_temploader.default <- function(file, dattype = c("pp","pt"), ...){
-  dat <- match.arg(dattype)
   #
+  dat <- match.arg(dattype)
   dn <- switch(dat, pp="hPa", pt="degC")
   #
   dtmp <- read.table(file, header=FALSE, colClasses=c(rep("character",2),"numeric"), sep=" ")
   data <- base::as.data.frame.POSIXct( unavco_temp_toPOS(paste(dtmp$V1, dtmp$V2)) )
   data$V3 <- dtmp$V3
   #
-  names(data) <- c("Dt.",dn)
+  names(data) <- c("Dt.", dn)
   #
   return(data)
 }
@@ -124,11 +178,11 @@ unavco_downloader.default <- function(url.toget, temp, PLUGIN, quiet=FALSE, remo
 dlCatcher <- function(FUN){
   ### exception handler
   funcRes <- tryCatch(FUN(), error = function(e) e )
-  if (inherits(funcRes, "error")) {
+  status <- if (inherits(funcRes, "error")) {
     conditionMessage(funcRes)
-    status <- "FAILED"
+    "FAILED"
   } else {
-    status <- "OK"
+    "OK"
   }
   return(status)
 }
@@ -151,7 +205,6 @@ dlCatcher <- function(FUN){
 #' # unavco_path("B084",2010, 1:10, "pt", TRUE)
 unavco_path <- function(sta4, year, jday, type=c("pp","pt"), url.check=FALSE){
   #### SETS PATHS TO UNAVCO REPOSITORY DATA
-  # was .unavPath
   type <- match.arg(type)
   longtype <- switch(type, pp="PorePressHPa", pt="PoreTempDegC")
   # format inputs
@@ -165,7 +218,7 @@ unavco_path <- function(sta4, year, jday, type=c("pp","pt"), url.check=FALSE){
   # url to data
   repos <- pbo_constants()$unavco
   repos <- repos[[type]]
-  #
+  # urls
   baserepos <- paste(repos, sta, sep="/")
   daturl <- paste(baserepos, yr4, dy3, sep="/")
   # data files
@@ -175,17 +228,17 @@ unavco_path <- function(sta4, year, jday, type=c("pp","pt"), url.check=FALSE){
   # full download links
   todl <- paste(daturl, fitxtgz, sep="/")
   #
-  if (url.check){
+  passed <- if (url.check){
     URLTEST <- RCurl::url.exists
     if (!URLTEST(baserepos)){
       # first check base repo, to save time
       pbo_message(baserepos, "non-existent", lead.char="!")
-      passed <- rep(FALSE, length(todl))
+      rep(FALSE, length(todl))
     } else {
-      passed <- unlist(lapply(X=todl, FUN=URLTEST))
+      unlist(lapply(X=todl, FUN=URLTEST))
     }
   } else {
-    passed <- rep(NA, length(todl))
+    rep(NA, length(todl))
   }
   # return
   toret <- list(daturl=daturl, bot=fi, txt=fitxt, txtgz=fitxtgz, wget=todl, wget.status=passed)

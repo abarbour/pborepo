@@ -232,3 +232,97 @@ rowRMS <- function(x, na.rm=TRUE, ...){
   x <- as.matrix(x)
   sqrt(rowMeans(x*x, na.rm=na.rm, ...))
 }
+
+##
+## NA stuff
+##
+#' Automatically decide how to best fill in NA sections
+#' @export
+#' @seealso \code{\link{unavco-methods}}
+#' 
+naOP <- function(d, fill=0, verbose=TRUE, ...) UseMethod("naOP")
+
+#' @rdname naOP
+#' @export
+naOP.default <- function(d, fill=0, verbose=TRUE, ...){
+  #require(zoo, quietly=TRUE)
+  #### decide how to best fill NA sections
+  l.d <- length(d)
+  l.na <- length(na.omit(d))  # if 0, the entire dataset is empty
+  first.na <- is.na(d[1])  # if yes, we cant interpolate
+  last.na <- is.na(d[l.d])  # ditto
+  dd <- if (l.na==0){
+    msg <- paste("(all) filling with:",fill)
+    rep.int(fill, l.d)
+  } else if (first.na==FALSE && last.na==FALSE && l.na > 1 && l.na!=l.d) {
+    msg <- "interpolation"
+    interpNA(d, ...)
+  } else if (l.na==l.d){
+    msg <- "none"
+    d
+  } else {
+    msg <- "forward/backward value carrying"
+    locfNA(d, ...)
+  }
+  msg <- paste(">>>> NAs:",msg)
+  if (verbose){message(msg)}
+  return(dd)
+}
+
+#' @rdname naOP
+#' @export
+fillNA <- function(d, fill=0, ...){
+  as.vector(zoo::na.fill(zoo::zoo(d), fill, ...))
+}
+#' @rdname naOP
+#' @export
+locfNA <- function(d, ...){
+  as.vector(zoo::na.locf(zoo::na.locf(zoo::zoo(d), na.rm=FALSE, ...), na.rm=FALSE, fromLast=TRUE))
+}
+#' @rdname naOP
+#' @export
+interpNA <- function(d,...){
+  as.vector(zoo::na.approx(zoo::zoo(d), ...))
+}
+
+#' Trim a series by some percentage
+#' @details The trimming is done with \code{\link{sort.int}}, which may be
+#' problematic for timeseries.  The best option is to trim an index series
+#' and use that to re-sample the timeseries.  See Examples.
+#' 
+#' Also sets an attribute \code{'trim'} with details of the trimming.
+#' 
+#' @export
+#' @param x series to trim
+#' @param prc the percentage of data to trim from either side of \code{x}; this
+#' cannot be less than \code{0} or greater than \code{0.5}.
+#' @examples
+#' # default is a 10% trim
+#' trimmer(1:10)  # 2 3 4 5 6 7 8 9
+#' 
+#' # but sort is used...
+#' set.seed(1234)
+#' x <- round(runif(10, max = 10)) # note order of values
+#' trimmer(x) # trimmed, but sorted
+#' 
+#' # we can fix this by trimming an index:
+#' x[trimmer(seq_along(x))] # trimmed, with order retained
+#' 
+trimmer <- function(x, prc=0.1){
+  prc <- as.numeric(prc)
+  if (length(prc) != 1L) stop("'trim' must be numeric of length one")
+  stopifnot(prc >= 0 & prc <= 0.5)
+  n <- length(x)
+  if (prc > 0 && n) {
+    lo <- floor(n * prc) + 1
+    hi <- n + 1 - lo
+    x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
+    attr(x,"trim") <- c(n,prc,lo,hi)
+  } else if (prc == 0 && n){
+    x
+    attr(x,"trim") <- c(n,rep(0,3))
+  } else {
+    stop('failed.')
+  }
+  return(x)
+}
