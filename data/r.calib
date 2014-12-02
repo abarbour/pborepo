@@ -1,14 +1,18 @@
-
-								# array'd
-load("/Users/abarbour/dbase/stations/calib/grant10.rda")	# [ ]
-load("/Users/abarbour/dbase/stations/calib/hodg.rda")		# [ ]
-load("/Users/abarbour/dbase/stations/calib/pbo.rda")		# [X]
-load("/Users/abarbour/dbase/stations/calib/roel.rda")		# [X]
+#
+# Creates the bsm calibration coefficient database
+#
+									# array'd
+load("/Users/abarbour/dbase/stations/calib/grant10.rda")		# [ ]
+load("/Users/abarbour/dbase/stations/calib/hodg.rda")			# [ ]
+load("/Users/abarbour/dbase/stations/calib/pbo.rda")			# [X]
+load("/Users/abarbour/dbase/stations/calib/isotropic/pboiso.rda")	# [X]
+load("/Users/abarbour/dbase/stations/calib/roel.rda")			# [X]
 
 bsmCalibrations <- list(
 	grant=grant10,
 	hodg=hodg,
 	pbo=pbo,
+	pboiso=pboiso,
 	roel=roel
 )
 

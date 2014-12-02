@@ -52,6 +52,8 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 #' @param preference character; a vector of preferred calibration types (decreasing 
 #' in preference with increasing index number); the first valid calibration matrix
 #' is returned based on this preference
+# @param try.iso logical; if a calibration matrix cant be found, try looking in
+# the isotropic (constrained) coefficients too?
 #' @param ... additional arguments
 #' 
 #' @author A. Barbour
@@ -89,7 +91,6 @@ get_caltbl.default <- function(tblname, describe.tbl=TRUE, ...){
 calibration_matrix <- function(tbl, sta4, typ=c('free','cdr','cd'), ...) UseMethod("calibration_matrix")
 
 #' @rdname calibration_matrix
-#' @aliases calibration_matrix.cal.pbo
 #' @export
 calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd'), ...){
   #
@@ -105,12 +106,14 @@ calibration_matrix.cal.pbo <- function(tbl, sta4, typ=c('free','cdr','cd'), ...)
 }
 
 #' @rdname calibration_matrix
-#' @aliases calibration_matrix.cal.hodg
+#' @export
+calibration_matrix.cal.pboiso <- calibration_matrix.cal.pbo  
+
+#' @rdname calibration_matrix
 #' @export
 calibration_matrix.cal.hodg <- function(tbl, sta4, typ=NULL, ...) .NotYetImplemented()
 
 #' @rdname calibration_matrix
-#' @aliases calibration_matrix.cal.roel
 #' @export
 calibration_matrix.cal.roel <- function(tbl, sta4, typ=NULL, ...) .NotYetImplemented()
 
@@ -179,13 +182,11 @@ fortify_calibration_matrix <- function(Sij, sta4=NA, typ=NA, needs.pinv=FALSE, b
 #' @export
 all_calibrations <- function(tbl, sta4, ...) UseMethod("all_calibrations")
 #' @rdname calibration_matrix
-#' @aliases all_calibrations.cal.hodg
 #' @export
 all_calibrations.cal.hodg <- function(tbl, sta4, ...){
   .NotYetImplemented()
 }
 #' @rdname calibration_matrix
-#' @aliases all_calibrations.cal.pbo
 #' @export
 all_calibrations.cal.pbo <- function(tbl, sta4, ...){
   caltypes <- eval(formals("calibration_matrix.cal.pbo")$typ)
@@ -200,19 +201,33 @@ all_calibrations.cal.pbo <- function(tbl, sta4, ...){
     return(arr)
   }
 }
+#' @rdname calibration_matrix
+#' @export
+all_calibrations.cal.pboiso <- function(tbl, sta4, ...){
+  ctyp <- "cd"
+  arr <- abind(as.array(calibration_matrix(tbl, sta4, typ=ctyp, ...)), along=3)
+  dimnames(arr)[[3]] <- ctyp
+  attr(arr, "is.available") <- apply(!is.na(arr), 3, all)
+  return(arr)
+}
 
 #' @rdname calibration_matrix
 #' @export
-any_calibration <- function(tbl, sta4, preference=c("free","cdr","cd"), ...)  UseMethod("any_calibration")
+any_calibration <- function(tbl, sta4, preference, ...) UseMethod("any_calibration")
+
+#' @rdname calibration_matrix
+#' @export
+any_calibration.default <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
+  if (missing(tbl)) tbl <- get_caltbl("pboiso")
+  any_calibration(tbl, sta4, preference, ...)
+}
  
 #' @rdname calibration_matrix
-#' @aliases any_calibration.cal.hodg
 #' @export
 any_calibration.cal.hodg <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
   .NotYetImplemented()
 }
 #' @rdname calibration_matrix
-#' @aliases any_calibration.cal.pbo
 #' @export
 any_calibration.cal.pbo <- function(tbl, sta4, preference=c("free","cdr","cd"), ...){
   allcal <- all_calibrations(tbl, sta4)
@@ -226,3 +241,6 @@ any_calibration.cal.pbo <- function(tbl, sta4, preference=c("free","cdr","cd"), 
     return(caltbl)
   }
 }
+#' @rdname calibration_matrix
+#' @export
+any_calibration.cal.pboiso <- any_calibration.cal.pbo
