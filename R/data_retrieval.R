@@ -22,7 +22,8 @@
 #' @param sta4 character; 4-character station name (e.g. B084).
 #' @param year numeric; the year of data
 #' @param jday numeric; Julian date (the day of \code{year})
-#' @param dt.window xx; extract data from this window; should be \code{POSIXt} compatible
+#' @param start. xx;
+#' @param end. xx;
 #' @param type character; the type of data to generate download data for
 #' @param url.check logical; should the urls be tested for existence?
 #' @param url.toget character; the URL to download
@@ -46,47 +47,56 @@
 #' @examples
 #' \dontrun{
 #' # Download data, also makes it consistent
-#' xpp<-pore.pressure("B084",2010,94)
-#' xpt<-pore.temperature("B084",2010,94)
+#' xpp <- pore.pressure("B084", 2010, 94)
+#' xpt <- pore.temperature("B084", 2010, 94)
 #' 
-#' layout(matrix(1:2))
+#' # window in on the El Mayor quake:
+#' st <- as.POSIXct("2010-04-04", tz='UTC') + 79200
+#' redo <- FALSE
+#' if (!exists('xppw') | redo) xppw <- pore.pressure("B084", 2010, 94, start.=st)
+#' if (!exists('xptw') | redo) xptw <- pore.temperature("B084", 2010, 94, start.=st)
+#' 
+#' layout(matrix(1:4,ncol=2))
 #' plot(xpp, type='l')
 #' plot(xpt, type='l')
+#' plot(xppw, type='l')
+#' plot(xptw, type='l')
 #' layout(matrix(1))
+#' 
+#' # Can also manually subset:
+#' unavco_window(as.data.frame(xpp), start. = st, end. = st+10)
+#' 
 #' }
 NULL
 
 #' @rdname data-retrieval
 #' @export
-pore.pressure <- function(sta4, year, jday, dt.window=NULL, ...){
+pore.pressure <- function(sta4, year, jday, start.=NULL, end.=NULL, ...){
   dat <- unavco_dataload(sta4, year, jday, dattype="pp", ...)
-  if (!is.null(dt.window)) .NotYetUsed("windowing", FALSE)
-  consistent(dat)
+  dat.w <- window(dat, start. = start., end. = end.)
+  consistent(dat.w)
 }
 #' @rdname data-retrieval
 #' @export
-pore.temperature <- function(sta4, year, jday, dt.window=NULL, ...){
+pore.temperature <- function(sta4, year, jday, start.=NULL, end.=NULL, ...){
   dat <- unavco_dataload(sta4, year, jday, dattype="pt", ...)
-  if (!is.null(dt.window)) .NotYetUsed("windowing", FALSE)
-  consistent(dat)
+  dat.w <- window(dat, start. = start., end. = end.)
+  consistent(dat.w)
 }
 
 #' @rdname data-retrieval
 #' @export
-unavco_dataload <- function(sta, year, jday, 
-                            dattype = c("pp","pt"), 
-                            default.sec.samp=1, localfile=NULL, quiet=FALSE,
-                            impute=TRUE) UseMethod("unavco_dataload")
+unavco_dataload <- function(sta, year, jday, dattype = c("pp","pt"), 
+                            localfile=NULL, quiet=FALSE) UseMethod("unavco_dataload")
 
 #' @rdname data-retrieval
 #' @export
 unavco_dataload.default <- function(sta, year, jday, 
                                     dattype = c("pp","pt"), 
-                                    default.sec.samp=1, localfile=NULL, quiet=FALSE,
-                                    impute=TRUE){
+                                    localfile=NULL, quiet=FALSE){
   #### LOAD TEMPERATURE OR PORE PRESSURE DATA from the UNAVCO REPOSITORY
   dat.t <- match.arg(dattype)
-  #if (!quiet) pbo_message(sta, year, day, dat)
+  if (!quiet) pbo_message(sta, year, jday, dat.t)
   # set paths
   pth <- unavco_path(sta, year, jday, type=dat.t, url.check=TRUE)
   # select data
@@ -106,32 +116,31 @@ unavco_dataload.default <- function(sta, year, jday,
     }
   }
   stopifnot(length(tempLOC) == nDL)
-  # loop through files
-  for (dli in seq_len(nDL)){
-    #
+  # Function to assemble one day of data
+  DLFUN <- function(dli){
     dl <- toDL[dli]
     tl <- tempLOC[dli]
     cdl <- canDL[dli]
-    #
-    dat <- if (cdl){
-      unavco_downloader(dl, temp=tl, quiet=quiet)
-      unavco_temploader(tl, dat.t)
+    if (cdl){
+      ec <- unavco_downloader(dl, temp=tl, quiet=TRUE)
+      if (ec=="FAILED"){
+        NULL
+      } else {
+        unavco_temploader(tl, dat.t)
+      }
     } else {
       pbo_message(dl, "unavailable", lead.char="!")
       NULL
     }
-    if (impute){
-      .NotYetUsed("impute", error = FALSE)
-      if (!is.null(dat)){
-        #dat <- impute(dat)
-      } else {
-        #generate [ ]
-        #dat <- genPP(year, day, sec.samp=default.sec.samp)
-      }
-    }
   }
-  class(dat) <- c('unavco',dat.t)
-  return(dat)
+  # put together the files
+  alldat <- plyr::rbind.fill(lapply(seq_len(nDL), DLFUN))
+  if (!is.null(alldat)){
+    class(alldat) <- c('unavco',dat.t)
+    return(alldat)
+  } else {
+    if (!quiet) warning("Downloading failed.")
+  }
 }
 
 #' @details \code{\link{unavco_temploader}} loads and process data downloaded from the UNAVCO archive

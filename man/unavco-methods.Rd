@@ -3,7 +3,12 @@
 \alias{as.data.frame.unavco}
 \alias{as.zoo.unavco}
 \alias{data.frame.unavco}
+\alias{end.unavco}
+\alias{index.unavco}
+\alias{start.unavco}
+\alias{time.unavco}
 \alias{unavco-methods}
+\alias{unavco_window}
 \alias{window.unavco}
 \alias{zoo.unavco}
 \title{Methods for the 'unavco' class}
@@ -16,10 +21,23 @@ zoo.unavco(x, frequency = NULL, ...)
 
 data.frame.unavco(x, ...)
 
-\method{window}{unavco}(x, ...)
+\method{start}{unavco}(x, ...)
+
+\method{end}{unavco}(x, ...)
+
+\method{time}{unavco}(x, ...)
+
+index.unavco(x, ...)
+
+\method{window}{unavco}(x, start. = NULL, end. = NULL, ...)
+
+unavco_window(x, start. = NULL, end. = NULL, ...)
 }
 \description{
 Methods for the 'unavco' class
+}
+\details{
+\code{\link{unavco_window}} does the time subsetting.
 }
 \seealso{
 \code{\link{consistent}} and \code{\link{unavco_dataload}}

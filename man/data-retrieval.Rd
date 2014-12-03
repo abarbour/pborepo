@@ -13,15 +13,15 @@
 \alias{unavco_temploader.default}
 \title{Retrieve and load data from the UNAVCO archive}
 \usage{
-pore.pressure(sta4, year, jday, dt.window = NULL, ...)
+pore.pressure(sta4, year, jday, start. = NULL, end. = NULL, ...)
 
-pore.temperature(sta4, year, jday, dt.window = NULL, ...)
+pore.temperature(sta4, year, jday, start. = NULL, end. = NULL, ...)
 
-unavco_dataload(sta, year, jday, dattype = c("pp", "pt"),
-  default.sec.samp = 1, localfile = NULL, quiet = FALSE, impute = TRUE)
+unavco_dataload(sta, year, jday, dattype = c("pp", "pt"), localfile = NULL,
+  quiet = FALSE)
 
 \method{unavco_dataload}{default}(sta, year, jday, dattype = c("pp", "pt"),
-  default.sec.samp = 1, localfile = NULL, quiet = FALSE, impute = TRUE)
+  localfile = NULL, quiet = FALSE)
 
 unavco_temploader(file, dattype = c("pp", "pt"), ...)
 
@@ -54,7 +54,9 @@ unavco_path(sta4, year, jday, type = c("pp", "pt"), url.check = FALSE)
 
 \item{jday}{numeric; Julian date (the day of \code{year})}
 
-\item{dt.window}{xx; extract data from this window; should be \code{POSIXt} compatible}
+\item{start.}{xx;}
+
+\item{end.}{xx;}
 
 \item{type}{character; the type of data to generate download data for}
 
@@ -105,13 +107,25 @@ of processing time for large numbers of urls.
 \examples{
 \dontrun{
 # Download data, also makes it consistent
-xpp<-pore.pressure("B084",2010,94)
-xpt<-pore.temperature("B084",2010,94)
+xpp <- pore.pressure("B084", 2010, 94)
+xpt <- pore.temperature("B084", 2010, 94)
 
-layout(matrix(1:2))
+# window in on the El Mayor quake:
+st <- as.POSIXct("2010-04-04", tz='UTC') + 79200
+redo <- FALSE
+if (!exists('xppw') | redo) xppw <- pore.pressure("B084", 2010, 94, start.=st)
+if (!exists('xptw') | redo) xptw <- pore.temperature("B084", 2010, 94, start.=st)
+
+layout(matrix(1:4,ncol=2))
 plot(xpp, type='l')
 plot(xpt, type='l')
+plot(xppw, type='l')
+plot(xptw, type='l')
 layout(matrix(1))
+
+# Can also manually subset:
+unavco_window(as.data.frame(xpp), start. = st, end. = st+10)
+
 }
 unavco_path("B084", 2010, 1)
 unavco_path("B084", 2010, 1:10) # use vectors for multiple urls

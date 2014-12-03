@@ -3,6 +3,10 @@
 #' @seealso \code{\link{consistent}} and \code{\link{unavco_dataload}}
 NULL
 
+# @rdname unavco-methods
+# @export
+#as.zoo <- function(x, ...) UseMethod("as.zoo")
+
 #' @rdname unavco-methods
 #' @export
 as.zoo.unavco <- function(x, frequency = NULL, ...){
@@ -12,9 +16,11 @@ as.zoo.unavco <- function(x, frequency = NULL, ...){
   xord <- udf[, 1]
   zoo(xd, order.by = xord, frequency = frequency)
 }
+
 #' @rdname unavco-methods
 #' @export
 zoo.unavco <- as.zoo.unavco
+
 #' @rdname unavco-methods
 #' @export
 as.data.frame.unavco <- function(x, ...){
@@ -32,10 +38,49 @@ data.frame.unavco <- as.data.frame.unavco
 
 #' @rdname unavco-methods
 #' @export
-window.unavco <- function(x, ...){
-  window(as.zoo(x), ...)
+start.unavco <- function(x, ...){
+  ti <- time(x)
+  ti[1]
+}
+#' @rdname unavco-methods
+#' @export
+end.unavco <- function(x, ...){
+  ti <- time(x)
+  ti[length(ti)]
+}
+#' @rdname unavco-methods
+#' @export
+time.unavco <- function(x, ...){
+  x$Dt.
+}
+#' @rdname unavco-methods
+#' @export
+index.unavco <- function(x, ...){
+  as.integer(time(x, ...))
 }
 
+#' @rdname unavco-methods
+#' @export
+window.unavco <- function(x, start. = NULL, end. = NULL, ...){
+  stn <- is.null(start.)
+  enn <- is.null(end.)
+  if (all(stn,enn)){
+    x
+  } else {
+    if (stn) start. <- start(x)
+    if (enn) end. <- end(x)
+    xwin <- as.list(unavco_window(as.data.frame(x), start., end., ...))
+    class(xwin) <- class(x)
+    xwin
+  }
+}
+
+#' @details \code{\link{unavco_window}} does the time subsetting.
+#' @rdname unavco-methods
+#' @export
+unavco_window <- function(x, start. = NULL, end. = NULL, ...){
+  subset(x, Dt. >= start. & Dt. < end., ...)
+}
 
 #' Make the downloaded data consistent in time
 #' @export
