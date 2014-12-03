@@ -139,7 +139,7 @@ unavco_dataload.default <- function(sta, year, jday,
     class(alldat) <- c('unavco',dat.t)
     return(alldat)
   } else {
-    if (!quiet) warning("Downloading failed.")
+    "Downloading failed."
   }
 }
 
