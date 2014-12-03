@@ -9,12 +9,13 @@ NULL
 
 #' @rdname unavco-methods
 #' @export
-as.zoo.unavco <- function(x, frequency = NULL, ...){
-  udf <- as.data.frame(x, ...)
+as.zoo.unavco <- function(x, ...){
+  #frq <- ave_frequency(x)
+  udf <- as.data.frame(x)
   xd <- data.frame(udf[, 2])
   names(xd) <- names(x)[2]
   xord <- udf[, 1]
-  zoo(xd, order.by = xord, frequency = frequency)
+  zoo(xd, order.by = x[[1]], ...)
 }
 
 #' @rdname unavco-methods
@@ -28,7 +29,7 @@ as.data.frame.unavco <- function(x, ...){
   #[1] "numeric" <-- the data
   #> class(x[[1]])
   #[1] "POSIXct" "POSIXt"  <- timestamps
-  df. <- data.frame(x[[1]], x[[2]], stringsAsFactors=FALSE)
+  df. <- data.frame(x[[1]], x[[2]], stringsAsFactors=FALSE, ...)
   names(df.) <- names(x)[1:2]
   df.
 }
@@ -82,6 +83,67 @@ unavco_window <- function(x, start. = NULL, end. = NULL, ...){
   subset(x, Dt. >= start. & Dt. < end., ...)
 }
 
+#' @rdname unavco-methods
+#' @export
+frequency.unavco <- function(x, ...){
+  frequency(zoo(x[[2]], order.by = x[[1]]))
+}
+
+#' @rdname unavco-methods
+#' @export
+deltat.unavco <- function(x, ...){
+  deltat(zoo(x[[2]], order.by = x[[1]]))
+}
+
+#' @rdname unavco-methods
+#' @export
+ave_deltat <- function(x, FUN=mean, trim=0.1, ...) UseMethod("ave_deltat")
+
+#' @rdname unavco-methods
+#' @export
+ave_deltat.zoo <- function(x, FUN=mean, trim=0.1, ...){
+  ave_deltat(time(x))
+}
+
+#' @rdname unavco-methods
+#' @export
+ave_deltat.unavco <- function(x, FUN=mean, trim=0.1, ...){
+  ave_deltat(x[[1]])
+}
+
+#' @rdname unavco-methods
+#' @export
+ave_deltat.default <- function(x, FUN=mean, trim=0.1, ...){
+  FUN(trimmer(diff(as.integer(x)), prc = trim), na.rm=TRUE)
+}
+
+#' @rdname unavco-methods
+#' @export
+ave_frequency <- function(x, ...) UseMethod("ave_frequency")
+
+#' @rdname unavco-methods
+#' @export
+ave_frequency.unavco <- function(x, ...){
+  ave_frequency(x[[1]], ...)
+}
+
+#' @rdname unavco-methods
+#' @export
+ave_frequency.zoo <- function(x, ...){
+  ave_frequency(time(x), ...)
+}
+
+#' @rdname unavco-methods
+#' @export
+ave_frequency.default <- function(x, ...){
+  dt <- ave_deltat(x, ...)
+  if (dt==0){
+    NA
+  } else {
+    1/dt
+  }
+}
+
 #' Make the downloaded data consistent in time
 #' @export
 #' @param dat downloaded data to fortify
@@ -107,6 +169,7 @@ consistent.default <- function(dat, ...){
 consistent.unavco <- function(dat, ...){
   dat.z <- as.zoo(dat)
   dat.cz <- consistent(dat.z)
+  # reassemble...
   times <- as.POSIXct(format(time(dat.cz)), tz = 'UTC')
   dat.c <- data.frame(times, dat.cz[,1])
   rownames(dat.c) <- NULL
@@ -124,7 +187,11 @@ consistent.zoo <- function(dat, verbose=TRUE, ...){
   #
   stopifnot(is.zoo(dat))
   nms <- names(dat)
-  frq <- frequency(dat)
+  zdelt <- deltat(dat)
+  adelt <- ave_deltat(dat)
+  bad.samp <- zdelt != adelt
+  if (bad.samp & verbose) warning(paste("sampling mismatch: zoo =", zdelt, "but average =", adelt, "-- using trimmed average"))
+  delt <- ifelse(bad.samp, adelt, zdelt)
   st <- start(dat)
   en <- end(dat)
   # reformat if posix -- hopefully this catches all
@@ -134,7 +201,7 @@ consistent.zoo <- function(dat, verbose=TRUE, ...){
   if (all(!is.numeric(en), !is.integer(en))){
     en <- as.POSIXct(format(en), tz = 'UTC')
   }
-  time.seq <- seq.int(from=st, to=en, by=frq)
+  time.seq <- seq.int(from=st, to=en, by=delt)
   #
   nnew <- length(time.seq)
   new.dat <- zoo(rep.int(NA, nnew), order.by=time.seq)

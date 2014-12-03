@@ -2,8 +2,18 @@
 \name{unavco-methods}
 \alias{as.data.frame.unavco}
 \alias{as.zoo.unavco}
+\alias{ave_deltat}
+\alias{ave_deltat.default}
+\alias{ave_deltat.unavco}
+\alias{ave_deltat.zoo}
+\alias{ave_frequency}
+\alias{ave_frequency.default}
+\alias{ave_frequency.unavco}
+\alias{ave_frequency.zoo}
 \alias{data.frame.unavco}
+\alias{deltat.unavco}
 \alias{end.unavco}
+\alias{frequency.unavco}
 \alias{index.unavco}
 \alias{start.unavco}
 \alias{time.unavco}
@@ -13,9 +23,9 @@
 \alias{zoo.unavco}
 \title{Methods for the 'unavco' class}
 \usage{
-as.zoo.unavco(x, frequency = NULL, ...)
+as.zoo.unavco(x, ...)
 
-zoo.unavco(x, frequency = NULL, ...)
+zoo.unavco(x, ...)
 
 \method{as.data.frame}{unavco}(x, ...)
 
@@ -32,6 +42,26 @@ index.unavco(x, ...)
 \method{window}{unavco}(x, start. = NULL, end. = NULL, ...)
 
 unavco_window(x, start. = NULL, end. = NULL, ...)
+
+\method{frequency}{unavco}(x, ...)
+
+\method{deltat}{unavco}(x, ...)
+
+ave_deltat(x, FUN = mean, trim = 0.1, ...)
+
+\method{ave_deltat}{zoo}(x, FUN = mean, trim = 0.1, ...)
+
+\method{ave_deltat}{unavco}(x, FUN = mean, trim = 0.1, ...)
+
+\method{ave_deltat}{default}(x, FUN = mean, trim = 0.1, ...)
+
+ave_frequency(x, ...)
+
+\method{ave_frequency}{unavco}(x, ...)
+
+\method{ave_frequency}{zoo}(x, ...)
+
+\method{ave_frequency}{default}(x, ...)
 }
 \description{
 Methods for the 'unavco' class
