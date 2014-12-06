@@ -78,6 +78,7 @@ sta16_from_sta4 <- function(sta4=NULL, meta="bsm", use.regexp=FALSE){
 #' @rdname station_data
 #' @export
 location <- function(sta4=NULL, ...){
+  sta4 <- as.character(sta4)
   s16 <- sta16_from_sta4(sta4, ...)
   loc3 <- substr(s16, 10, 12)
   LOC <- .location.names
@@ -87,6 +88,7 @@ location <- function(sta4=NULL, ...){
 #' @rdname station_data
 #' @export
 .location.names <- Vectorize(function(x){
+  x <- as.character(x)
   switch(x, 
          bwa="Washington",
          bbc="British Columbia",
