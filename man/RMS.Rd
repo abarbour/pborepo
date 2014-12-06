@@ -60,8 +60,9 @@ rowRMS(M)
 [1] \url{http://en.wikipedia.org/wiki/Root_mean_square}
 }
 \seealso{
-Other utilities: \code{\link{list.txtgz}};
-  \code{\link{norms}}; \code{\link{pbo_message}};
-  \code{\link{sta16_from_sta4}}, \code{\link{station_data}}
+Other utilities: \code{\link{.location.names}},
+  \code{\link{location}}, \code{\link{sta16_from_sta4}},
+  \code{\link{station_data}}; \code{\link{list.txtgz}};
+  \code{\link{norms}}; \code{\link{pbo_message}}
 }
 

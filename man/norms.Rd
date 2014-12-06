@@ -27,9 +27,11 @@ norms(M, c("O","M"))
 \seealso{
 \code{\link{norm}}
 
-Other utilities: \code{\link{RMS}}, \code{\link{colRMS}},
-  \code{\link{rms}}, \code{\link{rowRMS}};
-  \code{\link{list.txtgz}}; \code{\link{pbo_message}};
-  \code{\link{sta16_from_sta4}}, \code{\link{station_data}}
+Other utilities: \code{\link{.location.names}},
+  \code{\link{location}}, \code{\link{sta16_from_sta4}},
+  \code{\link{station_data}}; \code{\link{RMS}},
+  \code{\link{colRMS}}, \code{\link{rms}},
+  \code{\link{rowRMS}}; \code{\link{list.txtgz}};
+  \code{\link{pbo_message}}
 }
 

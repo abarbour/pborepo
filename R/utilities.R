@@ -75,6 +75,31 @@ sta16_from_sta4 <- function(sta4=NULL, meta="bsm", use.regexp=FALSE){
   }
   return(as.vector(stadat))
 }
+#' @rdname station_data
+#' @export
+location <- function(sta4=NULL, ...){
+  s16 <- sta16_from_sta4(sta4, ...)
+  loc3 <- substr(s16, 10, 12)
+  LOC <- .location.names
+  #apply(data.frame(sta16), 1, LOC)
+  data.frame(sta16=s16, location.code=loc3, location.name=as.vector(LOC(loc3)))
+}
+#' @rdname station_data
+#' @export
+.location.names <- Vectorize(function(x){
+  switch(x, 
+         bwa="Washington",
+         bbc="British Columbia",
+         bcn="Northern California",
+         scn="Northern California (seismic)",
+         bcs="Southern California",
+          bcsp="Parkfield",
+          bcsa="Anza",
+          bcsm="Mojave",
+         bor="Oregon",
+         bwy="Yellowstone",
+         swy="Yellowstone (seismic)")
+})
 
 #' List .txt.gz files in a directory
 #' @details
