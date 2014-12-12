@@ -23,6 +23,7 @@
 #' @export
 #' @family utilities
 #' @examples
+#' \dontrun{
 #' station_data()
 #' station_data("B084")
 #' station_data("bcs", use.regexp=TRUE)
@@ -33,6 +34,11 @@
 #' sta16_from_sta4()
 #' # or just a few
 #' sta16_from_sta4(c("B082","B084"))
+#' 
+#' # Special wrapper to get Anza cluster stations
+#' # (note the extra bit of information returned: has.pp)
+#' Anza_stations()
+#' }
 station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE, verbose=TRUE){
   metao <- match.arg(meta)
   meta <- switch(metao, bsm="bsmmeta")
@@ -63,6 +69,13 @@ station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE, verbose=TRUE){
   }
   rownames(dat) <- NULL
   return(dat)
+}
+#' @rdname station_data
+#' @export
+Anza_stations <- function(...){
+  anz <- station_data("E4J", use.regexp=TRUE, ...)
+  anz$has.pp <- !(anz$sta4 %in% c("B089","B093"))
+  return(anz)
 }
 #' @rdname station_data
 #' @export

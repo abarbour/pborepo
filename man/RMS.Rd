@@ -61,7 +61,8 @@ rowRMS(M)
 }
 \seealso{
 Other utilities: \code{\link{.location.names}},
-  \code{\link{location}}, \code{\link{sta16_from_sta4}},
+  \code{\link{Anza_stations}}, \code{\link{location}},
+  \code{\link{sta16_from_sta4}},
   \code{\link{station_data}}; \code{\link{list.txtgz}};
   \code{\link{norms}}; \code{\link{pbo_message}}
 }
