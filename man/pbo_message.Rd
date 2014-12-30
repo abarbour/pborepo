@@ -17,9 +17,10 @@ Consistent messaging for downloading and other functions
 }
 \seealso{
 Other utilities: \code{\link{.location.names}},
-  \code{\link{Anza_stations}}, \code{\link{location}},
+  \code{\link{Anza_stations}},
   \code{\link{sta16_from_sta4}},
-  \code{\link{station_data}}; \code{\link{RMS}},
+  \code{\link{station_data}},
+  \code{\link{station_location}}; \code{\link{RMS}},
   \code{\link{colRMS}}, \code{\link{rms}},
   \code{\link{rowRMS}}; \code{\link{list.txtgz}};
   \code{\link{norms}}

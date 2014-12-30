@@ -2,9 +2,9 @@
 \name{station_data}
 \alias{.location.names}
 \alias{Anza_stations}
-\alias{location}
 \alias{sta16_from_sta4}
 \alias{station_data}
+\alias{station_location}
 \title{Station information from PBO metadata}
 \usage{
 station_data(name = NULL, meta = "bsm", use.regexp = FALSE,
@@ -14,7 +14,7 @@ Anza_stations(...)
 
 sta16_from_sta4(sta4 = NULL, meta = "bsm", use.regexp = FALSE)
 
-location(sta4 = NULL, ...)
+station_location(sta4 = NULL, ...)
 
 .location.names(x)
 }
