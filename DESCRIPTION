@@ -34,3 +34,4 @@ Suggests:
     dplyr (>= 0.2),
     zoo
 License: GPL
+RoxygenNote: 5.0.1

@@ -67,6 +67,7 @@ station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE, verbose=TRUE){
       dat <- dat[dat==name, ]      
     }
   }
+  dat <- unique(dat)
   rownames(dat) <- NULL
   return(dat)
 }
