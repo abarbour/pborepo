@@ -31,7 +31,7 @@ Depends:
 Suggests:
     RCurl (>= 1.95-4.1),
     plyr (>= 1.8),
-    dplyr (>= 0.2),
+    tidyverse,
     zoo
 License: GPL
 RoxygenNote: 5.0.1
