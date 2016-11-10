@@ -18,11 +18,8 @@
 #' 
 #' @author Andrew J. Barbour <andy.barbour@@gmail.com> 
 #' 
-#' @import corpcor abind httr zoo
-# @importFrom zoo as.zoo
-#' 
-# not needed since specified in DESCRIPTION-DEPENDS: stats utils graphics grDevices
-# @useDynLib strain
+#' @import corpcor abind tidyverse zoo
+#' @importFrom plyr rbind.fill
 #'
 #' @seealso 
 #' See \code{\link{data-retrieval}} for functions related to data retrieval
@@ -99,6 +96,11 @@ pbo_constants <- function(){
 
 #' @title BSM metadata
 #' @name bsmmeta
+#' @docType data
+NULL
+
+#' @title BSM metadata 2
+#' @name bsmmeta2
 #' @docType data
 NULL
 

@@ -1,3 +1,6 @@
+[![Travis-CI Build Status](https://travis-ci.org/abarbour/pborepo.svg?branch=master)](https://travis-ci.org/abarbour/pborepo)
+[![Coverage Status](https://img.shields.io/codecov/c/github/abarbour/pborepo/master.svg)](https://codecov.io/github/abarbour/pborepo?branch=master)
+
 This project is intended to be a storage repository for metadata and other bits of
 data for [PBO](http://pbo.unavco.org/), but it also
 serves as a self-consistent R-package, meaning

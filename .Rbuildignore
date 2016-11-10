@@ -17,3 +17,5 @@ data/Makefile
 data/r.*
 data/gen/
 ^packrat/
+^\.travis\.yml$
+^codecov\.yml$

@@ -29,7 +29,6 @@ norms(M, c("O","M"))
 \code{\link{norm}}
 
 Other utilities: \code{\link{RMS}},
-  \code{\link{list.txtgz}}, \code{\link{pbo_message}},
-  \code{\link{station_data}}
+  \code{\link{list.txtgz}}, \code{\link{pbo_message}}
 }
 

@@ -62,7 +62,6 @@ rowRMS(M)
 }
 \seealso{
 Other utilities: \code{\link{list.txtgz}},
-  \code{\link{norms}}, \code{\link{pbo_message}},
-  \code{\link{station_data}}
+  \code{\link{norms}}, \code{\link{pbo_message}}
 }
 

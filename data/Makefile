@@ -1,10 +1,13 @@
-all: bsmmeta.rda bsmCalibrations.rda clean
+all: bsmmeta2.rda bsmmeta.rda bsmCalibrations.rda clean
+
+bsmmeta2.rda: r.new_bsmmeta
+	Rscript r.new_bsmmeta
 
 bsmmeta.rda: gen/bsm_coords r.bsmmeta
-	rr r.bsmmeta s
+	Rscript r.bsmmeta
 
 bsmCalibrations.rda: r.calib
-	rr r.calib s
+	Rscript r.calib
 
 clean:
-	rm -f .Rdata *.Rout
+	rm -f .Rdata *.Rout .Rhistory

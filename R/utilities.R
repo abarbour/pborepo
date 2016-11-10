@@ -11,9 +11,10 @@
 #' 
 #' @param name character; the search string; use \code{use.regexp=TRUE} to use it
 #' as a regular expression
-#' @param meta character; the metadata source; currently the only
-#' option is \code{'bsm'}, which accesses
-#' PBO-BSM station information (see \code{data('bsmmeta')})
+#' @param meta character; the metadata source; the only
+#' options are  \code{'bsm'}, which accesses \code{data('bsmmeta')}, or
+#'   \code{'bsm2'} which accesses \code{data('bsmmeta2')}; the main difference is
+#'   that the former has GHAM codes, and the latter has start/end times but no GHAM codes.
 #' @param use.regexp logical; should \code{name} be considered to be a regular expression
 #' (c.f. \code{\link{regexp}})?
 #' @param verbose logical; should messages be given?
@@ -21,7 +22,7 @@
 #' 
 #' @author A. Barbour
 #' @export
-#' @family utilities
+#' 
 #' @examples
 #' \dontrun{
 #' station_data()
@@ -39,56 +40,64 @@
 #' # (note the extra bit of information returned: has.pp)
 #' Anza_stations()
 #' }
-station_data <- function(name=NULL, meta="bsm", use.regexp=FALSE, verbose=TRUE){
-  metao <- match.arg(meta)
-  meta <- switch(metao, bsm="bsmmeta")
+station_data <- function(name=NULL, meta=NULL, use.regexp=FALSE, verbose=TRUE){
+  metao <- match.arg(meta, c("bsm",'bsm2'))
+  meta <- switch(metao, bsm="bsmmeta", bsm2='bsmmeta2')
   env <- new.env()
   do.call("data", list(meta, package="pborepo", envir=env))
   metad <- env[[meta]]
   #print(metad)
-  nms <- switch(metao, bsm=c("coords"))
-  dat <- metad[[nms]]
+  nms <- switch(metao, bsm=c("coords"), bsm2=c("coords")) # may change in future
+  dat <- as.data.frame(metad[[nms]])
   #> head(bsmmeta$coords)
   #sta4             sta16     nlat      elon elev.m    gham.geocode
   #1 B001  golbeck01bwa2005 48.04307 -123.1314 237.00    E4X4P1E2X3Y0
   #2 B003  floequarybwa2005 48.06236 -124.1409 284.66    E4T1T9U2V1W4
   if (!is.null(name)){
     name <- as.character(name)
-    if (use.regexp){
-      #dat[regexpr("bcs",dat$sta16)>0,]
+    dat <- if (use.regexp){
+      if (length(name) > 1) warning('only used first value of "name"')
       name <- name[1]
       logics <- sapply(dat, function(x, pat){regexpr(pat, x, ignore.case=TRUE) > 0}, pat=name)
       nrd <- nrow(dat)
       logics <- which(logics) %% nrd
       logics[logics==0] <- nrd
-      dat <- dat[logics, ]
+      dat[logics, ]
     } else {
       if (verbose) message("can also set 'use.regexp=TRUE'")
-      dat <- dat[dat==name, ]      
+      sta4 <- NULL
+      dplyr::filter(dat, sta4 %in% name)
     }
   }
   dat <- unique(dat)
   rownames(dat) <- NULL
   return(dat)
 }
+
+#' @rdname station_data
+#' @export
+station_data2 <- function(...) station_data(meta='bsm2', ...)
+
 #' @rdname station_data
 #' @export
 Anza_stations <- function(...){
-  anz <- station_data("E4J", use.regexp=TRUE, ...)
+  anz <- station_data("E4J", meta='bsm', use.regexp=TRUE, ...)
   anz$has.pp <- !(anz$sta4 %in% c("B089","B093"))
   return(anz)
 }
+
 #' @rdname station_data
 #' @export
-sta16_from_sta4 <- function(sta4=NULL, meta="bsm", use.regexp=FALSE){
+sta16_from_sta4 <- function(sta4=NULL, use.regexp=FALSE){
   s16 <- "sta16"
   stadat <- if (!is.null(sta4)){
-    sapply(X=sta4, FUN=function(x, MET=meta, REG=use.regexp){station_data(name=x, meta=MET, use.regexp=REG)[[s16]]})
+    sapply(X=sta4, FUN=function(x, MET=meta, REG=use.regexp){station_data2(name=x, use.regexp=REG, verbose=FALSE)[[s16]]})
   } else {
-    station_data(meta=meta, use.regexp=use.regexp)[[s16]]
+    station_data2(use.regexp=use.regexp, verbose=FALSE)[[s16]]
   }
   return(as.vector(stadat))
 }
+
 #' @rdname station_data
 #' @export
 station_location <- function(sta4=NULL, ...){
@@ -109,10 +118,11 @@ station_location <- function(sta4=NULL, ...){
          bcn="Northern California",
          scn="Northern California (seismic)",
          bcs="Southern California",
-          bcsp="Parkfield",
-          bcsa="Anza",
-          bcsm="Mojave",
+         bcsp="Parkfield",
+         bcsa="Anza",
+         bcsm="Mojave",
          bor="Oregon",
+         bok="Oklahoma",
          bwy="Yellowstone",
          swy="Yellowstone (seismic)")
 })

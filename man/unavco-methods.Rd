@@ -24,7 +24,7 @@
 \alias{zoo.unavco}
 \title{Methods for the 'unavco' class}
 \usage{
-as.zoo.unavco(x, ...)
+\method{as.zoo}{unavco}(x, ...)
 
 zoo.unavco(x, ...)
 
@@ -38,7 +38,7 @@ data.frame.unavco(x, ...)
 
 \method{time}{unavco}(x, ...)
 
-index.unavco(x, ...)
+\method{index}{unavco}(x, ...)
 
 \method{window}{unavco}(x, start. = NULL, end. = NULL, ...)
 

@@ -18,7 +18,6 @@ Consistent messaging for downloading and other functions
 }
 \seealso{
 Other utilities: \code{\link{RMS}},
-  \code{\link{list.txtgz}}, \code{\link{norms}},
-  \code{\link{station_data}}
+  \code{\link{list.txtgz}}, \code{\link{norms}}
 }
 

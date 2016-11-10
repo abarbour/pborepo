@@ -17,7 +17,6 @@
 #if (!require("pacman")) install.packages("pacman", dependencies=TRUE)
 #pacman::p_load(package1, package2, package_n)
 
-library(plyr)
 # loads core tidy packages:  ggplot2, tibble, tidyr, readr, purrr, and dplyr
 library(tidyverse)
 #tidyverse_conflicts()
@@ -33,14 +32,6 @@ library(tidyverse)
 #Dark2ll <- brew.dark2(TRUE,TRUE)
 
 #+++++++++++
-
-shake <- FALSE
-redo <- FALSE
-
-#if (!exists("something") | redo){
-#	fi <- "something.txt"
-#	fi %>% read_table(., col_names=TRUE)
-#}
 
 countSpaces <- function(st) { sapply(gregexpr(" ", st), function(p) { sum(p>=0) } ) }
 
@@ -59,9 +50,18 @@ read_delim("http://service.iris.edu/fdsnws/station/1/query?network=PB&format=tex
 	delim="|", col_names=TRUE, trim_ws=TRUE) %>%
 	select(., -ends_with('Network')) %>%
 	dplyr::filter(., nchar(Station)==4 & substr(Station,1,1) %in% c('A','B')) %>%
-	transmute(., sta4 = Station, sta16 = get16_SiteName(SiteName), nlat=Latitude, elon=Longitude, elev.m = Elevation, StartTime, EndTime) -> X
+	transmute(., 
+		sta4 = factor(Station), 
+		sta16 = factor(get16_SiteName(SiteName)), 
+		nlat=Latitude, elon=Longitude, elev.m = Elevation, 
+		gham.geocode=NA, StartTime, EndTime) -> coords
 
-X
+bsmmeta2 <- list(
+	coords=coords
+)
+
+message("saving bsmmeta2.rda ...")
+save(bsmmeta2, file="bsmmeta2.rda")
 
 #+++++++++++
 

@@ -5,15 +5,18 @@
 \alias{Anza_stations}
 \alias{sta16_from_sta4}
 \alias{station_data}
+\alias{station_data2}
 \alias{station_location}
 \title{Station information from PBO metadata}
 \usage{
-station_data(name = NULL, meta = "bsm", use.regexp = FALSE,
+station_data(name = NULL, meta = NULL, use.regexp = FALSE,
   verbose = TRUE)
+
+station_data2(...)
 
 Anza_stations(...)
 
-sta16_from_sta4(sta4 = NULL, meta = "bsm", use.regexp = FALSE)
+sta16_from_sta4(sta4 = NULL, use.regexp = FALSE)
 
 station_location(sta4 = NULL, ...)
 
@@ -23,9 +26,10 @@ station_location(sta4 = NULL, ...)
 \item{name}{character; the search string; use \code{use.regexp=TRUE} to use it
 as a regular expression}
 
-\item{meta}{character; the metadata source; currently the only
-option is \code{'bsm'}, which accesses
-PBO-BSM station information (see \code{data('bsmmeta')})}
+\item{meta}{character; the metadata source; the only
+options are  \code{'bsm'}, which accesses \code{data('bsmmeta')}, or
+  \code{'bsm2'} which accesses \code{data('bsmmeta2')}; the main difference is
+  that the former has GHAM codes, and the latter has start/end times but no GHAM codes.}
 
 \item{use.regexp}{logical; should \code{name} be considered to be a regular expression
 (c.f. \code{\link{regexp}})?}
@@ -65,10 +69,5 @@ Anza_stations()
 }
 \author{
 A. Barbour
-}
-\seealso{
-Other utilities: \code{\link{RMS}},
-  \code{\link{list.txtgz}}, \code{\link{norms}},
-  \code{\link{pbo_message}}
 }
 
