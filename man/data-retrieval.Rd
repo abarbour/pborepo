@@ -2,16 +2,16 @@
 % Please edit documentation in R/data_retrieval.R
 \name{data-retrieval}
 \alias{data-retrieval}
-\alias{dlCatcher}
 \alias{pore.pressure}
 \alias{pore.temperature}
 \alias{unavco_dataload}
 \alias{unavco_dataload.default}
-\alias{unavco_downloader}
-\alias{unavco_downloader.default}
-\alias{unavco_path}
 \alias{unavco_temploader}
 \alias{unavco_temploader.default}
+\alias{unavco_downloader}
+\alias{unavco_downloader.default}
+\alias{dlCatcher}
+\alias{unavco_path}
 \title{Retrieve and load data from the UNAVCO archive}
 \usage{
 pore.pressure(sta4, year, jday, start. = NULL, end. = NULL, ...)
@@ -142,4 +142,3 @@ the source (github)
 
 \code{\link{unavco-methods}}
 }
-

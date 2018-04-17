@@ -2,10 +2,10 @@
 % Please edit documentation in R/pborepo-package.R
 \docType{data}
 \name{pborepo-constants}
+\alias{pborepo-constants}
 \alias{.pbo_constants}
 \alias{constants}
 \alias{pbo_constants}
-\alias{pborepo-constants}
 \title{Constants used as defaults}
 \format{An object of class \code{list} of length 3.}
 \usage{
@@ -34,4 +34,3 @@ str(pbo_constants())
 \code{\link{pborepo}}
 }
 \keyword{datasets}
-

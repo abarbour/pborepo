@@ -35,4 +35,3 @@ trimmer(x) # trimmed, but sorted
 x[trimmer(seq_along(x))] # trimmed, with order retained
 
 }
-

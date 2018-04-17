@@ -4,4 +4,3 @@
 \name{bsmmeta2}
 \alias{bsmmeta2}
 \title{BSM metadata 2}
-

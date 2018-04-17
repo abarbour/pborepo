@@ -28,4 +28,3 @@ and \code{\link{list.files}} with:
 Other utilities: \code{\link{RMS}}, \code{\link{norms}},
   \code{\link{pbo_message}}
 }
-

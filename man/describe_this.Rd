@@ -21,4 +21,3 @@ Prints a description of the calibration table
 Other Calibrations: \code{\link{calibration_matrix}},
   \code{\link{get_caltbl}}
 }
-

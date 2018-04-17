@@ -2,10 +2,10 @@ Package: pborepo
 Type: Package
 Title: Access to data-products and metadata from the Plate Boundary Observatory
     geodetic network
-Version: 0.2016.315-1
-Date: 2016-11-10
+Version: 0.2016.315-2
+Date: 2018-04-17
 Author: Andrew J Barbour
-Maintainer: Andrew J Barbour <andy.barbour@gmail.com>
+Maintainer: AJB <andy.barbour@gmail.com>
 URL: https://github.com/abarbour/pborepo
 Description: The Plate Boundary Observatory is the geodetic
     component of the EarthScope project, and maintains a
@@ -37,4 +37,4 @@ Suggests:
     covr
 License: GPL
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

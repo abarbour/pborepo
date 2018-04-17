@@ -31,4 +31,3 @@ norms(M, c("O","M"))
 Other utilities: \code{\link{RMS}},
   \code{\link{list.txtgz}}, \code{\link{pbo_message}}
 }
-

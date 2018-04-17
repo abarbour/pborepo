@@ -34,4 +34,3 @@ na.approx(xc) # interpolate, for example
 \seealso{
 \code{\link{unavco_dataload}} and \code{\link{unavco-methods}}
 }
-

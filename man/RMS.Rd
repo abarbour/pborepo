@@ -2,8 +2,8 @@
 % Please edit documentation in R/utilities.R
 \name{RMS}
 \alias{RMS}
-\alias{colRMS}
 \alias{rms}
+\alias{colRMS}
 \alias{rowRMS}
 \title{Trimmed root mean square (RMS)}
 \usage{
@@ -64,4 +64,3 @@ rowRMS(M)
 Other utilities: \code{\link{list.txtgz}},
   \code{\link{norms}}, \code{\link{pbo_message}}
 }
-
