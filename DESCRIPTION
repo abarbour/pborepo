@@ -2,8 +2,8 @@ Package: pborepo
 Type: Package
 Title: Access to data-products and metadata from the Plate Boundary Observatory
     geodetic network
-Version: 0.2016.315-2
-Date: 2018-04-17
+Version: 0.2016.315-3
+Date: 2018-10-09
 Author: Andrew J Barbour
 Maintainer: AJB <andy.barbour@gmail.com>
 URL: https://github.com/abarbour/pborepo
@@ -28,13 +28,16 @@ Depends:
 Imports:
     abind,
     corpcor,
+    dplyr,
     tidyverse,
+    plyr,
+    httr,
     zoo
 Suggests:
     RCurl (>= 1.95-4.1),
-    plyr (>= 1.8),
     testthat,
     covr
 License: GPL
 LazyData: true
-RoxygenNote: 6.0.1
+Encoding: UTF-8
+RoxygenNote: 6.1.0

@@ -4,3 +4,6 @@
 \name{bsmmeta2}
 \alias{bsmmeta2}
 \title{BSM metadata 2}
+\description{
+BSM metadata 2
+}

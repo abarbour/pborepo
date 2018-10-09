@@ -19,6 +19,8 @@ consistent(dat, ...)
 \item{dat}{downloaded data to fortify}
 
 \item{...}{additional parameters}
+
+\item{verbose}{logical; should messages be given?}
 }
 \description{
 Make the downloaded data consistent in time

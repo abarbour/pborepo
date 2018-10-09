@@ -1,5 +1,11 @@
 #' Methods for the 'unavco' class
 #' @name unavco-methods
+#' @param x object
+#' @param ... additional arguments
+#' @param start. start time
+#' @param end. end time
+#' @param FUN function to use
+#' @param trim fraction to trim is \code{FUN} allows
 #' @seealso \code{\link{consistent}} and \code{\link{unavco_dataload}}
 NULL
 
@@ -80,19 +86,20 @@ window.unavco <- function(x, start. = NULL, end. = NULL, ...){
 #' @rdname unavco-methods
 #' @export
 unavco_window <- function(x, start. = NULL, end. = NULL, ...){
+  Dt. <- NULL
   subset(x, Dt. >= start. & Dt. < end., ...)
 }
 
 #' @rdname unavco-methods
 #' @export
 frequency.unavco <- function(x, ...){
-  frequency(zoo(x[[2]], order.by = x[[1]]))
+  frequency(zoo::zoo(x[[2]], order.by = x[[1]]))
 }
 
 #' @rdname unavco-methods
 #' @export
 deltat.unavco <- function(x, ...){
-  deltat(zoo(x[[2]], order.by = x[[1]]))
+  deltat(zoo::zoo(x[[2]], order.by = x[[1]]))
 }
 
 #' @rdname unavco-methods
@@ -148,6 +155,7 @@ ave_frequency.default <- function(x, ...){
 #' @export
 #' @param dat downloaded data to fortify
 #' @param ... additional parameters
+#' @param verbose logical; should messages be given?
 #' @seealso \code{\link{unavco_dataload}} and \code{\link{unavco-methods}}
 #' @examples
 #' consistent(1:10)  # does nothing but return
@@ -167,7 +175,7 @@ consistent.default <- function(dat, ...){
 #' @rdname consistent
 #' @export
 consistent.unavco <- function(dat, ...){
-  dat.z <- as.zoo(dat)
+  dat.z <- zoo::as.zoo(dat)
   dat.cz <- consistent(dat.z)
   # reassemble...
   times <- as.POSIXct(format(time(dat.cz)), tz = 'UTC')
@@ -204,10 +212,10 @@ consistent.zoo <- function(dat, verbose=TRUE, ...){
   time.seq <- seq.int(from=st, to=en, by=delt)
   #
   nnew <- length(time.seq)
-  new.dat <- zoo(rep.int(NA, nnew), order.by=time.seq)
+  new.dat <- zoo::zoo(rep.int(NA, nnew), order.by=time.seq)
   dat.m <- merge(dat, new.dat)
   #
-  dat.c <- zoo(data.frame(dat.m[,1]), order.by=time.seq)
+  dat.c <- zoo::zoo(data.frame(dat.m[,1]), order.by=time.seq)
   names(dat.c) <- nms
   dat.c
 }

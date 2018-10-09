@@ -31,3 +31,4 @@ Various time conversion functions
 These are \emph{very much} legacy functions, and will
 probably evaporate in the future.
 }
+\concept{utilities time-conversion}

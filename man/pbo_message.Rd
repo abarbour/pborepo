@@ -20,3 +20,4 @@ Consistent messaging for downloading and other functions
 Other utilities: \code{\link{RMS}},
   \code{\link{list.txtgz}}, \code{\link{norms}}
 }
+\concept{utilities}

@@ -64,3 +64,4 @@ rowRMS(M)
 Other utilities: \code{\link{list.txtgz}},
   \code{\link{norms}}, \code{\link{pbo_message}}
 }
+\concept{utilities}

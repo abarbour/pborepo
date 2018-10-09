@@ -19,6 +19,8 @@
 #' (c.f. \code{\link{regexp}})?
 #' @param verbose logical; should messages be given?
 #' @param sta4 character; an optional 4-character station code (e.g., \code{'B084'})
+#' @param x character; return a location for a given region-code
+#' @param ... additional arguments
 #' 
 #' @author A. Barbour
 #' @export
@@ -91,7 +93,7 @@ Anza_stations <- function(...){
 sta16_from_sta4 <- function(sta4=NULL, use.regexp=FALSE){
   s16 <- "sta16"
   stadat <- if (!is.null(sta4)){
-    sapply(X=sta4, FUN=function(x, MET=meta, REG=use.regexp){station_data2(name=x, use.regexp=REG, verbose=FALSE)[[s16]]})
+    sapply(X=sta4, FUN=function(x, REG=use.regexp){station_data2(name=x, use.regexp=REG, verbose=FALSE)[[s16]]})
   } else {
     station_data2(use.regexp=use.regexp, verbose=FALSE)[[s16]]
   }
@@ -288,10 +290,16 @@ rowRMS <- function(x, na.rm=TRUE, ...){
 ## NA stuff
 ##
 #' Automatically decide how to best fill in NA sections
+#'
+#' @param d data
+#' @param fill  value to fill
+#' @param verbose logical; should messages be given?
+#' @param ... additional arguments
+#'
 #' @export
 #' @seealso \code{\link{unavco-methods}}
 #' 
-naOP <- function(d, fill=0, verbose=TRUE, ...) UseMethod("naOP")
+naOP <- function(d, ...) UseMethod("naOP")
 
 #' @rdname naOP
 #' @export

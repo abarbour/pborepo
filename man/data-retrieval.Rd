@@ -18,11 +18,11 @@ pore.pressure(sta4, year, jday, start. = NULL, end. = NULL, ...)
 
 pore.temperature(sta4, year, jday, start. = NULL, end. = NULL, ...)
 
-unavco_dataload(sta, year, jday, dattype = c("pp", "pt"), localfile = NULL,
-  quiet = FALSE)
-
-\method{unavco_dataload}{default}(sta, year, jday, dattype = c("pp", "pt"),
+unavco_dataload(sta, year, jday, dattype = c("pp", "pt"),
   localfile = NULL, quiet = FALSE)
+
+\method{unavco_dataload}{default}(sta, year, jday, dattype = c("pp",
+  "pt"), localfile = NULL, quiet = FALSE)
 
 unavco_temploader(file, dattype = c("pp", "pt"), ...)
 
@@ -31,8 +31,8 @@ unavco_temploader(file, dattype = c("pp", "pt"), ...)
 unavco_downloader(url.toget, temp, PLUGIN, quiet = FALSE,
   remove.temp = FALSE, ...)
 
-\method{unavco_downloader}{default}(url.toget, temp, PLUGIN, quiet = FALSE,
-  remove.temp = FALSE, ...)
+\method{unavco_downloader}{default}(url.toget, temp, PLUGIN,
+  quiet = FALSE, remove.temp = FALSE, ...)
 
 dlCatcher(FUN)
 
@@ -74,10 +74,6 @@ unavco_path(sta4, year, jday, type = c("pp", "pt"), url.check = FALSE)
 \item{type}{character; the type of data to generate download data for}
 
 \item{url.check}{logical; should the urls be tested for existence?}
-
-\item{default.sec.samp}{numeric;}
-
-\item{impute}{logical;}
 }
 \description{
 The user should be most interested in \code{\link{pore.pressure}} and

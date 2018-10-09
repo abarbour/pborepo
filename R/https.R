@@ -8,7 +8,7 @@
 #' @param delete logical; should \code{local.file} be delete upon exit?
 #' @param verbose logical; should messages be shown?
 #' @param FUN the function to use for reading \code{URL}; default is \code{\link{read.table}}
-#' @param ... additional parameters sent to \code{URL} or \code{\link{content}}
+#' @param ... additional parameters sent to \code{URL} or \code{\link[httr]{content}}
 #' @export
 #' @author A.J. Barbour
 #' @examples
@@ -66,7 +66,8 @@ get_https <- function(URL, ...){
 #' # Get them all with plyr/dplyr
 #' library(plyr)
 #' library(dplyr, warn.conflicts=FALSE)
-#' alldata <- llply(gitfiles, function(fi) tbl_df(pborepo_gitdata(fi, verbose=FALSE)), .progress = 'text')
+#' FUNC <- function(fi){tbl_df(pborepo_gitdata(fi, verbose=FALSE))}
+#' alldata <- llply(gitfiles, FUNC, .progress = 'text')
 #' names(alldata) <- gitfiles
 #' summary(alldata)
 #' print(str(alldata, vec.len=2, nchar.max=10))
@@ -82,6 +83,7 @@ pborepo_gitdata <- function(file=NULL, save.local=FALSE, saf = FALSE, verbose=TR
   # if a name was specified we continue marching...
   Df <- df[["gitfile"]]
   Df$status <- Df$file %in% file
+  status <- NULL
   Dfsub <- subset(Df, status)
   nr <- nrow(Dfsub)
   if (nr==0){

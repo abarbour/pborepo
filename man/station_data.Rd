@@ -36,7 +36,11 @@ options are  \code{'bsm'}, which accesses \code{data('bsmmeta')}, or
 
 \item{verbose}{logical; should messages be given?}
 
+\item{...}{additional arguments}
+
 \item{sta4}{character; an optional 4-character station code (e.g., \code{'B084'})}
+
+\item{x}{character; return a location for a given region-code}
 }
 \description{
 PBO operates a large number of stations, and \code{\link{station_data}} is

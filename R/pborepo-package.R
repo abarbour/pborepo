@@ -18,8 +18,12 @@
 #' 
 #' @author Andrew J. Barbour <andy.barbour@@gmail.com> 
 #' 
-#' @import corpcor abind tidyverse zoo
+#' @import abind corpcor tidyverse zoo
+#' @importFrom stats start end deltat frequency time window na.omit
+#' @importFrom utils download.file read.csv read.table str
+#' @importFrom dplyr filter
 #' @importFrom plyr rbind.fill
+#' @importFrom httr GET stop_for_status content
 #'
 #' @seealso 
 #' See \code{\link{data-retrieval}} for functions related to data retrieval

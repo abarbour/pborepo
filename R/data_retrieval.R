@@ -16,9 +16,7 @@
 #'
 #' @param sta character;
 #' @param dattype character;
-#' @param default.sec.samp numeric;
 #' @param localfile character;
-#' @param impute logical;
 #' @param sta4 character; 4-character station name (e.g. B084).
 #' @param year numeric; the year of data
 #' @param jday numeric; Julian date (the day of \code{year})
@@ -33,6 +31,8 @@
 #' @param PLUGIN function (not used)
 #' @param FUN a function to try, and catch exceptions from
 #' @param remove.temp logical; should temporary files be deleted?
+# @param default.sec.samp numeric; the default sampling rate (in seconds)
+# @param impute logical;
 #' @param ... additional parameters
 #' 
 #' @name data-retrieval

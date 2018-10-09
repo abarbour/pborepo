@@ -38,7 +38,8 @@ pborepo_gitdata("bogus_filename") # an error, as expected
 # Get them all with plyr/dplyr
 library(plyr)
 library(dplyr, warn.conflicts=FALSE)
-alldata <- llply(gitfiles, function(fi) tbl_df(pborepo_gitdata(fi, verbose=FALSE)), .progress = 'text')
+FUNC <- function(fi){tbl_df(pborepo_gitdata(fi, verbose=FALSE))}
+alldata <- llply(gitfiles, FUNC, .progress = 'text')
 names(alldata) <- gitfiles
 summary(alldata)
 print(str(alldata, vec.len=2, nchar.max=10))

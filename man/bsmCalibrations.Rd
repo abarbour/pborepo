@@ -6,6 +6,9 @@
 \title{BSM calibration coefficients}
 \format{A list with lists of dataframes with
 calibration coefficients by station}
+\description{
+BSM calibration coefficients
+}
 \examples{
 data(bsmCalibrations)
 summary(bsmCalibrations)

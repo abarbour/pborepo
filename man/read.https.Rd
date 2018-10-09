@@ -21,7 +21,7 @@ get_https(URL, ...)
 
 \item{FUN}{the function to use for reading \code{URL}; default is \code{\link{read.table}}}
 
-\item{...}{additional parameters sent to \code{URL} or \code{\link{content}}}
+\item{...}{additional parameters sent to \code{URL} or \code{\link[httr]{content}}}
 }
 \description{
 Uses functions in the \pkg{httr} package to load

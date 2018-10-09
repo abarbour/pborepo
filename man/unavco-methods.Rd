@@ -64,6 +64,19 @@ ave_frequency(x, ...)
 
 \method{ave_frequency}{default}(x, ...)
 }
+\arguments{
+\item{x}{object}
+
+\item{...}{additional arguments}
+
+\item{start.}{start time}
+
+\item{end.}{end time}
+
+\item{FUN}{function to use}
+
+\item{trim}{fraction to trim is \code{FUN} allows}
+}
 \description{
 Methods for the 'unavco' class
 }
