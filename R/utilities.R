@@ -44,12 +44,12 @@
 #' }
 station_data <- function(name=NULL, meta=NULL, use.regexp=FALSE, verbose=TRUE){
   metao <- match.arg(meta, c("bsm",'bsm2'))
-  meta <- switch(metao, bsm="bsmmeta", bsm2='bsmmeta2')
+  meta <- switch(metao, bsm="bsmmeta", bsm2='bsmmeta2', bsm3='bsmmeta3')
   env <- new.env()
   do.call("data", list(meta, package="pborepo", envir=env))
   metad <- env[[meta]]
   #print(metad)
-  nms <- switch(metao, bsm=c("coords"), bsm2=c("coords")) # may change in future
+  nms <- switch(metao, bsm=c("coords"), bsm2=c("coords"), bsm3=c('coords')) # may change in future
   dat <- as.data.frame(metad[[nms]])
   #> head(bsmmeta$coords)
   #sta4             sta16     nlat      elon elev.m    gham.geocode
@@ -79,6 +79,10 @@ station_data <- function(name=NULL, meta=NULL, use.regexp=FALSE, verbose=TRUE){
 #' @rdname station_data
 #' @export
 station_data2 <- function(...) station_data(meta='bsm2', ...)
+
+#' @rdname station_data
+#' @export
+station_data3 <- function(...) station_data(meta='bsm3', ...)
 
 #' @rdname station_data
 #' @export

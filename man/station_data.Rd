@@ -3,6 +3,7 @@
 \name{station_data}
 \alias{station_data}
 \alias{station_data2}
+\alias{station_data3}
 \alias{Anza_stations}
 \alias{sta16_from_sta4}
 \alias{station_location}
@@ -13,6 +14,8 @@ station_data(name = NULL, meta = NULL, use.regexp = FALSE,
   verbose = TRUE)
 
 station_data2(...)
+
+station_data3(...)
 
 Anza_stations(...)
 

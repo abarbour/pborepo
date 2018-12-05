@@ -7,3 +7,6 @@
 \description{
 BSM metadata
 }
+\details{
+\code{\link{bsmmeta3}} is the preferred metadata source
+}

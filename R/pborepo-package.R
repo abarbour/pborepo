@@ -100,11 +100,20 @@ pbo_constants <- function(){
 
 #' @title BSM metadata
 #' @name bsmmeta
+#' @details \code{\link{bsmmeta3}} is the preferred metadata source
 #' @docType data
 NULL
 
 #' @title BSM metadata 2
 #' @name bsmmeta2
+#' @details \code{\link{bsmmeta3}} is the preferred metadata source
+#' @docType data
+NULL
+
+#' @title BSM metadata 3
+#' @name bsmmeta3
+#' @details This is the preferred metadata source
+#' @references \url{https://www.unavco.org/data/strain-seismic/bsm-data/metadata/metadata.html}
 #' @docType data
 NULL
 
