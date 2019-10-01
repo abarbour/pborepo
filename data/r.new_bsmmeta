@@ -36,52 +36,64 @@ library(tidyverse)
 countSpaces <- function(st) { sapply(gregexpr(" ", st), function(p) { sum(p>=0) } ) }
 
 get16_SiteName <- function(x){
-	sapply(strsplit(x, ","), function(.x.){
+	unlist(sapply(strsplit(x, ","), function(.x.){
 		tx <- trimws(.x.)
-		sta16 <- tx[nchar(tx)==16]
+		sta16 <- tx[nchar(tx) == 16]
 		# ignore those with spaces [ ]
-		sta16[countSpaces(sta16)==0]
-	})
+		res <- sta16[countSpaces(sta16) == 0]
+		if (!length(res)) res <- ""
+		return(res)
+	}))
+}
+
+get_region <- function(sta16){
+	#blacka900bcn2007
+	#         ^^^
+	#1234567890123456
+	#0        1
+	sta16 <- as.character(sta16)
+	nc <- nchar(sta16)
+	res <- stringr::str_sub(sta16, 11, 12)
+	res[nc==0] <- ".?."
+	res
 }
 
 #+++++++++++
+lsms <- c("CHL1","CHL2","DHL1","DHL2","GVS1","SCS1","SCS2")
+excludes <- c()
 
-read_delim("http://service.iris.edu/fdsnws/station/1/query?network=PB&format=text&includeavailability=true",
-	delim="|", col_names=TRUE, trim_ws=TRUE) %>%
-	select(., -ends_with('Network')) %>%
-	dplyr::filter(., nchar(Station)==4 & substr(Station,1,1) %in% c('A','B')) %>%
-	transmute(., 
+currSysTime <- Sys.time()
+
+u <- "https://service.iris.edu/fdsnws/station/1/query?network=PB&channel=LS*&format=text&includeavailability=true"
+message(u)
+read_delim(u, delim="|", col_names=TRUE, trim_ws=TRUE) -> quer
+
+quer %>%
+	#dplyr::select(., -ends_with('Network')) %>%
+	#dplyr::filter(., nchar(Station)==4 & substr(Station,1,1) %in% c('A','B')) %>%
+	dplyr::transmute(., 
 		sta4 = factor(Station), 
 		sta16 = factor(get16_SiteName(SiteName)), 
-		nlat=Latitude, elon=Longitude, elev.m = Elevation, 
-		gham.geocode=NA, StartTime, EndTime) -> coords
+		nlat=Latitude, elon=Longitude, 
+		elev.m = Elevation, 
+		region = factor(get_region(sta16)),
+		#gham.geocode=NA, 
+		is.bsm = !(sta4 %in% lsms), is.active = EndTime > currSysTime,
+		StartTime, 
+		EndTime) %>% 
+	dplyr::arrange(!is.bsm, region, nlat) -> coords
 
 bsmmeta2 <- list(
+	ws_url = u,
+	DB_updated = currSysTime,
 	coords=coords
 )
+
+coords %>% dplyr::group_by(region) %>% dplyr::count(.) %>% arrange(-n)
 
 message("saving bsmmeta2.rda ...")
 save(bsmmeta2, file="bsmmeta2.rda")
 
 #+++++++++++
 
-#FIG <- function(x, ...){}
-#if (shake){
-#	FIG() 
-#} else {
-#	figfi <- "some_figure"
-#	h <- 7
-#	w <- 7
-#	niceEPS(figfi, h=h, w=w, toPDF=TRUE)
-#	try(FIG())
-#	niceEPS()
-#	nicePNG(figfi, h=h, w=w)
-#	try(FIG())
-#	nicePNG()
-#}
-
-###
-
-#kook::warn_shake()
-#if (require('kook') & packageVersion("kook") < '1.0.17') stop("update kook -- some defaults have changed!")
 

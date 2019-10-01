@@ -1,12 +1,18 @@
 #
 # Creates the bsm calibration coefficient database
 #
-									# array'd
-load("/Users/abarbour/dbase/stations/calib/grant10.rda")		# [ ]
-load("/Users/abarbour/dbase/stations/calib/hodg.rda")			# [ ]
-load("/Users/abarbour/dbase/stations/calib/pbo.rda")			# [X]
-load("/Users/abarbour/dbase/stations/calib/isotropic/pboiso.rda")	# [X]
-load("/Users/abarbour/dbase/stations/calib/roel.rda")			# [X]
+fi <- function(r){
+	base <- "~/dbase-lite/stations/strain/calib"
+	rd <- file.path(base, r)
+	if (!file.exists(rd)) warning(rd, " doesn't exist ", call.=FALSE, immediate.=TRUE)
+	rd
+}
+	
+load(fi("grant10.rda"))			# [ ]
+load(fi("hodg.rda"))			# [ ]
+load(fi("pbo.rda"))			# [X]
+load(fi("isotropic/pboiso.rda"))	# [X]
+load(fi("roel.rda"))			# [X]
 
 bsmCalibrations <- list(
 	grant=grant10,

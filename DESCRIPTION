@@ -2,18 +2,18 @@ Package: pborepo
 Type: Package
 Title: Access to data-products and metadata from the Plate Boundary Observatory
     geodetic network
-Version: 0.2018.338-0
-Date: 2018-12-04
+Version: 0.2019.274
+Date: 2019-10-01
 Author: Andrew J Barbour
 Maintainer: AJB <andy.barbour@gmail.com>
 URL: https://github.com/abarbour/pborepo
 Description: The Plate Boundary Observatory is the geodetic
-    component of the EarthScope project, and maintains a
+    component of the EarthScope project (now SAGE/GAGE) with a
     large network of instruments, including continuous GPS,
     longbase laser strainmeters, and borehole strainmeters.
     This package provides access to calibration coefficients
     and metadata associated
-    with these stations, and some data products.
+    with (most of) these stations, and some data products.
     Note that the metadata is a compilation from multiple
     sources, and is only current up to the version number, which
     has the following format: version.year.day-of-year.
@@ -21,8 +21,7 @@ Description: The Plate Boundary Observatory is the geodetic
     high-frequency strain,
     pore-fluid pressure, and
     pore-fluid temperature.
-SystemRequirements: libcurl for downloading; c-shell and python (>= 2.5
-    preferred) to assemble high-frequency strain data from bottle files
+SystemRequirements: libcurl for downloading
 Depends:
     R (>= 2.14.1)
 Imports:

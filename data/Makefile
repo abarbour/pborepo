@@ -1,4 +1,10 @@
-all: bsmmeta2.rda bsmmeta.rda bsmCalibrations.rda clean
+ALLRDA=bsmmeta2.rda bsmmeta.rda bsmCalibrations.rda
+
+all: refresh
+
+refresh: clean rda
+
+rda: $(ALLRDA)
 
 bsmmeta2.rda: r.new_bsmmeta
 	Rscript r.new_bsmmeta
@@ -10,4 +16,5 @@ bsmCalibrations.rda: r.calib
 	Rscript r.calib
 
 clean:
+	rm -f $(ALLRDA)
 	rm -f .Rdata *.Rout .Rhistory
