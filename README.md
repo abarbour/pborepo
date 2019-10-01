@@ -6,9 +6,9 @@ data for [PBO](http://pbo.unavco.org/), but it also
 serves as a self-consistent R-package, meaning
 one can do the following
 ~~~~~{.R}
-install.packages("devtools",dependencies=TRUE)
-library(devtools)
-install_github("pborepo", username = "abarbour")
+install.packages("remotes")
+library(remotes)
+install_github("abarbour/pborepo")
 ~~~~~
 and from then on
 ~~~~~{.R}
@@ -28,7 +28,7 @@ should you have questions, or wish to see other data included; or, use github as
 intended and commit some changes of your own! :)
 
 ----
-####Metadata
+# Metadata
 ----
 
 PBO borehole strainmeters
