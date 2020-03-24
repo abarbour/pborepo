@@ -18,21 +18,45 @@ pore.pressure(sta4, year, jday, start. = NULL, end. = NULL, ...)
 
 pore.temperature(sta4, year, jday, start. = NULL, end. = NULL, ...)
 
-unavco_dataload(sta, year, jday, dattype = c("pp", "pt"),
-  localfile = NULL, quiet = FALSE)
+unavco_dataload(
+  sta,
+  year,
+  jday,
+  dattype = c("pp", "pt"),
+  localfile = NULL,
+  quiet = FALSE
+)
 
-\method{unavco_dataload}{default}(sta, year, jday, dattype = c("pp",
-  "pt"), localfile = NULL, quiet = FALSE)
+\method{unavco_dataload}{default}(
+  sta,
+  year,
+  jday,
+  dattype = c("pp", "pt"),
+  localfile = NULL,
+  quiet = FALSE
+)
 
 unavco_temploader(file, dattype = c("pp", "pt"), ...)
 
 \method{unavco_temploader}{default}(file, dattype = c("pp", "pt"), ...)
 
-unavco_downloader(url.toget, temp, PLUGIN, quiet = FALSE,
-  remove.temp = FALSE, ...)
+unavco_downloader(
+  url.toget,
+  temp,
+  PLUGIN,
+  quiet = FALSE,
+  remove.temp = FALSE,
+  ...
+)
 
-\method{unavco_downloader}{default}(url.toget, temp, PLUGIN,
-  quiet = FALSE, remove.temp = FALSE, ...)
+\method{unavco_downloader}{default}(
+  url.toget,
+  temp,
+  PLUGIN,
+  quiet = FALSE,
+  remove.temp = FALSE,
+  ...
+)
 
 dlCatcher(FUN)
 

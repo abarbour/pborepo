@@ -6,8 +6,13 @@
 \alias{list_github_files}
 \title{Retrieve data from the \code{pborepo} online repository (github)}
 \usage{
-pborepo_gitdata(file = NULL, save.local = FALSE, saf = FALSE,
-  verbose = TRUE, ...)
+pborepo_gitdata(
+  file = NULL,
+  save.local = FALSE,
+  saf = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 list_github_files()
 }

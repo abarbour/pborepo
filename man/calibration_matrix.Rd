@@ -22,18 +22,22 @@
 \usage{
 calibration_matrix(tbl, sta4, typ = c("free", "cdr", "cd"), ...)
 
-\method{calibration_matrix}{cal.pbo}(tbl, sta4, typ = c("free", "cdr",
-  "cd"), ...)
+\method{calibration_matrix}{cal.pbo}(tbl, sta4, typ = c("free", "cdr", "cd"), ...)
 
-\method{calibration_matrix}{cal.pboiso}(tbl, sta4, typ = c("free", "cdr",
-  "cd"), ...)
+\method{calibration_matrix}{cal.pboiso}(tbl, sta4, typ = c("free", "cdr", "cd"), ...)
 
 \method{calibration_matrix}{cal.hodg}(tbl, sta4, typ = NULL, ...)
 
 \method{calibration_matrix}{cal.roel}(tbl, sta4, typ = NULL, ...)
 
-fortify_calibration_matrix(Sij, sta4 = NA, typ = NA,
-  needs.pinv = FALSE, byrow = TRUE, ...)
+fortify_calibration_matrix(
+  Sij,
+  sta4 = NA,
+  typ = NA,
+  needs.pinv = FALSE,
+  byrow = TRUE,
+  ...
+)
 
 all_calibrations(tbl, sta4, ...)
 
@@ -45,17 +49,13 @@ all_calibrations(tbl, sta4, ...)
 
 any_calibration(tbl, sta4, preference, ...)
 
-\method{any_calibration}{default}(tbl, sta4, preference = c("free",
-  "cdr", "cd"), ...)
+\method{any_calibration}{default}(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
 
-\method{any_calibration}{cal.hodg}(tbl, sta4, preference = c("free",
-  "cdr", "cd"), ...)
+\method{any_calibration}{cal.hodg}(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
 
-\method{any_calibration}{cal.pbo}(tbl, sta4, preference = c("free",
-  "cdr", "cd"), ...)
+\method{any_calibration}{cal.pbo}(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
 
-\method{any_calibration}{cal.pboiso}(tbl, sta4, preference = c("free",
-  "cdr", "cd"), ...)
+\method{any_calibration}{cal.pboiso}(tbl, sta4, preference = c("free", "cdr", "cd"), ...)
 }
 \arguments{
 \item{tbl}{character; the name of the table to load; defaults to \code{"pbo"}
@@ -111,8 +111,9 @@ any_calibration(pbotbl, "B084")
 \code{\link{station_data}} to find information about the PBO stations (including
 \code{sta4})
 
-Other Calibrations: \code{\link{describe_this}},
-  \code{\link{get_caltbl}}
+Other Calibrations: 
+\code{\link{describe_this}()},
+\code{\link{get_caltbl}()}
 }
 \author{
 A. Barbour
