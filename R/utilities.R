@@ -43,7 +43,7 @@
 #' Anza_stations()
 #' }
 station_data <- function(name=NULL, meta=NULL, use.regexp=FALSE, verbose=TRUE){
-  metao <- match.arg(meta, c("bsm",'bsm2'))
+  metao <- match.arg(meta, c("bsm",'bsm2','bsm3'))
   meta <- switch(metao, bsm="bsmmeta", bsm2='bsmmeta2', bsm3='bsmmeta3')
   env <- new.env()
   do.call("data", list(meta, package="pborepo", envir=env))

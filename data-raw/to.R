@@ -63,7 +63,7 @@ if (!exists("spotl") | redo){
 #+++++++++++
 
 bsmmeta3 <- list(
-	coords=coords,
+	coords=dplyr::rename(coords, sta4=BNUM, sta16=NAME, nlat=LAT, elon=LONG, elev.m=`ELEV(m)`),
 	tides=list(spotl=spotl)
 )
 
