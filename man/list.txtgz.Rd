@@ -4,8 +4,7 @@
 \alias{list.txtgz}
 \title{List .txt.gz files in a directory}
 \usage{
-list.txtgz(datadir = ".", basedir = getwd(), pattern = "txt.gz$",
-  ...)
+list.txtgz(datadir = ".", basedir = getwd(), pattern = "txt.gz$", ...)
 }
 \arguments{
 \item{datadir}{character; the location of the .txt.gz files}
@@ -26,7 +25,9 @@ and \code{\link{list.files}} with:
 \code{full.names = TRUE, ignore.case = FALSE}
 }
 \seealso{
-Other utilities: \code{\link{RMS}}, \code{\link{norms}},
-  \code{\link{pbo_message}}
+Other utilities: 
+\code{\link{RMS}()},
+\code{\link{norms}()},
+\code{\link{pbo_message}()}
 }
 \concept{utilities}

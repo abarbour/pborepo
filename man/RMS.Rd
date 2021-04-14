@@ -48,7 +48,7 @@ xr <- RMS(x)
 RMS(c(4,9))
 # should equal ~6.96
 #
-# The expected value for a default \\code{sin} curve is sqrt(2)/2
+# The expected value for a default \code{sin} curve is sqrt(2)/2
 plot(x, type="l")
 lines(abs(x), col="red")
 abline(h=c(mean(x), mean(abs(x)), sqrt(2)/2, xr), lty=4:1, col=4:1)
@@ -61,7 +61,9 @@ rowRMS(M)
 [1] \url{http://en.wikipedia.org/wiki/Root_mean_square}
 }
 \seealso{
-Other utilities: \code{\link{list.txtgz}},
-  \code{\link{norms}}, \code{\link{pbo_message}}
+Other utilities: 
+\code{\link{list.txtgz}()},
+\code{\link{norms}()},
+\code{\link{pbo_message}()}
 }
 \concept{utilities}

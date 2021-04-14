@@ -17,7 +17,9 @@ pbo_message(..., lead.char = c("+", ">", "!"), n = 8)
 Consistent messaging for downloading and other functions
 }
 \seealso{
-Other utilities: \code{\link{RMS}},
-  \code{\link{list.txtgz}}, \code{\link{norms}}
+Other utilities: 
+\code{\link{RMS}()},
+\code{\link{list.txtgz}()},
+\code{\link{norms}()}
 }
 \concept{utilities}

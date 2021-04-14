@@ -10,8 +10,7 @@
 \alias{.location.names}
 \title{Station information from PBO metadata}
 \usage{
-station_data(name = NULL, meta = NULL, use.regexp = FALSE,
-  verbose = TRUE)
+station_data(name = NULL, meta = NULL, use.regexp = FALSE, verbose = TRUE)
 
 station_data2(...)
 

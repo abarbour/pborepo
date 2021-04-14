@@ -18,7 +18,8 @@ describe_this(tbl, ...)
 Prints a description of the calibration table
 }
 \seealso{
-Other Calibrations: \code{\link{calibration_matrix}},
-  \code{\link{get_caltbl}}
+Other Calibrations: 
+\code{\link{calibration_matrix}()},
+\code{\link{get_caltbl}()}
 }
 \concept{Calibrations}

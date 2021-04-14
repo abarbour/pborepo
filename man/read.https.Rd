@@ -5,8 +5,14 @@
 \alias{get_https}
 \title{Use \code{read.table} with a secure http url (https)}
 \usage{
-read.https(URL, local.file = NULL, delete = TRUE, verbose = TRUE,
-  FUN = read.table, ...)
+read.https(
+  URL,
+  local.file = NULL,
+  delete = TRUE,
+  verbose = TRUE,
+  FUN = read.table,
+  ...
+)
 
 get_https(URL, ...)
 }

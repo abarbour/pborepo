@@ -25,7 +25,8 @@ Get a specific calibration table
 \seealso{
 \code{\link{bsmCalibrations}}
 
-Other Calibrations: \code{\link{calibration_matrix}},
-  \code{\link{describe_this}}
+Other Calibrations: 
+\code{\link{calibration_matrix}()},
+\code{\link{describe_this}()}
 }
 \concept{Calibrations}

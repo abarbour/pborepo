@@ -28,7 +28,9 @@ norms(M, c("O","M"))
 \seealso{
 \code{\link{norm}}
 
-Other utilities: \code{\link{RMS}},
-  \code{\link{list.txtgz}}, \code{\link{pbo_message}}
+Other utilities: 
+\code{\link{RMS}()},
+\code{\link{list.txtgz}()},
+\code{\link{pbo_message}()}
 }
 \concept{utilities}
