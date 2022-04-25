@@ -3,7 +3,7 @@ Type: Package
 Title: Access to data-products and metadata from the Plate Boundary Observatory
     geodetic network
 Version: 0.2020.026
-Date: 2020-01-26
+Date: 2022-04-24
 Author: Andrew J Barbour
 Maintainer: AJB <andy.barbour@gmail.com>
 URL: https://github.com/abarbour/pborepo
@@ -23,7 +23,7 @@ Description: The Plate Boundary Observatory is the geodetic
     pore-fluid temperature.
 SystemRequirements: libcurl for downloading
 Depends:
-    R (>= 2.14.1)
+    R (>= 3.5.0)
 Imports:
     abind,
     corpcor,
